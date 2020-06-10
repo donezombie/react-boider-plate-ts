@@ -1,0 +1,1 @@
+export const todosReducerSelector = (state:any) => state.todosReducer;

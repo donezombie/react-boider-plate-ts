@@ -1,0 +1,1 @@
+export const authReducerSelector = (state:any) => state.authReducer;
