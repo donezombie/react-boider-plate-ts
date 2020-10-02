@@ -9,13 +9,20 @@ const HomePage = (props: any) => {
   const { data: listTodo, loading } = todoList;
 
   useEffect(() => {
-    dispatch(getTodosList());
+    dispatch(getTodosList({
+      onSuccess: (response) => {
+        console.log(response);
+      },
+      onFailed: (error) => {
+        console.log(error)
+      }
+    }));
   }, [dispatch]);
 
   // Render
   if (loading) {
     return (
-      <div>Loaing...</div>
+      <div>Loading...</div>
     )
   }
 

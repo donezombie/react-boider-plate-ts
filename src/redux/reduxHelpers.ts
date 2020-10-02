@@ -1,7 +1,4 @@
-export interface Action<T = any> {
-	type: string;
-	payload?: T;
-}
+import { Action } from "interfaces/redux";
 
 // use for call back
 export const onSagaSuccess = (action: Action, data: any, next: any) => {
