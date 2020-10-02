@@ -1,6 +1,6 @@
 {
-  "name": "practice-type-script",
-  "version": "0.1.0",
+  "name": "dzb-react-typescript-template",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.4.0",
