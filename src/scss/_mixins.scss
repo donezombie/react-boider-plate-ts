@@ -1,0 +1,11 @@
+@mixin darkTheme() {
+  .dark-theme & {
+    @content;
+  }
+}
+
+@mixin lightTheme(){
+  .light-theme & {
+    @content;
+  }
+}

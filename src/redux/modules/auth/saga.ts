@@ -1,8 +1,8 @@
+import { Action } from 'redux/reduxHelpers';
 import { takeLatest, put } from 'redux-saga/effects';
+import * as types from 'redux/types';
 
-import * as types from 'redux-module/types';
-
-function* login({ payload }: any) {
+function* login({ payload }: Action) {
   const { username, password } = payload;
   try {
     if (username === 'don' && password === 'don') {
@@ -12,10 +12,9 @@ function* login({ payload }: any) {
     }
   } catch (error) {
     yield put({ type: types.REQUEST_LOGIN_FAILED, error });
-    console.log(error);
   }
 }
 
-export default function* () {
+export function* authSaga() {
   yield takeLatest(types.REQUEST_LOGIN, login);
 }

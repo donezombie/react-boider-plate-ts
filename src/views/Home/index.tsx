@@ -1,34 +1,34 @@
-import React, { useLayoutEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchData } from "redux-module/actions/testActions";
-import { todosReducerSelector } from "redux-module/selectors/todos";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getTodosList } from "redux/modules/todos";
+import { GetListTodoSelector } from "redux/selectors";
 
 const HomePage = (props: any) => {
   const dispatch = useDispatch();
-  const todosReducer = useSelector(todosReducerSelector);
-  const { todos, isFetching, errorTodos } = todosReducer;
-  
-  useLayoutEffect(() => {
-    dispatch(fetchData());
-  }, []);
+  const todoList = GetListTodoSelector();
+  const { data: listTodo, loading } = todoList;
 
-  // RENDER
-  if (isFetching) {
-    return 'Loading...'
+  useEffect(() => {
+    dispatch(getTodosList());
+  }, [dispatch]);
+
+  // Render
+  if (loading) {
+    return (
+      <div>Loaing...</div>
+    )
   }
 
-  if (errorTodos) {
-    return errorTodos.toString();
-  }
-
-  if (todos.length <= 0) {
-    return 'Todos is empty!'
-  }
-
-  return todos.map((el:any) => (
-    <div key={el.id}>
-      {el.id} - {el.title}
+  return (
+    <div>
+      List Todo
+      <hr />
+      {listTodo.map((el:any) => (
+        <div key={el.id}>
+          {el.id} - {el.title}
+        </div>
+      ))}
     </div>
-  ));
+  )
 }
 export default HomePage;

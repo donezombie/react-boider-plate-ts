@@ -1,11 +1,10 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Route, Redirect } from 'react-router-dom';
-import { authReducerSelector } from "redux-module/selectors/auth";
+import { GetAuthSelector } from "redux/selectors/auth";
 
 const PrivateRoute = (props: any) => {
-  const authReducer = useSelector(authReducerSelector);
-  const { isLogin } = authReducer;
+  const auth = GetAuthSelector();
+  const { isLogin } = auth;
 
   // Render
   if (isLogin) {

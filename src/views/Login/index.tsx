@@ -1,16 +1,16 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Formik, Form, FastField } from 'formik';
 import ErrorFocus from 'components/ErrorFocus';
 import InputField from "components/CustomField/InputField";
-import { login } from "redux-module/actions/authActions";
-import { authReducerSelector } from "redux-module/selectors/auth";
+import { login } from "redux/modules/auth";
+import { GetAuthSelector } from "redux/selectors/auth";
 import { Redirect } from "react-router-dom";
 
 const LoginPage = (props: any) => {
   const dispatch = useDispatch();
-  const authReducer = useSelector(authReducerSelector);
-  const { isLogin } = authReducer;
+  const auth = GetAuthSelector();
+  const { isLogin } = auth;
 
   if (isLogin) {
     return <Redirect to="/" />
