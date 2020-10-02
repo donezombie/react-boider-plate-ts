@@ -71,6 +71,7 @@ const FocusError = () => {
     }
 
     checkErrorAndScroll();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitting, isValidating, isValid]);
 
   return null;
