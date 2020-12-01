@@ -1,4 +1,4 @@
-import { Action } from "interfaces/redux";
+import { Action } from 'interfaces/redux';
 
 // use for call back
 export const onSagaSuccess = (action: Action, data: any, next: any) => {

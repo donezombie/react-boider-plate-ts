@@ -8,7 +8,6 @@ import { RouteBase } from 'constants/routeUrl';
 import LoginPage from 'views/Login';
 
 const App: React.FC = () => {
-
   // RENDER
   return (
     <Router>
@@ -17,8 +16,7 @@ const App: React.FC = () => {
         <PrivateRoute path="/" component={SecureRoute} />
       </Switch>
     </Router>
-  )
-  
-}
+  );
+};
 
 export default App;

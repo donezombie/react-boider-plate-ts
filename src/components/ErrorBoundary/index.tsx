@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default class ErrorBoundary extends React.Component {
   constructor(props: any) {
@@ -6,7 +6,7 @@ export default class ErrorBoundary extends React.Component {
     this.state = {
       hasError: false,
       error: null,
-      errorInfo: null
+      errorInfo: null,
     };
   }
 
@@ -14,22 +14,21 @@ export default class ErrorBoundary extends React.Component {
     this.setState({
       hasError: true,
       error,
-      errorInfo
+      errorInfo,
     });
   }
 
   render() {
     const { hasError, error, errorInfo }: any = this.state;
     if (hasError) {
-      const errorDetails = process.env.NODE_ENV === 'development'
-      ? (
-        <details className="preserve-space">
-          {error && error.toString()}
-          <br />
-          {errorInfo.componentStack}
-        </details>
-      )
-      : null;
+      const errorDetails =
+        process.env.NODE_ENV === 'development' ? (
+          <details className="preserve-space">
+            {error && error.toString()}
+            <br />
+            {errorInfo.componentStack}
+          </details>
+        ) : null;
 
       // You can render any custom fallback UI
       return (

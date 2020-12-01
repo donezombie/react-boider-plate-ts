@@ -1,13 +1,26 @@
-import React, { Fragment } from "react";
+import React, { Fragment } from 'react';
 
-const InputField = (props:any) => {
-  const { form, field, maxLength, placeholder, type, label, disabled, onChangeCustomize, onKeyDown, style, invalid, className } = props;
+const InputField = (props: any) => {
+  const {
+    form,
+    field,
+    maxLength,
+    placeholder,
+    type,
+    label,
+    disabled,
+    onChangeCustomize,
+    onKeyDown,
+    style,
+    invalid,
+    className,
+  } = props;
   const { name, value } = field;
   const { errors, touched } = form;
 
   return (
     <Fragment>
-      { label && <label htmlFor={name} dangerouslySetInnerHTML={{ __html: label }} /> }
+      {label && <label htmlFor={name} dangerouslySetInnerHTML={{ __html: label }} />}
       <input
         {...field}
         style={style}
@@ -22,17 +35,15 @@ const InputField = (props:any) => {
         invalid={invalid || (!!errors[name] && touched[name])}
         onKeyDown={onKeyDown}
       />
-      {
-        errors[name] &&  <div>{errors[name]}</div>
-      }
+      {errors[name] && <div>{errors[name]}</div>}
     </Fragment>
-  )
-}
+  );
+};
 
 InputField.defaultProps = {
   type: 'text',
   tabIndex: '0',
-  invalid: "false",
-}
+  invalid: 'false',
+};
 
 export default InputField;

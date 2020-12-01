@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { GetAuthSelector } from "redux/selectors/auth";
+import { GetAuthSelector } from 'redux/selectors/auth';
 
 const PrivateRoute = (props: any) => {
   const auth = GetAuthSelector();
@@ -8,12 +8,10 @@ const PrivateRoute = (props: any) => {
 
   // Render
   if (isLogin) {
-    return (
-      <Route {...props} />
-    )
+    return <Route {...props} />;
   }
 
-  return <Redirect to="/login" />
-}
+  return <Redirect to="/login" />;
+};
 
 export default PrivateRoute;

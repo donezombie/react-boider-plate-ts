@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Header: React.FC = (props) => {
   return (
@@ -8,7 +8,7 @@ const Header: React.FC = (props) => {
       <Link to="/login">Login</Link>
       <Link to="/dashboard">Dashboard</Link>
     </div>
-  )
-}
+  );
+};
 
 export default Header;

@@ -7,7 +7,16 @@ const Page404 = lazy(() => import('views/Page404'));
 
 // For secured route
 export default [
-  { path: '/dashboard', name: 'Dashboard', component: withErrorBoundary(Dashboard) },
-	{ path: '/', exact: true, name: 'Home', component: withErrorBoundary(HomePage) },
-	{ name: '404', component: withErrorBoundary(Page404)}
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: withErrorBoundary(Dashboard),
+  },
+  {
+    path: '/',
+    exact: true,
+    name: 'Home',
+    component: withErrorBoundary(HomePage),
+  },
+  { name: '404', component: withErrorBoundary(Page404) },
 ];

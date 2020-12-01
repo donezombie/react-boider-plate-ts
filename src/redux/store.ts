@@ -7,7 +7,7 @@ import { rootReducers, rootSagas } from 'redux/root';
 
 // setup middleware
 const sagaMiddleware = createMiddlewareSaga();
-const middleware = [ sagaMiddleware, createLogger() ];
+const middleware = [sagaMiddleware, createLogger()];
 
 const store = createStore(rootReducers, composeWithDevTools(applyMiddleware(...middleware)));
 sagaMiddleware.run(rootSagas);

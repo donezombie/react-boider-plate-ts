@@ -1,0 +1,66 @@
+{
+  "root": true,
+  "extends": [
+    "react-app",
+    "plugin:jsx-a11y/recommended",
+    "plugin:prettier/recommended",
+    "plugin:react/recommended",
+    "prettier/react"
+  ],
+  "plugins": ["jsx-a11y", "prettier", "graphql"],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
+  },
+  "rules": {
+    "require-yield": "warn",
+    "react/jsx-key": "error",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "@typescript-eslint/no-angle-bracket-type-assertion": "off",
+    "react/no-direct-mutation-state": "error",
+    "prefer-const": "warn",
+    "no-var": "warn",
+    "react/display-name": "off",
+    "graphql/template-strings": [
+      "error",
+      {
+        "env": "apollo",
+        "schemaJsonFilepath": "./schema/schema.json"
+      },
+      {
+        "env": "literal",
+        "schemaJsonFilepath": "./schema/schema.json"
+      }
+    ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": [
+      "warn",
+      {
+        "additionalHooks": "useRecoilCallback"
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      },
+      "plugins": ["@typescript-eslint"],
+      "extends": ["prettier/@typescript-eslint"],
+      "rules": {
+        "react/prop-types": "off"
+      }
+    }
+  ],
+  "globals": {
+    "page": true,
+    "browser": true,
+    "context": true
+  }
+}

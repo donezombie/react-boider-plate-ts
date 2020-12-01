@@ -4,10 +4,7 @@ import { authSaga, authReducer } from './modules/auth';
 import { todosReducer, todosSaga } from './modules/todos';
 
 export function* rootSagas() {
-  yield all([
-      fork(authSaga),
-      fork(todosSaga),
-  ]);
+  yield all([fork(authSaga), fork(todosSaga)]);
 }
 
 export const rootReducers = combineReducers({

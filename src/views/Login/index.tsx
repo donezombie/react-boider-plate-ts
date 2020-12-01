@@ -1,11 +1,11 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Formik, Form, FastField } from 'formik';
 import ErrorFocus from 'components/ErrorFocus';
-import InputField from "components/CustomField/InputField";
-import { login } from "redux/modules/auth";
-import { GetAuthSelector } from "redux/selectors/auth";
-import { Redirect } from "react-router-dom";
+import InputField from 'components/CustomField/InputField';
+import { login } from 'redux/modules/auth';
+import { GetAuthSelector } from 'redux/selectors/auth';
+import { Redirect } from 'react-router-dom';
 
 const LoginPage = (props: any) => {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const LoginPage = (props: any) => {
   const { isLogin } = auth;
 
   if (isLogin) {
-    return <Redirect to="/" />
+    return <Redirect to="/" />;
   }
 
   return (
@@ -22,7 +22,7 @@ const LoginPage = (props: any) => {
       validateOnChange={false}
       initialValues={{
         username: '',
-        password: ''
+        password: '',
       }}
       onSubmit={(values) => {
         const { username, password } = values;
@@ -35,25 +35,18 @@ const LoginPage = (props: any) => {
           <div>username: don & password: don</div>
           <div>
             <label htmlFor="username">UserName</label>
-            <FastField
-              component={InputField}
-              name="username"
-            />
+            <FastField component={InputField} name="username" />
           </div>
 
           <div>
             <label htmlFor="password">Password</label>
-            <FastField
-              component={InputField}
-              name="password"
-              type="password"
-            />
+            <FastField component={InputField} name="password" type="password" />
           </div>
 
           <button type="submit">Submit</button>
         </Form>
       )}
     </Formik>
-  )
-}
+  );
+};
 export default LoginPage;
