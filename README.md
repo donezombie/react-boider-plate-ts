@@ -25,8 +25,10 @@
 - Immer
 
 (New update: 01/12/2020)
+
 - Code styles: prettier, eslint
 - Pre-commit: husky
+- Auto format when save prettier
 
 ## How to use
 
