@@ -28,7 +28,7 @@ const HomePage = (props: any) => {
 
   return (
     <div>
-      List Todo
+      List Todo Example
       <hr />
       {listTodo.map((el: any) => (
         <div key={el.id}>
