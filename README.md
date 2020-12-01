@@ -24,7 +24,7 @@
 - Lodash
 - Immer
 
-(new update: 01/12/2020)
+(New update: 01/12/2020)
 - Code styles: prettier, eslint
 - Pre-commit: husky
 
@@ -32,7 +32,7 @@
 
 ```javascript
 npm i
-npm start ( developepment )
+npm start ( development )
 npm run build ( production )
 ```
 
