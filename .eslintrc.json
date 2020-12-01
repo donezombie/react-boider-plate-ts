@@ -7,7 +7,7 @@
     "plugin:react/recommended",
     "prettier/react"
   ],
-  "plugins": ["jsx-a11y", "prettier", "graphql"],
+  "plugins": ["jsx-a11y", "prettier"],
   "settings": {
     "import/resolver": {
       "node": {
@@ -25,24 +25,19 @@
     "prefer-const": "warn",
     "no-var": "warn",
     "react/display-name": "off",
-    "graphql/template-strings": [
-      "error",
-      {
-        "env": "apollo",
-        "schemaJsonFilepath": "./schema/schema.json"
-      },
-      {
-        "env": "literal",
-        "schemaJsonFilepath": "./schema/schema.json"
-      }
-    ],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": [
       "warn",
       {
         "additionalHooks": "useRecoilCallback"
       }
-    ]
+    ],
+    "jsx-a11y/label-has-associated-control": 0,
+    "jsx-a11y/label-has-for": [ "error", {
+      "required": {
+        "some": [ "nesting", "id"  ]
+      }
+    }]
   },
   "overrides": [
     {

@@ -8,7 +8,7 @@ const FocusError = () => {
     const checkErrorAndScroll = () => {
       if (!isSubmitting && !isValidating && !isValid) {
         let idError: any;
-        let keys = Object.keys(errors);
+        const keys = Object.keys(errors);
         if (keys.length > 0) {
           // For Array Field
           if (typeof errors[keys[0]] === 'object') {
