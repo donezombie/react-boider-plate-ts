@@ -6,6 +6,7 @@ import InputField from 'components/CustomField/InputField';
 import { login } from 'redux/modules/auth';
 import { GetAuthSelector } from 'redux/selectors/auth';
 import { Redirect } from 'react-router-dom';
+import Button from 'components/Button';
 
 const LoginPage = (props: any) => {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const LoginPage = (props: any) => {
             <FastField component={InputField} name="password" type="password" />
           </div>
 
-          <button type="submit">Submit</button>
+          <Button type="submit">Submit</Button>
         </Form>
       )}
     </Formik>

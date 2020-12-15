@@ -24,7 +24,7 @@ const InputField = (props: any) => {
       <input
         {...field}
         style={style}
-        className={className}
+        className={`${className} border p-2`}
         onChange={onChangeCustomize || field.onChange}
         type={type}
         id={name}

@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import './scss/styles.scss';
+import './styles/scss/styles.scss';
+import './styles/main.css';
 import SecureRoute from 'routes/SecureRoute';
 import PrivateRoute from 'components/PrivateRoute';
 import { RouteBase } from 'constants/routeUrl';
