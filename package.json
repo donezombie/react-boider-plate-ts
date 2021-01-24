@@ -77,7 +77,6 @@
   },
   "lint-staged": {
     "*.@(ts|tsx)": [
-      "npm run format",
       "npm run lint"
     ]
   }
