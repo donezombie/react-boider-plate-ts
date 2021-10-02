@@ -32,14 +32,13 @@
     "yup": "^0.29.3"
   },
   "scripts": {
-    "start": "npm run build:css && react-scripts start",
-    "build": "npm run build:css && react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "prettier --write ./src/** --ignore-unknown",
     "lint": "eslint . --ext ts --ext tsx --ext js",
-    "type-check": "tsc --pretty --noEmit",
-    "build:css": "postcss src/styles/tailwind.css -o src/styles/main.css"
+    "type-check": "tsc --pretty --noEmit"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -57,6 +56,7 @@
     ]
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.175",
     "autoprefixer": "^10.1.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-graphql": "^4.0.0",
@@ -66,8 +66,7 @@
     "lint-staged": "^10.5.2",
     "postcss": "^8.2.10",
     "postcss-cli": "^8.3.1",
-    "prettier": "^2.2.1",
-    "tailwindcss": "^2.0.2"
+    "prettier": "^2.2.1"
   },
   "husky": {
     "hooks": {

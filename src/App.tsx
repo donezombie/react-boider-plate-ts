@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './styles/scss/styles.scss';
-import './styles/main.css';
 
 import { RouteBase } from 'constants/routeUrl';
 import DefaultLayout from 'layout/DefaultLayout';

@@ -1,2 +1,11 @@
 // Variable overrides
-$main-color: rgba(32, 168, 216, 1);
+:root {
+  --font-size: 14px;
+  --main-color: rgba(32, 168, 216, 1);
+  --secondary-color: #ccc;
+}
+
+$main-color: var(--main-color);
+$secondary-color: var(--secondary-color);
+
+$font-size: var(--font-size);

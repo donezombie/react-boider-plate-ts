@@ -1,0 +1,8 @@
+//* Use JS to add .dark-theme to html tag
+body {
+  color: $main-color;
+
+  @include darkTheme() {
+    --main-color: #ccc;
+  }
+}

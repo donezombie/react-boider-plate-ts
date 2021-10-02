@@ -1,25 +1,8 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { getTodosList } from 'redux/modules/todos';
-import { GetListTodoSelector } from 'redux/selectors';
+import React from 'react';
+import useGetTodoList from 'hooks/todos/useGetTodoList';
 
-const HomePage = (props: any) => {
-  const dispatch = useDispatch();
-  const todoList = GetListTodoSelector();
-  const { data: listTodo, loading } = todoList;
-
-  useEffect(() => {
-    dispatch(
-      getTodosList({
-        onSuccess: (response) => {
-          console.log(response);
-        },
-        onFailed: (error) => {
-          console.log(error);
-        },
-      }),
-    );
-  }, [dispatch]);
+const HomePage: React.FC = () => {
+  const { data: todoList, loading } = useGetTodoList();
 
   // Render
   if (loading) {
@@ -30,9 +13,9 @@ const HomePage = (props: any) => {
     <div>
       List Todo Example
       <hr />
-      {listTodo.map((el: any) => (
-        <div key={el.id}>
-          {el.id} - {el.title}
+      {todoList.map((todo) => (
+        <div key={todo.id}>
+          {todo.id} - {todo.title}
         </div>
       ))}
     </div>
