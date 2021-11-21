@@ -1,4 +1,4 @@
-<h1 align="center">React + Redux + Redux Saga + Scss + Formik + Typescript + Prettier + Eslint + i18n + DZB Creators</h1>
+<h1 align="center">React + Redux + Redux Saga + Scss + Formik + Yup + Typescript + Prettier + Eslint + i18n + DZB Creators</h1>
 
 <p align="center">
   <a href="https://reactjs.org/" target="_blank"><img src="https://img.shields.io/badge/React-v16.13.1-%238DD6F9.svg?logo=React"></a>
@@ -8,7 +8,7 @@
 
 </p>
 
-## Packages use in template:
+## Packages in template:
 
 - TypeScript
 - React.js
@@ -48,3 +48,17 @@ npm run build ( production )
 
 You can access your .env variables by deconstructing 'process.env' object, both on client and server.
 Just make sure that you reboot the server when updating .env file
+
+## Some extension (VS Code) recommended
+
+- Better Comments
+- Auto Import
+- Auto Rename Tag
+- Bracket Pair Colorizer
+- Color Highlight
+- Eslint
+- Prettier - Code formatter
+- GitLens
+- Import Cost
+- vscode-icons
+- Visual Studio IntelliCode
