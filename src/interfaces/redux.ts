@@ -1,3 +1,5 @@
+import { Saga } from '@redux-saga/types';
+
 export interface ReduxCallbacks {
   onSuccess?: (data?: any) => void;
   onFailed?: (data?: any) => void;
@@ -7,4 +9,10 @@ export interface ReduxCallbacks {
 export interface Action<T = any> {
   type: string;
   payload?: T;
+}
+
+export interface SagaCreator {
+  [key: string]: {
+    saga: Saga;
+  };
 }

@@ -1,15 +1,15 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { Formik, Form, FastField } from 'formik';
 import ErrorFocus from 'components/ErrorFocus';
 import InputField from 'components/CustomField/InputField';
-import { login } from 'redux/modules/auth';
 import { GetAuthSelector } from 'redux/selectors/auth';
 import { Redirect } from 'react-router-dom';
 import Button from 'components/Button';
+import useSagaCreators from 'hooks/useSagaCreators';
+import { authActions } from 'redux/creators/modules/auth';
 
 const LoginPage = (props: any) => {
-  const dispatch = useDispatch();
+  const { dispatch } = useSagaCreators();
   const auth = GetAuthSelector();
   const { isLogin } = auth;
 
@@ -27,7 +27,10 @@ const LoginPage = (props: any) => {
       }}
       onSubmit={(values) => {
         const { username, password } = values;
-        dispatch(login(username, password));
+        dispatch(authActions.login, {
+          username,
+          password,
+        });
       }}
     >
       {(propsFormik) => (

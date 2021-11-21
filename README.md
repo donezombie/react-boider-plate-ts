@@ -1,4 +1,4 @@
-<h1 align="center">React + Redux + Redux Saga + Scss + TailwindCSS + Formik + Typescript + Prettier + Eslint</h1>
+<h1 align="center">React + Redux + Redux Saga + Scss + Formik + Typescript + Prettier + Eslint + i18n + DZB Creators</h1>
 
 <p align="center">
   <a href="https://reactjs.org/" target="_blank"><img src="https://img.shields.io/badge/React-v16.13.1-%238DD6F9.svg?logo=React"></a>
@@ -30,9 +30,11 @@
 - Pre-commit: husky
 - Auto format when save prettier
 
-(New update: 15/12/2020)
+(New update: 21/11/2021)
 
-- TailwindCSS
+- Saga Creators (To easier to use redux stack (actions / reducers / sagas))
+- Add multiple language (i18n)
+- Add Reset Scss
 
 ## How to use
 
@@ -46,7 +48,3 @@ npm run build ( production )
 
 You can access your .env variables by deconstructing 'process.env' object, both on client and server.
 Just make sure that you reboot the server when updating .env file
-
-### Development
-
-- Restructure Redux folder.

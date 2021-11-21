@@ -1,46 +1,60 @@
-import axios from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 class Services {
-  axios: any;
-  interceptors: null;
+  axios: AxiosInstance;
 
   constructor() {
     this.axios = axios;
-    this.interceptors = null;
     this.axios.defaults.withCredentials = true;
-  }
 
-  attachTokenToHeader(token: string) {
-    this.interceptors = this.axios.interceptors.request.use(
-      function (config: any) {
-        // Do something before request is sent
-        config.headers.sessionId = token;
+    //! Interceptor request
+    this.axios.interceptors.request.use(
+      function (config) {
         return config;
       },
-      function (error: any) {
+      function (error) {
+        return Promise.reject(error);
+      },
+    );
+
+    //! Interceptor response
+    this.axios.interceptors.response.use(
+      function (config) {
+        return config;
+      },
+      function (error) {
         return Promise.reject(error);
       },
     );
   }
 
-  removeInterceptors() {
-    this.axios.interceptors.request.eject(this.interceptors);
+  attachTokenToHeader(token: string) {
+    this.axios.interceptors.request.use(
+      function (config) {
+        // Do something before request is sent
+        config.headers.sessionId = token;
+        return config;
+      },
+      function (error) {
+        return Promise.reject(error);
+      },
+    );
   }
 
-  get(...arg: any) {
-    return this.axios.get(...arg);
+  get(url: string, config?: AxiosRequestConfig) {
+    return this.axios.get(url, config);
   }
 
-  post(...arg: any) {
-    return this.axios.post(...arg);
+  post(url: string, data: any, config?: AxiosRequestConfig) {
+    return this.axios.post(url, data, config);
   }
 
-  delete(...arg: any) {
-    return this.axios.delete(...arg);
+  delete(url: string, config?: AxiosRequestConfig) {
+    return this.axios.delete(url, config);
   }
 
-  put(...arg: any) {
-    return this.axios.put(...arg);
+  put(url: string, data: any, config?: AxiosRequestConfig) {
+    return this.axios.put(url, data, config);
   }
 }
 

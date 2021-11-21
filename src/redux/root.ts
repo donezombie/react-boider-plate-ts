@@ -1,10 +1,9 @@
-import { combineReducers } from 'redux';
 import { all, spawn, call } from 'redux-saga/effects';
-import { authSaga, authReducer } from './modules/auth';
-import { todosReducer, todosSaga } from './modules/todos';
+import watchCreatorSaga from './creators';
+import { combineReducers } from './creators/modules';
 
 export function* rootSagas() {
-  const sagas = [authSaga, todosSaga];
+  const sagas = [watchCreatorSaga];
 
   yield all(
     sagas.map((saga) =>
@@ -22,7 +21,4 @@ export function* rootSagas() {
   );
 }
 
-export const rootReducers = combineReducers({
-  authReducer,
-  todosReducer,
-});
+export const rootReducers = combineReducers;

@@ -1,8 +1,18 @@
 //* Use JS to add .dark-theme to html tag
 body {
-  color: $main-color;
+  color: var(--main-color);
 
   @include darkTheme() {
     --main-color: #ccc;
+  }
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  > main {
+    flex: 1;
   }
 }
