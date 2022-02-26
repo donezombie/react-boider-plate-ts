@@ -16,6 +16,7 @@
     }
   },
   "rules": {
+    "import/no-anonymous-default-export": 0,
     "require-yield": "warn",
     "react/jsx-key": "error",
     "jsx-a11y/click-events-have-key-events": "off",

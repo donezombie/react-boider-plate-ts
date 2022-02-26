@@ -1,11 +1,11 @@
 import React from 'react';
 
-interface Button {
+interface ButtonI {
   className?: string;
   type?: 'button' | 'submit' | 'reset' | undefined;
 }
 
-const Button: React.FC<Button> = ({ type = 'button', children, className }) => {
+const Button: React.FC<ButtonI> = ({ type = 'button', children, className }) => {
   return (
     <button
       type={type}
