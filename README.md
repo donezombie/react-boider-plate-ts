@@ -1,4 +1,4 @@
-<h1 align="center">React + Redux + Redux Saga + Scss + Formik + Yup + Typescript + Prettier + Eslint + i18n + DZB Creators</h1>
+<h1 align="center">React + Redux + Redux Saga + Scss + Formik + Yup + Typescript + Prettier + Eslint + i18n + Saga Creators + Storybook</h1>
 
 <p align="center">
   <a href="https://reactjs.org/" target="_blank"><img src="https://img.shields.io/badge/React-v16.13.1-%238DD6F9.svg?logo=React"></a>
@@ -35,6 +35,7 @@
 - Saga Creators (To easier to use redux stack (actions / reducers / sagas))
 - Add multiple language (i18n)
 - Add Reset Scss
+- Add Storybook
 
 ## How to use
 
