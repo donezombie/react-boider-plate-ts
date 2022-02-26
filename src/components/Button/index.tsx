@@ -3,14 +3,14 @@ import React from 'react';
 interface ButtonI {
   className?: string;
   type?: 'button' | 'submit' | 'reset' | undefined;
+  onChange?: React.FormEventHandler<HTMLButtonElement>;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onKeyDown?: React.KeyboardEventHandler<HTMLButtonElement>;
 }
 
-const Button: React.FC<ButtonI> = ({ type = 'button', children, className }) => {
+const Button: React.FC<ButtonI> = ({ type = 'button', children, className, onChange, onClick, onKeyDown }) => {
   return (
-    <button
-      type={type}
-      className={`${className} class="inline-block px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-blue-700 rounded shadow ripple hover:shadow-lg hover:bg-blue-800 focus:outline-none"`}
-    >
+    <button type={type} className={className} onClick={onClick} onKeyDown={onKeyDown} onChange={onChange}>
       {children}
     </button>
   );

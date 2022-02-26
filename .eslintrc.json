@@ -5,7 +5,8 @@
     "plugin:jsx-a11y/recommended",
     "plugin:prettier/recommended",
     "plugin:react/recommended",
-    "prettier/react"
+    "prettier/react",
+    "plugin:storybook/recommended"
   ],
   "plugins": ["jsx-a11y", "prettier"],
   "settings": {
@@ -42,7 +43,7 @@
   },
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx"],
+      "files": ["*.ts", "*.tsx", "*.stories.@(ts|tsx|js|jsx|mjs|cjs)"],
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
         "project": "./tsconfig.json"
@@ -50,6 +51,8 @@
       "plugins": ["@typescript-eslint"],
       "extends": ["prettier/@typescript-eslint"],
       "rules": {
+        "storybook/hierarchy-separator": "error",
+        "storybook/default-exports": "off",
         "react/prop-types": "off"
       }
     }
