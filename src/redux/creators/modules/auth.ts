@@ -13,8 +13,9 @@ export const authActions = {
 //! Sagas
 export const authSaga = {
   [authActions.login]: {
-    saga: function* ({ payload = {} }) {
+    saga: function* ({ payload }) {
       const { username, password } = payload;
+
       if (username === 'don' && password === 'don') {
         yield put({ type: authActions.loginSuccess });
       } else {

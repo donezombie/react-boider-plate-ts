@@ -1,9 +1,10 @@
+import { ResponseGenerator } from './index';
 import { Saga } from '@redux-saga/types';
 
-export interface ReduxCallbacks {
-  onSuccess?: (data?: any) => void;
-  onFailed?: (data?: any) => void;
-  onCancelled?: (data?: any) => void;
+export interface ReduxCallbacks<T = any> {
+  onSuccess?: (response: ResponseGenerator<T>) => void;
+  onFailed?: (error?: any, data?: T) => void;
+  onCancelled?: (data?: T) => void;
 }
 
 export interface Action<T = any> {
@@ -11,8 +12,12 @@ export interface Action<T = any> {
   payload?: T;
 }
 
+export interface Payload {
+  [key: string | number]: any;
+  payload: { [key: string | number]: any; callbacks: ReduxCallbacks };
+}
 export interface SagaCreator {
   [key: string]: {
-    saga: Saga;
+    saga: Saga<Payload[]>;
   };
 }
