@@ -2,7 +2,7 @@ import { ResponseGenerator } from './index';
 import { Saga } from '@redux-saga/types';
 
 export interface ReduxCallbacks<T = any> {
-  onSuccess?: (response: ResponseGenerator<T>) => void;
+  onSuccess?: (response?: ResponseGenerator<T>) => void;
   onFailed?: (error?: any, data?: T) => void;
   onCancelled?: (data?: T) => void;
 }
@@ -18,6 +18,7 @@ export interface Payload {
 }
 export interface SagaCreator {
   [key: string]: {
+    isTakeEvery?: boolean;
     saga: Saga<Payload[]>;
   };
 }

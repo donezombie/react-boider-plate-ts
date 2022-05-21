@@ -30,6 +30,10 @@ const LoginPage = (props: any) => {
         dispatch(authActions.login, {
           username,
           password,
+          callbacks: {
+            onSuccess: () => {},
+            onFailed: () => {},
+          },
         });
       }}
     >

@@ -5,19 +5,28 @@ const HomePage = lazy(() => import('views/Home'));
 const Dashboard = lazy(() => import('views/Dashboard'));
 const Page404 = lazy(() => import('views/Page404'));
 
-export default [
+const routes = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: withErrorBoundary(Dashboard),
+    component: Dashboard,
     isPrivate: true,
   },
   {
     path: '/',
     exact: true,
     name: 'Home',
-    component: withErrorBoundary(HomePage),
+    component: HomePage,
     isPrivate: true,
   },
-  { name: '404', component: withErrorBoundary(Page404) },
+  { name: '404', component: Page404 },
 ];
+
+const wrapRouteErrorBoundary = routes.map((route) => {
+  return {
+    ...route,
+    component: withErrorBoundary(route.component),
+  };
+});
+
+export default wrapRouteErrorBoundary;

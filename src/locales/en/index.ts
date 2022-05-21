@@ -1,9 +1,10 @@
 import flatten from 'flat';
-import message from './message.json';
+import shared from './shared.json';
 
 const locale = {
-  message: flatten(message, {
+  shared: flatten(shared, {
     delimiter: '_',
   }),
 };
+
 export default locale;

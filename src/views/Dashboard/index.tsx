@@ -14,7 +14,7 @@ const Dashboard: React.FC = (props) => {
   return (
     <div>
       <span>Example multiple lang (i18n)</span>
-      <h4>{t('message:hello')}</h4>
+      <h4>{t('shared:hello')}</h4>
       <div>
         <button onClick={onChangeLanguage('vi')}>Vi lang</button>
         <button onClick={onChangeLanguage('en')}>Eng lang</button>

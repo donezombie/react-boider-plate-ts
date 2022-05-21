@@ -1,2 +1,2 @@
-Authors: Donezombe - 2021
-To use redux (actions + sagas + reducers) easier
+Authors: Donezombie - 2021
+To make redux (actions + sagas + reducers) easier to use

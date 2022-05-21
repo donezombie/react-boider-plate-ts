@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import { isArray } from 'lodash';
 
 class TodoModel {
@@ -7,17 +6,16 @@ class TodoModel {
   title: string;
   completed: boolean;
 
-  constructor() {
-    this.userId = 0 || undefined;
-    this.id = 0 || undefined;
-    this.title = '';
-    this.completed = false;
+  constructor(data: TodoModel) {
+    this.userId = data?.userId;
+    this.id = data?.id;
+    this.title = data?.title;
+    this.completed = data?.completed;
   }
 
-  static parseTodoListFromResponse(response: AxiosResponse) {
-    const { data } = response;
+  static parseTodoListFromResponse(data: any) {
     if (isArray(data)) {
-      return data.map((el: TodoModel) => el);
+      return data.map((el) => new TodoModel(el));
     }
 
     return [];

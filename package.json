@@ -45,7 +45,8 @@
     "lint": "eslint . --ext ts --ext tsx --ext js",
     "type-check": "tsc --pretty --noEmit",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "make:module": "zsh scripts/gen-module.sh"
   },
   "eslintConfig": {
     "extends": [
@@ -99,7 +100,7 @@
     "postcss": "^8.2.10",
     "postcss-cli": "^8.3.1",
     "prettier": "^2.2.1",
-    "webpack": "^5.69.1"
+    "webpack": "^5.72.1"
   },
   "husky": {
     "hooks": {
