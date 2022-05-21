@@ -96,24 +96,35 @@ export default use$name"Hooks";"  | tee -a ${SOURCE_HOOKS}
 SOURCE_SERVICES="$SRC_SOURCE/constants/api.ts"
 echo "export const "$nameUpper"_URL = 'v1/api/$nameLower';" | tee -a ${SOURCE_SERVICES}
 
+#Create file models
+SOURCE_MODELS="$SRC_SOURCE/models/${nameLower}.model.ts";
+touch ${SOURCE_MODELS}
+
+echo "class ${name}Model {
+  constructor(data: ${name}Model) {}
+}
+
+export default ${name}Model;" | tee -a ${SOURCE_MODELS}
+
 # Create file services
 SOURCE_SERVICES="$SRC_SOURCE/services/${nameLower}Services.ts"
 touch ${SOURCE_SERVICES}
 
 echo "import httpService from './httpServices';
+import ${name}Model from 'models/$nameLower.model';
 import { ${nameUpper}_URL } from 'constants/api';
 import { ResponseGenerator } from 'interfaces';
 
 class ${name}Services {
-  getList(): Promise<ResponseGenerator<any>> {
+  getList(): Promise<ResponseGenerator<${name}Model>> {
     return httpService.get(${nameUpper}_URL);
   }
 
-  getDetail(): Promise<ResponseGenerator<any>> {
+  getDetail(): Promise<ResponseGenerator<${name}Model>> {
     return httpService.get(${nameUpper}_URL);
   }
 
-  delete(): Promise<ResponseGenerator<any>> {
+  delete(): Promise<ResponseGenerator<${name}Model>> {
     return httpService.delete(${nameUpper}_URL);
   }
 }
