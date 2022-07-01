@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 export const GetListTodoSelector = () => {
   const todos = useSelector((state: any) => state.todosReducer.todos);

@@ -1,13 +1,13 @@
-import { SagaCreator } from 'interfaces/redux';
-import ReducerInterface from 'interfaces/reducerInterface';
-import { put } from '@redux-saga/core/effects';
-import produce from 'immer';
+import { SagaCreator } from "interfaces/redux";
+import ReducerInterface from "interfaces/reducerInterface";
+import { put } from "@redux-saga/core/effects";
+import produce from "immer";
 
 //! Actions
 export const authActions = {
-  login: 'login',
-  loginSuccess: 'loginSuccess',
-  loginFailed: 'loginFailed',
+  login: "login",
+  loginSuccess: "loginSuccess",
+  loginFailed: "loginFailed",
 };
 
 //! Sagas
@@ -16,7 +16,7 @@ export const authSaga = {
     saga: function* ({ payload }) {
       const { username, password } = payload;
 
-      if (username === 'don' && password === 'don') {
+      if (username === "don" && password === "don") {
         yield put({ type: authActions.loginSuccess });
       } else {
         yield put({ type: authActions.loginFailed });

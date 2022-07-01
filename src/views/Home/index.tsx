@@ -1,6 +1,6 @@
-import React from 'react';
-import useGetTodoList from 'hooks/todos/useGetTodoList';
-import { useTranslation } from 'react-i18next';
+import React from "react";
+import useGetTodoList from "hooks/todos/useGetTodoList";
+import { useTranslation } from "react-i18next";
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
@@ -13,7 +13,7 @@ const HomePage: React.FC = () => {
 
   return (
     <div>
-      <span>{t('message:hello')}</span>
+      <span>{t("message:hello")}</span>
       List Todo Example
       <hr />
       {todoList.map((todo) => (

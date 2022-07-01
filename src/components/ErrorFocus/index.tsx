@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useFormikContext } from 'formik';
+import { useEffect } from "react";
+import { useFormikContext } from "formik";
 
 const FocusError = () => {
   const { errors, isSubmitting, isValidating, isValid } = useFormikContext<any>();
@@ -11,15 +11,15 @@ const FocusError = () => {
         const keys = Object.keys(errors);
         if (keys.length > 0) {
           // For Array Field
-          if (typeof errors[keys[0]] === 'object') {
+          if (typeof errors[keys[0]] === "object") {
             setTimeout(() => {
               const selectorFieldArray = `[name*="${keys[0]}"]`;
               const errorElementFieldArray: any = document.querySelector(selectorFieldArray);
               if (errorElementFieldArray) {
                 errorElementFieldArray.scrollIntoView({
-                  behavior: 'smooth',
-                  block: 'center',
-                  inline: 'start',
+                  behavior: "smooth",
+                  block: "center",
+                  inline: "start",
                 });
                 errorElementFieldArray.focus({
                   preventScroll: true,
@@ -34,14 +34,14 @@ const FocusError = () => {
           const errorElement: any = document.querySelector(selector);
 
           if (errorElement) {
-            const name = errorElement.getAttribute('name');
+            const name = errorElement.getAttribute("name");
             idError = document.querySelector(`[id='${name}']`);
 
             // For element hidden / select
             const errorElementRect = errorElement.getBoundingClientRect();
 
             // Always get the final modal in case nest modal.
-            const modalElement = document.querySelectorAll('.modal')[document.querySelectorAll('.modal').length - 1];
+            const modalElement = document.querySelectorAll(".modal")[document.querySelectorAll(".modal").length - 1];
 
             // In case modal / dialog
             if (modalElement) {
@@ -49,7 +49,7 @@ const FocusError = () => {
               const offset = errorElementRect.top - modalElementRect.top;
               modalElement.scrollTo({
                 top: offset - 100,
-                behavior: 'smooth',
+                behavior: "smooth",
               });
               errorElement.focus({
                 preventScroll: true,
@@ -57,18 +57,18 @@ const FocusError = () => {
             } else {
               if (idError) {
                 idError.scrollIntoView({
-                  behavior: 'smooth',
-                  block: 'center',
-                  inline: 'start',
+                  behavior: "smooth",
+                  block: "center",
+                  inline: "start",
                 });
                 idError.focus({
                   preventScroll: true,
                 });
               } else {
                 errorElement.scrollIntoView({
-                  behavior: 'smooth',
-                  block: 'center',
-                  inline: 'start',
+                  behavior: "smooth",
+                  block: "center",
+                  inline: "start",
                 });
                 errorElement.focus({
                   preventScroll: true,

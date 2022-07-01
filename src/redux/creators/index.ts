@@ -1,5 +1,5 @@
-import { all, takeEvery, takeLatest } from 'redux-saga/effects';
-import { combineSaga } from './modules';
+import { all, takeEvery, takeLatest } from "redux-saga/effects";
+import { combineSaga } from "./modules";
 
 const generatedWatchedServices = Object.entries(combineSaga).map(([typeAction, act]) => {
   if (act.isTakeEvery) {

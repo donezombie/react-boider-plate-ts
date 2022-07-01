@@ -1,12 +1,12 @@
-import React from 'react';
-import { Formik, Form, FastField } from 'formik';
-import ErrorFocus from 'components/ErrorFocus';
-import InputField from 'components/CustomField/InputField';
-import { GetAuthSelector } from 'redux/selectors/auth';
-import { Redirect } from 'react-router-dom';
-import Button from 'components/Button';
-import useSagaCreators from 'hooks/useSagaCreators';
-import { authActions } from 'redux/creators/modules/auth';
+import React from "react";
+import { Formik, Form, FastField } from "formik";
+import ErrorFocus from "components/ErrorFocus";
+import InputField from "components/CustomField/InputField";
+import { GetAuthSelector } from "redux/selectors/auth";
+import { Redirect } from "react-router-dom";
+import Button from "components/Button";
+import useSagaCreators from "hooks/useSagaCreators";
+import { authActions } from "redux/creators/modules/auth";
 
 const LoginPage = (props: any) => {
   const { dispatch } = useSagaCreators();
@@ -22,8 +22,8 @@ const LoginPage = (props: any) => {
       validateOnBlur={false}
       validateOnChange={false}
       initialValues={{
-        username: '',
-        password: '',
+        username: "",
+        password: "",
       }}
       onSubmit={(values) => {
         const { username, password } = values;

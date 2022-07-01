@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from "react";
 
 const InputField = (props: any) => {
   const {
@@ -41,9 +41,9 @@ const InputField = (props: any) => {
 };
 
 InputField.defaultProps = {
-  type: 'text',
-  tabIndex: '0',
-  invalid: 'false',
+  type: "text",
+  tabIndex: "0",
+  invalid: "false",
 };
 
 export default InputField;

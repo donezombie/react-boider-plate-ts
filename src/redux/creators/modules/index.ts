@@ -1,7 +1,7 @@
-import { combineReducers as combineReducersRedux } from 'redux';
+import { combineReducers as combineReducersRedux } from "redux";
 
-import { authSaga, authReducer } from './auth';
-import { todoSagas, todoReducer } from './todos';
+import { authSaga, authReducer } from "./auth";
+import { todoSagas, todoReducer } from "./todos";
 
 const combineSaga = {
   ...authSaga,

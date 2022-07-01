@@ -1,8 +1,8 @@
-import { ResponseGenerator } from 'interfaces';
-import { useEffect, useState, useCallback } from 'react';
-import TodoModel from 'models/todo.model';
-import useSagaCreators from 'hooks/useSagaCreators';
-import { todoActions } from 'redux/creators/modules/todos';
+import { ResponseGenerator } from "interfaces";
+import { useEffect, useState, useCallback } from "react";
+import TodoModel from "models/todo.model";
+import useSagaCreators from "hooks/useSagaCreators";
+import { todoActions } from "redux/creators/modules/todos";
 
 const useGetTodoList = () => {
   const { dispatch } = useSagaCreators();

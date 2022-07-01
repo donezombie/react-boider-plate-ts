@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { ReactNode } from "react";
 
-export default class ErrorBoundary extends React.Component {
-  constructor(props: any) {
+interface MainProps {
+  children: ReactNode;
+}
+
+interface MainState {
+  hasError: boolean;
+  error?: string | null;
+  errorInfo?: string | null;
+}
+
+export default class ErrorBoundary extends React.Component<MainProps, MainState> {
+  constructor(props: MainProps) {
     super(props);
     this.state = {
       hasError: false,
@@ -22,7 +32,7 @@ export default class ErrorBoundary extends React.Component {
     const { hasError, error, errorInfo }: any = this.state;
     if (hasError) {
       const errorDetails =
-        process.env.NODE_ENV === 'development' ? (
+        process.env.NODE_ENV === "development" ? (
           <details className="preserve-space">
             {error && error.toString()}
             <br />

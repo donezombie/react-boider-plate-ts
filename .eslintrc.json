@@ -1,65 +1,6 @@
 {
-  "root": true,
-  "extends": [
-    "react-app",
-    "plugin:jsx-a11y/recommended",
-    "plugin:prettier/recommended",
-    "plugin:react/recommended",
-    "prettier/react",
-    "plugin:storybook/recommended"
-  ],
-  "plugins": ["jsx-a11y", "prettier"],
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "paths": ["src"]
-      }
-    }
-  },
+  "plugins": ["react-hooks"],
   "rules": {
-    "import/no-anonymous-default-export": 0,
-    "require-yield": "warn",
-    "react/jsx-key": "error",
-    "jsx-a11y/click-events-have-key-events": "off",
-    "jsx-a11y/no-static-element-interactions": "off",
-    "@typescript-eslint/no-angle-bracket-type-assertion": "off",
-    "react/no-direct-mutation-state": "error",
-    "prefer-const": "warn",
-    "no-var": "warn",
-    "react/display-name": "off",
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": [
-      "warn",
-      {
-        "additionalHooks": "useRecoilCallback"
-      }
-    ],
-    "jsx-a11y/label-has-associated-control": 0,
-    "jsx-a11y/label-has-for": [ "error", {
-      "required": {
-        "some": [ "nesting", "id"  ]
-      }
-    }]
-  },
-  "overrides": [
-    {
-      "files": ["*.ts", "*.tsx", "*.stories.@(ts|tsx|js|jsx|mjs|cjs)"],
-      "parser": "@typescript-eslint/parser",
-      "parserOptions": {
-        "project": "./tsconfig.json"
-      },
-      "plugins": ["@typescript-eslint"],
-      "extends": ["prettier/@typescript-eslint"],
-      "rules": {
-        "storybook/hierarchy-separator": "error",
-        "storybook/default-exports": "off",
-        "react/prop-types": "off"
-      }
-    }
-  ],
-  "globals": {
-    "page": true,
-    "browser": true,
-    "context": true
+    "react-hooks/exhaustive-deps": "off"
   }
 }

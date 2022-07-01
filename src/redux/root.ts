@@ -1,6 +1,6 @@
-import { all, spawn, call } from 'redux-saga/effects';
-import watchCreatorSaga from './creators';
-import { combineReducers } from './creators/modules';
+import { all, spawn, call } from "redux-saga/effects";
+import watchCreatorSaga from "./creators";
+import { combineReducers } from "./creators/modules";
 
 export function* rootSagas() {
   const sagas = [watchCreatorSaga];

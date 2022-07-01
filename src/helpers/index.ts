@@ -1,4 +1,4 @@
-import { List } from 'interfaces';
+import { List } from "interfaces";
 
 export const convertToFormSelect = (
   list: List<any> | any = [],
@@ -13,24 +13,24 @@ export const convertToFormSelect = (
       }, []),
     ];
   }
-  if (typeof list === 'object' && list) {
+  if (typeof list === "object" && list) {
     const listReturn = [
       ...list.reduce((arr: any, el: any) => {
         return [
           ...arr,
           {
             ...el,
-            label: el[fieldForLabel] ?? 'None',
-            value: el[fieldForValue] ?? '',
+            label: el[fieldForLabel] ?? "None",
+            value: el[fieldForValue] ?? "",
           },
         ];
       }, []),
     ];
 
     if (noneOption) {
-      return [{ label: 'None', value: '' }, ...listReturn];
+      return [{ label: "None", value: "" }, ...listReturn];
     }
     return listReturn;
   }
-  return [{ label: 'None', value: '' }, ...list];
+  return [{ label: "None", value: "" }, ...list];
 };

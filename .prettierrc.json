@@ -1,8 +1,6 @@
 {
   "useTabs": false,
-  "singleQuote": true,
   "arrowParens": "always",
-  "trailingComma": "all",
   "endOfLine": "lf",
   "overrides": [
     {

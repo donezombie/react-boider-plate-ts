@@ -1,15 +1,15 @@
-import { SagaCreator } from 'interfaces/redux';
-import ReducerInterface from 'interfaces/reducerInterface';
-import { put } from '@redux-saga/core/effects';
-import { call } from 'typed-redux-saga';
-import produce from 'immer';
-import todoServices from 'services/todosServices';
+import { SagaCreator } from "interfaces/redux";
+import ReducerInterface from "interfaces/reducerInterface";
+import { put } from "@redux-saga/core/effects";
+import { call } from "typed-redux-saga";
+import produce from "immer";
+import todoServices from "services/todosServices";
 
 //! Actions
 export const todoActions = {
-  getTodos: 'getTodos',
-  getTodosSuccess: 'getTodosSuccess',
-  getTodoFailed: 'getTodoFailed',
+  getTodos: "getTodos",
+  getTodosSuccess: "getTodosSuccess",
+  getTodoFailed: "getTodoFailed",
 };
 
 //! Sagas
@@ -42,7 +42,7 @@ export const todoReducer = (
       error: null,
     },
   },
-  action: ReducerInterface,
+  action: ReducerInterface
 ) => {
   return produce(state, (draftState) => {
     switch (action.type) {

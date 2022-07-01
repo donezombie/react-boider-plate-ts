@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
 class Services {
   axios: AxiosInstance;
@@ -14,7 +14,7 @@ class Services {
       },
       function (error) {
         return Promise.reject(error);
-      },
+      }
     );
 
     //! Interceptor response
@@ -24,20 +24,22 @@ class Services {
       },
       function (error) {
         return Promise.reject(error);
-      },
+      }
     );
   }
 
   attachTokenToHeader(token: string) {
     this.axios.interceptors.request.use(
       function (config) {
-        // Do something before request is sent
-        config.headers.sessionId = token;
+        if (config.headers) {
+          // Do something before request is sent
+          config.headers.sessionId = token;
+        }
         return config;
       },
       function (error) {
         return Promise.reject(error);
-      },
+      }
     );
   }
 

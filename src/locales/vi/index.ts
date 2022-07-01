@@ -1,9 +1,9 @@
-import flatten from 'flat';
-import shared from './shared.json';
+import flatten from "flat";
+import shared from "./shared.json";
 
 const locale = {
   shared: flatten(shared, {
-    delimiter: '_',
+    delimiter: "_",
   }),
 };
 

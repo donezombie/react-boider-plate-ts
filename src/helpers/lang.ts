@@ -1,6 +1,6 @@
-import { changeLanguage } from 'i18next';
+import { changeLanguage } from "i18next";
 
 export const changeLang = (lang: string) => {
   changeLanguage(lang);
-  localStorage.setItem('lang', lang);
+  localStorage.setItem("lang", lang);
 };

@@ -1,5 +1,5 @@
-import { ResponseGenerator } from './index';
-import { Saga } from '@redux-saga/types';
+import { ResponseGenerator } from "./index";
+import { Saga } from "@redux-saga/types";
 
 export interface ReduxCallbacks<T = any> {
   onSuccess?: (response?: ResponseGenerator<T>) => void;
