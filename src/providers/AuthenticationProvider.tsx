@@ -14,6 +14,7 @@ type Action =
   | { type: 'LOGIN_SUCCESS'; token: string }
   | { type: 'LOGGING_OUT_SUCCESS' }
   | { type: 'LOGGING_OUT_FAILED' };
+
 type State = {
   token: string;
   isLogged: boolean;
