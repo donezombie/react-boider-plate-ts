@@ -1,88 +1,29 @@
 {
-  "name": "dzb-react-template",
-  "version": "0.1.0",
+  "name": "react-boider-plate-vite",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
   "dependencies": {
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^13.0.0",
-    "@testing-library/user-event": "^13.2.1",
-    "axios": "^0.27.2",
-    "flat": "^5.0.2",
+    "axios": "^1.3.2",
     "formik": "^2.2.9",
-    "i18next": "^21.8.11",
-    "immer": "^9.0.15",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-i18next": "^11.17.4",
-    "react-redux": "^8.0.2",
-    "react-router-dom": "5.2.0",
-    "react-scripts": "5.0.1",
-    "redux-devtools-extension": "^2.13.9",
-    "redux-logger": "^3.0.6",
-    "redux-saga": "^1.1.3",
-    "sass": "^1.53.0",
-    "typed-redux-saga": "^1.5.0",
-    "typescript": "^4.4.2",
-    "web-vitals": "^2.1.0",
+    "react-router-dom": "6.4.0",
     "yup": "^0.32.11"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "format": "prettier --write ./src/** --ignore-unknown",
-    "lint": "eslint . --ext ts --ext tsx --ext js",
-    "type-check": "tsc --pretty --noEmit",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
-    "@types/flat": "^5.0.2",
-    "@types/jest": "^27.0.1",
-    "@types/node": "^16.7.13",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
     "@types/react-router-dom": "^5.3.3",
-    "@types/redux-logger": "^3.0.9",
-    "autoprefixer": "^10.1.0",
-    "eslint-config-prettier": "^6.15.0",
-    "eslint-plugin-graphql": "^4.0.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "eslint-plugin-storybook": "^0.5.7",
-    "husky": "^4.3.0",
-    "lint-staged": "^10.5.2",
-    "prettier": "^2.2.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run type-check"
-    }
-  },
-  "lint-staged": {
-    "*.@(ts|tsx)": [
-      "npm run lint"
-    ]
+    "@vitejs/plugin-react": "^3.1.0",
+    "typescript": "^4.9.3",
+    "vite": "^4.1.0",
+    "vite-tsconfig-paths": "^4.0.5"
   }
 }

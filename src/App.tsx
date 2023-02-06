@@ -1,21 +1,64 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import "./styles/scss/styles.scss";
+import {
+  BrowserRouter as Router,
+  Outlet,
+  Route,
+  Routes,
+} from "react-router-dom";
 
-import { RouteBase } from "constants/routeUrl";
-import DefaultLayout from "layout/DefaultLayout";
-import LoginPage from "views/Login";
+import { Suspense } from "react";
+import Page404 from "pages/Page404";
+import routes from "routes/DefaultRoutes";
+import PrivateRoute from "components/PrivateRoute";
 
-const App: React.FC = () => {
+interface AppProps {}
+
+const App = (props: AppProps) => {
+  //! State
+
+  //! Function
+
   //! Render
   return (
-    <Router>
-      <Switch>
-        <Route path={RouteBase.Login} exact component={LoginPage} />
-        <Route path={RouteBase.Home} component={DefaultLayout} />
-      </Switch>
-    </Router>
+    <Suspense fallback="Loading...">
+      <Router>
+        <Routes>
+          {routes.map((route) => {
+            return (
+              <Route
+                path={route.path}
+                element={
+                  <route.layout>
+                    <Outlet />
+                  </route.layout>
+                }
+              >
+                {route.routeChild.map((child, idx) => {
+                  return (
+                    <Route
+                      key={idx}
+                      path={child.path}
+                      element={
+                        child.isPrivateRoute ? (
+                          <PrivateRoute>
+                            <child.component />
+                          </PrivateRoute>
+                        ) : (
+                          <child.component />
+                        )
+                      }
+                    />
+                  );
+                })}
+              </Route>
+            );
+          })}
+
+          <Route path="*" element={<Page404 />} />
+        </Routes>
+      </Router>
+    </Suspense>
   );
 };
 
-export default App;
+export default React.memo(App);
