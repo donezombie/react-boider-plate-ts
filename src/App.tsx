@@ -1,15 +1,10 @@
-import React from "react";
-import {
-  BrowserRouter as Router,
-  Outlet,
-  Route,
-  Routes,
-} from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Outlet, Route, Routes } from 'react-router-dom';
 
-import { Suspense } from "react";
-import Page404 from "pages/Page404";
-import routes from "routes/DefaultRoutes";
-import PrivateRoute from "components/PrivateRoute";
+import { Suspense } from 'react';
+import Page404 from 'pages/Page404';
+import routes from 'routes/routes';
+import PrivateRoute from 'components/PrivateRoute';
 
 interface AppProps {}
 
@@ -20,12 +15,13 @@ const App = (props: AppProps) => {
 
   //! Render
   return (
-    <Suspense fallback="Loading...">
+    <Suspense fallback='Loading...'>
       <Router>
         <Routes>
           {routes.map((route) => {
             return (
               <Route
+                key={`${route.path}-layout`}
                 path={route.path}
                 element={
                   <route.layout>
@@ -54,7 +50,7 @@ const App = (props: AppProps) => {
             );
           })}
 
-          <Route path="*" element={<Page404 />} />
+          <Route path='*' element={<Page404 />} />
         </Routes>
       </Router>
     </Suspense>

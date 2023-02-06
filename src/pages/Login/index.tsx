@@ -1,6 +1,9 @@
-import React, { useCallback } from "react";
-import { Form, Formik, FormikHelpers } from "formik";
-import * as Yup from "yup";
+import React, { useCallback } from 'react';
+import { Form, Formik, FormikHelpers } from 'formik';
+import * as Yup from 'yup';
+import { useAuthentication } from 'providers/AuthenticationProvider';
+import BaseUrl from 'constants/baseUrl';
+import { Navigate } from 'react-router-dom';
 
 interface LoginProps {}
 
@@ -13,35 +16,34 @@ const validationSchema = Yup.object().shape({});
 
 const Login = (props: LoginProps) => {
   //! State
-  const initialValues: LoginFormValues = { username: "", password: "" };
+  const { isLogged, login } = useAuthentication();
+  const initialValues: LoginFormValues = { username: '', password: '' };
 
   //! Function
   const onSubmit = useCallback(
-    (
-      values: LoginFormValues,
-      formikHelpers: FormikHelpers<LoginFormValues>
-    ) => {
-      alert(JSON.stringify(values));
+    async (values: LoginFormValues, formikHelpers: FormikHelpers<LoginFormValues>) => {
+      const { username, password } = values;
+      login({ username, password });
     },
-    []
+    [login]
   );
+
+  if (isLogged) {
+    return <Navigate to={BaseUrl.Homepage} replace />;
+  }
 
   //! Render
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={onSubmit}
-    >
+    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
       {({ handleBlur, handleChange }) => {
         return (
           <Form>
             <div>
               <label>Username</label>
               <input
-                name="username"
-                type="text"
-                placeholder="Username"
+                name='username'
+                type='text'
+                placeholder='Username'
                 onBlur={handleBlur}
                 onChange={handleChange}
               />
@@ -50,16 +52,16 @@ const Login = (props: LoginProps) => {
             <div>
               <label>Password</label>
               <input
-                name="password"
-                type="password"
-                placeholder="Password"
+                name='password'
+                type='password'
+                placeholder='Password'
                 onBlur={handleBlur}
                 onChange={handleChange}
               />
             </div>
 
             <div>
-              <button type="submit">Login</button>
+              <button type='submit'>Login</button>
             </div>
           </Form>
         );

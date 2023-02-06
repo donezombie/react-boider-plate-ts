@@ -4,14 +4,57 @@ import React, {
   useContext,
   useEffect,
   useMemo,
-  useState,
-} from "react";
+  useReducer,
+} from 'react';
 
-import HttpService from "services/httpService";
-import { showError } from "helpers/toast";
+import HttpService from 'services/httpService';
+import { showError } from 'helpers/toast';
 
-const AuthenticationContext: any = createContext({
-  token: "",
+type Action =
+  | { type: 'LOGIN_SUCCESS'; token: string }
+  | { type: 'LOGGING_OUT_SUCCESS' }
+  | { type: 'LOGGING_OUT_FAILED' };
+type State = {
+  token: string;
+  isLogged: boolean;
+  isLoggingOut: boolean;
+  user?: {};
+};
+
+const reducer = (state: State, action: Action) => {
+  switch (action.type) {
+    case 'LOGIN_SUCCESS':
+      return {
+        ...state,
+        token: action.token,
+        isLogged: true,
+        isLoggingOut: false,
+      };
+
+    case 'LOGGING_OUT_SUCCESS':
+      return {
+        ...state,
+        isLoggingOut: true,
+      };
+
+    case 'LOGGING_OUT_FAILED':
+      return {
+        ...state,
+        isLoggingOut: false,
+      };
+
+    default:
+      return state;
+  }
+};
+
+interface AuthenticationContextI extends State {
+  login: ({ username, password }: { username: string; password: string }) => void;
+  logout: () => void;
+}
+
+const AuthenticationContext = createContext<AuthenticationContextI>({
+  token: '',
   isLogged: false,
   isLoggingOut: false,
   login: () => {},
@@ -23,15 +66,18 @@ export const useAuthentication = () => useContext(AuthenticationContext);
 const AuthProvider = ({ children }: { children: any }) => {
   //! State
   const tokenLocalStorage = HttpService.getTokenStorage();
-  const [isLogged, setIsLogged] = useState(tokenLocalStorage ? true : false);
-  const [token, setToken] = useState(tokenLocalStorage);
-  const [isLoggingOut, setLoggingOut] = useState(false);
+  const [authReducer, dispatch] = useReducer(reducer, {
+    token: tokenLocalStorage,
+    isLogged: !!tokenLocalStorage,
+    isLoggingOut: false,
+    user: {},
+  });
 
+  //! Function
   const onLoginSuccess = useCallback((token: string) => {
     HttpService.attachTokenToHeader(token);
     HttpService.saveTokenStorage(token);
-    setIsLogged(true);
-    setToken(token);
+    dispatch({ type: 'LOGIN_SUCCESS', token });
   }, []);
 
   useEffect(() => {
@@ -41,57 +87,50 @@ const AuthProvider = ({ children }: { children: any }) => {
     }
   }, [tokenLocalStorage, onLoginSuccess]);
 
-  //! Function
   const login = useCallback(
     ({ username, password }: { username: string; password: string }) => {
       return new Promise(async (resolve, reject) => {
         try {
-          if (username === "don" && password === "don") {
-            const token = "fake token";
+          if (username === 'don' && password === 'don') {
+            const token = 'fake token';
             onLoginSuccess(token);
           }
 
-          resolve("");
+          resolve('');
         } catch (error) {
           reject(error);
           showError(error);
         }
       });
     },
-    [onLoginSuccess]
+    [dispatch, onLoginSuccess]
   );
 
   const logout = useCallback(() => {
     return new Promise(async (resolve, reject) => {
       try {
-        setLoggingOut(true);
+        dispatch({ type: 'LOGGING_OUT_SUCCESS' });
         window.localStorage.clear();
         window.location.reload();
-        resolve("");
+        resolve('');
       } catch (error) {
+        dispatch({ type: 'LOGGING_OUT_FAILED' });
         showError(error);
-        setLoggingOut(false);
         reject(error);
       }
     });
-  }, []);
+  }, [dispatch]);
 
   //! Render
   const value = useMemo(() => {
     return {
-      token,
-      isLogged,
-      isLoggingOut,
+      ...authReducer,
       login,
       logout,
     };
-  }, [token, isLogged, login, logout, isLoggingOut]);
+  }, [authReducer, login, logout]);
 
-  return (
-    <AuthenticationContext.Provider value={value}>
-      {children}
-    </AuthenticationContext.Provider>
-  );
+  return <AuthenticationContext.Provider value={value}>{children}</AuthenticationContext.Provider>;
 };
 
 export default AuthProvider;

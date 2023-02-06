@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface Page404Props {}
 
@@ -9,7 +9,7 @@ const Page404 = (props: Page404Props) => {
 
   //! Render
   return (
-    <div id="error-page">
+    <div id='error-page'>
       <h1>Oops!</h1>
       <p>404 Not found!</p>
     </div>

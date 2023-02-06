@@ -1,11 +1,13 @@
-import baseUrl from "constants/baseUrl";
-import React from "react";
-import { Link } from "react-router-dom";
+import baseUrl from 'constants/baseUrl';
+import { useAuthentication } from 'providers/AuthenticationProvider';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface HomepageProps {}
 
 const Homepage = (props: HomepageProps) => {
   //! State
+  const { isLogged, logout } = useAuthentication();
 
   //! Function
 
@@ -23,6 +25,8 @@ const Homepage = (props: HomepageProps) => {
           <Link to={baseUrl.Todos}>Todos</Link>
         </li>
       </ul>
+
+      {isLogged && <button onClick={logout}>Logout</button>}
     </div>
   );
 };

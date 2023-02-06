@@ -1,6 +1,6 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
-export const TOKEN_KEY = "token";
+export const TOKEN_KEY = 'token';
 
 class Services {
   axios: AxiosInstance;
@@ -67,7 +67,7 @@ class Services {
 
   getTokenStorage() {
     const token = localStorage.getItem(TOKEN_KEY);
-    return token || "";
+    return token || '';
   }
 }
 
