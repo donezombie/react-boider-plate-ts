@@ -2,6 +2,7 @@ import baseUrl from 'constants/baseUrl';
 import { useAuthentication } from 'providers/AuthenticationProvider';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './styles/homepage.scss';
 
 interface HomepageProps {}
 
@@ -13,7 +14,7 @@ const Homepage = (props: HomepageProps) => {
 
   //! Render
   return (
-    <div>
+    <div className='Homepage'>
       <ul>
         <li>
           <Link to={baseUrl.Homepage}>Homepage</Link>

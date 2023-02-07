@@ -1,6 +1,7 @@
 import React, { Fragment, lazy } from 'react';
 import BaseUrl from 'constants/baseUrl';
 
+// Bash importHere
 const DefaultLayout = lazy(() => import('layouts/DefaultLayout'));
 const Login = lazy(() => import('pages/Login'));
 const Homepage = lazy(() => import('pages/Homepage'));
@@ -24,6 +25,7 @@ const routes: Route[] = [
     path: '/',
     layout: DefaultLayout,
     routeChild: [
+      // Bash appendHere
       {
         name: 'Homepage',
         path: BaseUrl.Homepage,
