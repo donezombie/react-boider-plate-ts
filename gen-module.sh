@@ -8,6 +8,7 @@ read -p "Enter the Route path: " route_path
 # Lowercase the string
 lowercase_foldername="$(echo "$module_name" | tr '[:upper:]' '[:lower:]')"
 capitalized_foldername="$(echo "${module_name:0:1}" | tr '[:lower:]' '[:upper:]')${module_name:1}"
+uppercase_foldername="$(echo "$module_name" | tr '[:lower:]' '[:upper:]')"
 
 # Check if dir has already exists
 SOURCEDIR="src/pages/$capitalized_foldername"
@@ -39,6 +40,12 @@ fi
 
 cd "src/pages"
 
+# Import API URL to base url
+cd "constants"
+string_api_url="ImportBaseURL\n export const $uppercase_foldername"_URL" = `\$\{ROOT_URL\}\/\\$api_url`;"
+sed -i '' "s/ImportBaseURL/$string_api_url/g" "./src/constants/apiUrl.ts"
+cd ..
+
 # Create the folder
 echo "Creating module: $capitalized_foldername"
 mkdir $capitalized_foldername
@@ -57,8 +64,9 @@ echo "import { useMutation, useQuery } from '@tanstack/react-query';
 import { PromiseResponseBase } from 'interfaces/common';
 import { showError } from 'helpers/toast';
 import httpService from 'services/httpService';
+import { $uppercase_foldername"_URL" } from 'constants/apiUrl';
 
-export const API_URL = '$api_url';
+export const API_URL = $uppercase_foldername"_URL";
 
 export const queryKeys$capitalized_foldername = {
   list: '$lowercase_foldername-list',
