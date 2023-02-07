@@ -2,7 +2,7 @@
 
 # Prompt for the name of the module
 read -p "Enter the name of the module: " module_name
-read -p "Enter the API Url: " api_url
+read -p "Enter the Endpoint API: " api_url
 read -p "Enter the Route path: " route_path
 
 # Lowercase the string
@@ -38,13 +38,15 @@ else
   echo "Path generated: [$route_path]"
 fi
 
-cd "src/pages"
-
-# Import API URL to base url
-cd "constants"
-string_api_url="ImportBaseURL\n export const $uppercase_foldername"_URL" = `\$\{ROOT_URL\}\/\\$api_url`;"
-sed -i '' "s/ImportBaseURL/$string_api_url/g" "./src/constants/apiUrl.ts"
+# Import API URL to API url
+cd "src/constants"
+string_api_url="ImportAPIURL\n export const $uppercase_foldername"_URL" = \`\$\{ROOT_URL\}\\$api_url\`;"
+sed -i '' "s/ImportAPIURL/$string_api_url/g" "apiUrl.ts"
 cd ..
+cd ..
+prettier --write './src/constants/apiUrl.ts'
+
+cd "src/pages"
 
 # Create the folder
 echo "Creating module: $capitalized_foldername"
