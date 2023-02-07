@@ -20,8 +20,12 @@ else
 if [ -z "$route_path" ]; then
   echo ""
 else
+  # Add path to base url
+  string_replace_base_url="ImportBaseURL\n $capitalized_foldername: '\\$route_path'\,"
+  sed -i '' "s/ImportBaseURL/$string_replace_base_url/g" "./src/constants/baseUrl.ts"
+
   # Import path
-  string_replace="appendHere\n { name: '$capitalized_foldername', \n component: $capitalized_foldername, \n path: '\\$route_path', isPrivateRoute: false },"
+  string_replace="appendHere\n { name: '$capitalized_foldername', \n component: $capitalized_foldername, \n path: BaseUrl.$capitalized_foldername, isPrivateRoute: false },"
   sed -i '' "s/appendHere/$string_replace/g" "./src/routes/routes.tsx"
 
   # Import pages
@@ -29,6 +33,7 @@ else
   sed -i '' "s/importHere/$string_import_replace/g" "./src/routes/routes.tsx"
 
   prettier --write './src/routes/routes.tsx'
+  prettier --write './src/constants/baseUrl.ts'
   echo "Path generated: [$route_path]"
 fi
 
