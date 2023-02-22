@@ -6,6 +6,7 @@ const DefaultLayout = lazy(() => import('layouts/DefaultLayout'));
 const Login = lazy(() => import('pages/Login'));
 const Homepage = lazy(() => import('pages/Homepage'));
 const Todos = lazy(() => import('pages/Todos'));
+const Todo = lazy(() => import('pages/Todo'));
 
 interface Route {
   name: string;
@@ -35,6 +36,12 @@ const routes: Route[] = [
         name: 'Todos',
         path: BaseUrl.Todos,
         component: Todos,
+        isPrivateRoute: true,
+      },
+      {
+        name: 'Todo',
+        path: `${BaseUrl.Todos}/:id`,
+        component: Todo,
         isPrivateRoute: true,
       },
     ],
