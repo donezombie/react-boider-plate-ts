@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Outlet, Route, Routes } from 'react-router-dom';
 
-import { Suspense } from 'react';
 import Page404 from 'pages/Page404';
 import routes from 'routes/routes';
 import PrivateRoute from 'components/PrivateRoute';
@@ -10,9 +9,20 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './theme';
 import { useToggleTheme } from 'providers/ToggleThemeProvider';
-import ErrorBoundary from 'components/ErrorBoundary';
+import { ErrorBoundary } from 'react-error-boundary';
+import CommonStyles from 'components/CommonStyles';
 
 interface AppProps {}
+
+const ErrorFallback = ({ error, resetErrorBoundary }: any) => {
+  return (
+    <div role='alert'>
+      <p>Something went wrong:</p>
+      <pre>{error.message}</pre>
+      <button onClick={resetErrorBoundary}>Try again</button>
+    </div>
+  );
+};
 
 const App = (props: AppProps) => {
   //! State
@@ -25,27 +35,27 @@ const App = (props: AppProps) => {
     <ThemeProvider theme={theme(mode)}>
       <CssBaseline />
 
-      <Suspense fallback='Loading...'>
-        <Router>
-          <Routes>
-            {routes.map((route) => {
-              return (
-                <Route
-                  key={`${route.path}-layout`}
-                  path={route.path}
-                  element={
-                    <route.layout>
-                      <Outlet />
-                    </route.layout>
-                  }
-                >
-                  {route.routeChild.map((child, idx) => {
-                    return (
-                      <Route
-                        key={idx}
-                        path={child.path}
-                        element={
-                          <ErrorBoundary>
+      <Router>
+        <Routes>
+          {routes.map((route) => {
+            return (
+              <Route
+                key={`${route.path}-layout`}
+                path={route.path}
+                element={
+                  <route.layout>
+                    <Outlet />
+                  </route.layout>
+                }
+              >
+                {route.routeChild.map((child, idx) => {
+                  return (
+                    <Route
+                      key={`${child.path}-${idx}`}
+                      path={child.path}
+                      element={
+                        <Suspense fallback={<CommonStyles.Loading />}>
+                          <ErrorBoundary FallbackComponent={ErrorFallback}>
                             {child.isPrivateRoute ? (
                               <PrivateRoute>
                                 <child.component />
@@ -54,18 +64,18 @@ const App = (props: AppProps) => {
                               <child.component />
                             )}
                           </ErrorBoundary>
-                        }
-                      />
-                    );
-                  })}
-                </Route>
-              );
-            })}
+                        </Suspense>
+                      }
+                    />
+                  );
+                })}
+              </Route>
+            );
+          })}
 
-            <Route path='*' element={<Page404 />} />
-          </Routes>
-        </Router>
-      </Suspense>
+          <Route path='*' element={<Page404 />} />
+        </Routes>
+      </Router>
     </ThemeProvider>
   );
 };

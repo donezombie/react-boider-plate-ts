@@ -1,9 +1,12 @@
 import React, { useCallback } from 'react';
-import { Form, Formik, FormikHelpers } from 'formik';
+import { FastField, Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { useAuthentication } from 'providers/AuthenticationProvider';
 import BaseUrl from 'constants/baseUrl';
 import { Navigate } from 'react-router-dom';
+import TextField from 'components/CustomFields/TextField';
+import { Box, Stack } from '@mui/material';
+import CommonStyles from 'components/CommonStyles';
 
 interface LoginProps {}
 
@@ -12,7 +15,10 @@ interface LoginFormValues {
   password: string;
 }
 
-const validationSchema = Yup.object().shape({});
+const validationSchema = Yup.object().shape({
+  username: Yup.string().required('Username is required!'),
+  password: Yup.string().required('Password is required!'),
+});
 
 const Login = (props: LoginProps) => {
   //! State
@@ -35,34 +41,57 @@ const Login = (props: LoginProps) => {
   //! Render
   return (
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-      {({ handleBlur, handleChange }) => {
+      {() => {
         return (
           <Form>
-            <div>
-              <label>Username</label>
-              <input
-                name='username'
-                type='text'
-                placeholder='Username'
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
-            </div>
+            <Box
+              sx={{
+                width: '100vw',
+                height: '100vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Box
+                sx={{
+                  minWidth: '300px',
+                  '& > div': {
+                    marginBottom: '12px',
+                  },
+                }}
+              >
+                <CommonStyles.Typography variant='h4' sx={{ mb: 2 }}>
+                  Login
+                </CommonStyles.Typography>
+                <Box>
+                  <FastField
+                    component={TextField}
+                    name='username'
+                    placeholder='Username'
+                    label='Username'
+                    fullWidth
+                  />
+                </Box>
 
-            <div>
-              <label>Password</label>
-              <input
-                name='password'
-                type='password'
-                placeholder='Password'
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
-            </div>
+                <Box>
+                  <FastField
+                    component={TextField}
+                    name='password'
+                    placeholder='Password'
+                    label='Password'
+                    type='password'
+                    fullWidth
+                  />
+                </Box>
 
-            <div>
-              <button type='submit'>Login</button>
-            </div>
+                <Box>
+                  <CommonStyles.Button type='submit' fullWidth>
+                    Login
+                  </CommonStyles.Button>
+                </Box>
+              </Box>
+            </Box>
           </Form>
         );
       }}

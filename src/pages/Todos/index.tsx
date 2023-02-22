@@ -1,5 +1,6 @@
-import { useGetTodos } from 'hooks/todos';
 import React from 'react';
+import CommonStyles from 'components/CommonStyles';
+import { useGetTodos } from 'hooks/todos';
 
 interface TodosProps {}
 
@@ -12,17 +13,17 @@ const Todos = (props: TodosProps) => {
 
   //! Render
   if (isLoading) {
-    return <span>'Loading'</span>;
+    return <CommonStyles.Loading />;
   }
 
   return (
-    <div>
+    <CommonStyles.Box>
       {todos.map((el) => (
-        <p>
+        <CommonStyles.Typography key={el.id} variant='subtitle1'>
           {el.id} - {el.title}
-        </p>
+        </CommonStyles.Typography>
       ))}
-    </div>
+    </CommonStyles.Box>
   );
 };
 
