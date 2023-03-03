@@ -3,7 +3,11 @@ import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
 
-const pathSrc = path.resolve(__dirname, './src');
+let pathSrc = path.resolve(__dirname, './src');
+//* In case Win OS
+if (pathSrc.includes('\\')) {
+  pathSrc = pathSrc.replace(/\\/g, '/');
+}
 
 // https://vitejs.dev/config/
 export default defineConfig({
