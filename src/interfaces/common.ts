@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios';
+import { FormikHelpers } from 'formik';
 
 //* Common interface
 export interface List<T> extends Array<T> {
@@ -40,4 +41,10 @@ export interface CommonFilters {
   page?: number;
   limit?: number;
   order?: OrderType;
+}
+
+export interface DialogI<T> {
+  isOpen: boolean;
+  toggle: () => void;
+  onSubmit?: (values: T, formikHelpers: FormikHelpers<T>) => void | Promise<any>;
 }
