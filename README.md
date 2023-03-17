@@ -25,11 +25,11 @@
 
 ## How to use
 
-| Script     | Description                                         |
-| ---------- | --------------------------------------------------- |
-| yarn       | Installs all packages.                              |
-| yarn dev   | Runs the app in the development mode.               |
-| yarn build | Builds the app for production to the `dist` folder. |
+| Script        | Description                                          |
+| ------------- | ---------------------------------------------------- |
+| npm i         | Installs all packages.                               |
+| npm start     | Runs the app in the development mode.                |
+| npm run build | Builds the app for production to the `build` folder. |
 
 ## Environment
 
