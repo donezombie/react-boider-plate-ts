@@ -1,53 +1,46 @@
-<h1 align="center">React + Scss + Formik + Yup + Typescript + Prettier + Eslint + i18n + Vite</h1>
+# Getting Started with Create React App
 
-<p align="center">
-  <a href="https://reactjs.org/" target="_blank"><img src="https://img.shields.io/badge/React-v18.2.0-%238DD6F9.svg?logo=React"></a>
-  <a href="https://github.com/donezombie" target="_blank"><img src="https://img.shields.io/badge/licence-MIT-green.svg" /></a>
-  <a href="https://www.typescriptlang.org/" target="_blank"><img src="https://badgen.net/badge/Built%20With/TypeScript/blue" /></a>
-  <a href="#badge"><img alt="code style: prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square"></a>
-</p>
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Packages in template:
+## Available Scripts
 
-- TypeScript
-- React.js (v18)
-- React-router-dom (v6)
-- SCSS
+In the project directory, you can run:
 
-- Axios
-- Formik
-- Yup Validator
-- Lodash
+### `npm start`
 
-- Code styles: prettier, eslint
-- Pre-commit: husky
-- Auto format when save prettier
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## How to use
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-| Script     | Description                                         |
-| ---------- | --------------------------------------------------- |
-| yarn       | Installs all packages.                              |
-| yarn dev   | Runs the app in the development mode.               |
-| yarn build | Builds the app for production to the `dist` folder. |
+### `npm test`
 
-## Environment
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-First, you need define key with prefix VITE\_[YOUR_KEY]="YOUR_VALUE"
+### `npm run build`
 
-You can access your .env variables by deconstructing 'import.meta.env.VITE\_[YOUR_KEY]' object, both on client and server.
-Just make sure that you reboot the server when updating .env file
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-## Some extension (VS Code) recommended
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-- Better Comments
-- Auto Import
-- Auto Rename Tag
-- Bracket Pair Colorizer
-- Color Highlight
-- Eslint
-- Prettier - Code formatter
-- GitLens
-- Import Cost
-- vscode-icons
-- Visual Studio IntelliCode
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).

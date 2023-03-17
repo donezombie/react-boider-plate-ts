@@ -22,8 +22,12 @@ const TextField = ({ field, form, ...props }: Props & TextFieldProps) => {
       error={!!msgError}
       helperText={isString(msgError) && msgError}
       sx={{
+        '& label': {
+          fontSize: '0.825rem',
+          top: -3,
+        },
         '& input': {
-          padding: '13.5px 14px',
+          padding: '9px 14px',
         },
       }}
       {...props}

@@ -1,7 +1,7 @@
-import MuiButton, { ButtonProps } from '@mui/material/Button';
 import MuiIconButton, { IconButtonProps } from '@mui/material/IconButton';
+import LoadingButton, { LoadingButtonProps } from '@mui/lab/LoadingButton';
 
-type TypeButton = IconButtonProps & ButtonProps;
+type TypeButton = IconButtonProps & LoadingButtonProps;
 interface Props extends TypeButton {
   isIconButton?: boolean;
 }
@@ -12,9 +12,9 @@ const Button = ({ isIconButton, ...props }: Props) => {
   }
 
   return (
-    <MuiButton variant='contained' {...props}>
+    <LoadingButton variant='contained' {...props}>
       {props.children}
-    </MuiButton>
+    </LoadingButton>
   );
 };
 

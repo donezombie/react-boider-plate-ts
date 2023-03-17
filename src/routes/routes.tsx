@@ -1,21 +1,27 @@
 import React, { Fragment, lazy } from 'react';
-import BaseUrl from 'constants/baseUrl';
+import BaseUrl from 'consts/baseUrl';
+import withCheckRole from 'HOCs/withCheckRole';
+import { PERMISSION_ENUM } from 'consts/index';
 
 // Bash importHere
 const DefaultLayout = lazy(() => import('layouts/DefaultLayout'));
-const Login = lazy(() => import('pages/Login'));
-const Homepage = lazy(() => import('pages/Homepage'));
-const Todos = lazy(() => import('pages/Todos'));
-const Todo = lazy(() => import('pages/Todo'));
+const Login = lazy(() => import('pages/Public/Login'));
+const Apps = lazy(() => import('pages/User/Apps'));
+const Callbacks = lazy(() => import('pages/Public/Callbacks'));
+
+const AppManagement = lazy(() => import('pages/Admin/AppManagement'));
 
 interface Route {
   name: string;
   path: string;
-  layout: React.LazyExoticComponent<React.MemoExoticComponent<any>> | React.ExoticComponent<any>;
+  layout:
+    | React.LazyExoticComponent<React.MemoExoticComponent<any>>
+    | React.ExoticComponent<any>
+    | typeof React.Component;
   routeChild: {
     name: string;
     path: string;
-    component: React.FC;
+    component: typeof React.Component | React.FC;
     isPrivateRoute?: boolean;
   }[];
 }
@@ -30,19 +36,13 @@ const routes: Route[] = [
       {
         name: 'Homepage',
         path: BaseUrl.Homepage,
-        component: Homepage,
-      },
-      {
-        name: 'Todos',
-        path: BaseUrl.Todos,
-        component: Todos,
+        component: withCheckRole(Apps, [PERMISSION_ENUM.PUBLIC]),
         isPrivateRoute: true,
       },
       {
-        name: 'Todo',
-        path: `${BaseUrl.Todos}/:id`,
-        component: Todo,
-        isPrivateRoute: true,
+        name: 'AppManagement',
+        path: BaseUrl.AppManagement,
+        component: withCheckRole(AppManagement, [PERMISSION_ENUM.PUBLIC]),
       },
     ],
   },
@@ -56,6 +56,19 @@ const routes: Route[] = [
         name: 'Login',
         path: BaseUrl.Login,
         component: Login,
+      },
+    ],
+  },
+
+  {
+    name: 'Callbacks Layout',
+    path: BaseUrl.Callbacks,
+    layout: Fragment,
+    routeChild: [
+      {
+        name: 'Callbacks',
+        path: BaseUrl.Callbacks,
+        component: Callbacks,
       },
     ],
   },

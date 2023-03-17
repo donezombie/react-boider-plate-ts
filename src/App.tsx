@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Outlet, Route, Routes } from 'react-router-dom';
 
-import Page404 from 'pages/Page404';
+import Page404 from 'pages/Public/Page404';
 import routes from 'routes/routes';
 import PrivateRoute from 'components/PrivateRoute';
 
@@ -11,8 +11,6 @@ import { theme } from './theme';
 import { useToggleTheme } from 'providers/ToggleThemeProvider';
 import { ErrorBoundary } from 'react-error-boundary';
 import CommonStyles from 'components/CommonStyles';
-
-interface AppProps {}
 
 const ErrorFallback = ({ error, resetErrorBoundary }: any) => {
   return (
@@ -24,7 +22,7 @@ const ErrorFallback = ({ error, resetErrorBoundary }: any) => {
   );
 };
 
-const App = (props: AppProps) => {
+const App = () => {
   //! State
   const { mode } = useToggleTheme();
 

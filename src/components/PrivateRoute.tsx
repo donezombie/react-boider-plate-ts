@@ -1,12 +1,12 @@
 import { Navigate } from 'react-router-dom';
-import BaseUrl from 'constants/baseUrl';
-import { useAuthentication } from 'providers/AuthenticationProvider';
+import BaseUrl from 'consts/baseUrl';
+import useAuth from 'hooks/useAuth';
 
 const PrivateRoute = (props: { children: any }) => {
-  const { isLogged } = useAuthentication();
+  const auth = useAuth();
 
   //! Render
-  if (isLogged) {
+  if (auth.isLogged) {
     return props.children;
   }
 
