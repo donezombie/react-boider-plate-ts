@@ -1,4 +1,4 @@
-<h1 align="center">React + Scss + Formik + Yup + Typescript + Prettier + Eslint + i18n + Webpack</h1>
+<h1 align="center">React + Scss + MUI + Formik + Yup + Typescript + Prettier + Eslint + i18n + Webpack</h1>
 
 <p align="center">
   <a href="https://reactjs.org/" target="_blank"><img src="https://img.shields.io/badge/React-v18.2.0-%238DD6F9.svg?logo=React"></a>
