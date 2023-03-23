@@ -1,47 +1,83 @@
 import { useMemo } from 'react';
 import CommonIcons from 'components/CommonIcons';
-import { useAppAuthentication } from 'providers/AppAuthenticationProvider';
-import { PERMISSION_ENUM } from 'consts/index';
 import BaseUrl from 'consts/baseUrl';
-
-const navbarAdmin = [
-  [
-    {
-      label: 'Apps',
-      icon: CommonIcons.CloudIcon,
-      href: BaseUrl.Homepage,
-    },
-    {
-      label: 'Apps Management',
-      icon: CommonIcons.CloudIcon,
-      href: BaseUrl.AppManagement,
-    },
-  ],
-];
-
-const navbarUser = [
-  [
-    {
-      label: 'Homepage',
-      icon: CommonIcons.HomeIcon,
-      href: '/',
-    },
-  ],
-];
+import { useAuth } from 'providers/AuthenticationProvider';
+import { useTranslation } from 'react-i18next';
 
 const useHandleAsideMenu = () => {
-  const { user } = useAppAuthentication();
-  const role = user?.role;
+  const { loading, isLogged, isAdmin, isAppManager } = useAuth();
+  const { t } = useTranslation();
 
   return useMemo(() => {
-    return navbarAdmin;
+    if (loading || !isLogged) {
+      return [];
+    }
 
-    if (role === PERMISSION_ENUM.ADMIN) {
+    const navbarAdmin = [
+      [
+        {
+          label: 'Home',
+          icon: CommonIcons.HomeIcon,
+          href: BaseUrl.Homepage,
+        },
+        {
+          label: 'Apps',
+          icon: CommonIcons.CloudIcon,
+          href: BaseUrl.AppManagement,
+        },
+        {
+          label: 'Users',
+          icon: CommonIcons.Users,
+          href: BaseUrl.Users,
+        },
+        {
+          label: 'Settings',
+          icon: CommonIcons.SettingsIcon,
+          href: BaseUrl.Settings,
+        },
+      ],
+    ];
+
+    const navbarAppManager = [
+      [
+        {
+          label: 'Home',
+          icon: CommonIcons.HomeIcon,
+          href: BaseUrl.Homepage,
+        },
+        {
+          label: 'Apps',
+          icon: CommonIcons.CloudIcon,
+          href: BaseUrl.AppManagement,
+        },
+        {
+          label: 'Settings',
+          icon: CommonIcons.SettingsIcon,
+          href: BaseUrl.Settings,
+        },
+      ],
+    ];
+
+    const navbarUser = [
+      [
+        {
+          label: t('shared:homepage'),
+          icon: CommonIcons.HomeIcon,
+          href: BaseUrl.Homepage,
+        },
+      ],
+    ];
+
+    if (isAdmin) {
       return navbarAdmin;
     }
 
+    if (isAppManager) {
+      return navbarAppManager;
+    }
+
     return navbarUser;
-  }, [role]);
+  }, [loading, isLogged, isAdmin, isAppManager, t]);
 };
 
 export default useHandleAsideMenu;

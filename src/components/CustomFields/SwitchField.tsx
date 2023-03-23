@@ -7,15 +7,17 @@ interface SwitchFieldI {
   field: FieldInputProps<any>;
   form: FormikProps<any>;
   label?: string;
+  afterOnChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 function SwitchField(props: SwitchFieldI & SwitchProps) {
-  const { field, form, label, ...restProps } = props;
+  const { field, form, label, afterOnChange, ...restProps } = props;
   const { name, value } = field;
   const { setFieldValue } = form;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFieldValue(name, event.target.checked);
+    afterOnChange && afterOnChange(event);
   };
 
   return (

@@ -1,8 +1,17 @@
+export const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
+
 export const queryKeys = {
   getTodos: 'getTodos',
   getAppList: 'getAppList',
   getAppDetail: 'getAppDetai',
   getAppInstalledList: 'getAppInstalledList',
+
+  getUserInfo: 'getUserInfo',
+  updateUserInfo: 'updateUserInfo',
+  assignUser: 'assignUser',
+  getListUser: 'getListUser',
+  getUserDetail: 'getUserDetail',
+  updateUser: 'updateUser',
 };
 
 export const LANG_ENUM = {
@@ -12,11 +21,23 @@ export const LANG_ENUM = {
 
 export enum PERMISSION_ENUM {
   PUBLIC = 'PUBLIC',
-  ADMIN = 'ADMIN',
-  USER = 'USER',
+  ADMIN = 'admin',
+  USER = 'user',
+  APP_MANAGER = 'appmanager',
 }
 
-export enum CONNECTOR_ENUM {
-  OKTA = 'OKTA',
-  GOOGLE = 'GOOGLE',
-}
+export const PermissionOptions = Object.entries(PERMISSION_ENUM)
+  .filter((el) => {
+    const [key, value] = el;
+    return key !== PERMISSION_ENUM.PUBLIC && value !== PERMISSION_ENUM.ADMIN;
+  })
+  .map((el) => {
+    const [key, value] = el;
+    return {
+      label: key,
+      value: value,
+    };
+  });
+
+export const NUMBER_DEFAULT_ROW_PER_PAGE = 5;
+export const NUMBER_DEFAULT_PAGE = 0;

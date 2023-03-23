@@ -1,3 +1,14 @@
+import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
+import CloseIcon from '@mui/icons-material/Close';
+import CheckIcon from '@mui/icons-material/Check';
+import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
+import SaveIcon from '@mui/icons-material/Save';
+import SettingsIcon from '@mui/icons-material/Settings';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import SearchIcon from '@mui/icons-material/Search';
+import GroupIcon from '@mui/icons-material/Group';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -24,4 +35,15 @@ export default {
   EditIcon,
   DownloadingIcon,
   UninstallIcon: RestoreFromTrashIcon,
+  NoteAddIcon: NoteAddOutlinedIcon,
+  BookIcon: MenuBookIcon,
+  Users: GroupIcon,
+  Search: SearchIcon,
+  Reset: RestartAltIcon,
+  SettingsIcon,
+  SaveIcon,
+  AssignIcon: PersonAddOutlinedIcon,
+  CheckIcon,
+  CloseIcon,
+  SendIcon: SendOutlinedIcon,
 };

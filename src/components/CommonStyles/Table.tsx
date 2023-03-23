@@ -51,6 +51,10 @@ function EnhancedTableHead<T>(props: EnhancedTableProps<T>) {
         )}
 
         {props.headCells.map((headCell: any) => {
+          if (headCell.isHided) {
+            return null;
+          }
+
           if (headCell?.disableSort) {
             return (
               <TableCell key={headCell.id} align={headCell.numeric ? 'right' : 'left'}>
@@ -93,6 +97,7 @@ interface HeadCell<T> {
   numeric?: boolean;
   disableSort?: boolean;
   Cell?: (row: T) => React.ReactElement;
+  isHided?: boolean;
 }
 
 interface TableCommonProps<T> {
@@ -104,11 +109,18 @@ interface TableCommonProps<T> {
   rows: T[];
   headCells: HeadCell<T>[];
   totalCount: number;
-  a?: (arg: T) => void;
   handleChangePage: (event: unknown, newPage: number) => void;
-  handleSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSelectAllClick: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    rows: T[],
+    key?: string
+  ) => void;
+  handleCheckBox?: (value: T, key: string) => void;
   handleRequestSort: (event: React.MouseEvent<unknown>, property: keyof any) => void;
   handleChangeRowsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  showCheckBox?: boolean;
+  keyPrimary?: string;
+  isLoading?: boolean;
 }
 
 function TableCommon<T>({
@@ -120,6 +132,10 @@ function TableCommon<T>({
   rows,
   headCells,
   totalCount,
+  showCheckBox,
+  keyPrimary = 'id',
+  isLoading,
+  handleCheckBox,
   handleChangePage,
   handleSelectAllClick,
   handleRequestSort,
@@ -140,36 +156,58 @@ function TableCommon<T>({
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
+              onSelectAllClick={(e) => {
+                handleSelectAllClick(e, rows, keyPrimary);
+              }}
               onRequestSort={handleRequestSort}
               rowCount={totalCount}
               headCells={headCells}
+              showCheckBox={showCheckBox}
             />
             <TableBody>
-              {rows.map((row, index) => {
-                const rowAny = row as any;
-                const isItemSelected = isSelected(rowAny?.name || '');
-                const labelId = `enhanced-table-checkbox-${index}`;
+              {!isLoading &&
+                rows.map((row, index) => {
+                  const rowAny = row as any;
+                  const isItemSelected = isSelected(rowAny?.[keyPrimary] || '');
+                  const labelId = `enhanced-table-checkbox-${index}-${keyPrimary}` as any;
 
-                return (
-                  <TableRow
-                    hover
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={labelId}
-                    selected={isItemSelected}
-                  >
-                    {headCells.map((hc, idx) => {
-                      return (
-                        <TableCell key={`cell-${index}-${idx}`}>
-                          {hc?.Cell?.(rowAny) || rowAny?.[hc?.id]}
+                  return (
+                    <TableRow
+                      hover
+                      aria-checked={isItemSelected}
+                      tabIndex={-1}
+                      key={labelId}
+                      selected={isItemSelected}
+                    >
+                      {showCheckBox && (
+                        <TableCell padding='checkbox'>
+                          <Checkbox
+                            color='primary'
+                            checked={isItemSelected}
+                            onClick={() => {
+                              handleCheckBox && handleCheckBox(row, keyPrimary);
+                            }}
+                            inputProps={{
+                              'aria-labelledby': labelId,
+                            }}
+                          />
                         </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-              {totalCount === 0 && (
+                      )}
+                      {headCells.map((hc, idx) => {
+                        if (hc.isHided) {
+                          return null;
+                        }
+
+                        return (
+                          <TableCell key={`cell-${index}-${idx}`}>
+                            {hc?.Cell?.(rowAny) || rowAny?.[hc?.id]}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
+              {!isLoading && totalCount === 0 && (
                 <TableRow
                   style={{
                     height: 53 * emptyRows,
@@ -194,7 +232,31 @@ function TableCommon<T>({
                   </TableCell>
                 </TableRow>
               )}
-              {emptyRows > 0 && (
+
+              {isLoading && (
+                <TableRow
+                  style={{
+                    height: 53,
+                  }}
+                >
+                  <TableCell colSpan={6}>
+                    <CommonStyles.Box
+                      sx={{
+                        width: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flexDirection: 'column',
+                        gap: 1,
+                      }}
+                    >
+                      <CommonStyles.Loading />
+                    </CommonStyles.Box>
+                  </TableCell>
+                </TableRow>
+              )}
+
+              {!isLoading && emptyRows > 0 && (
                 <TableRow
                   style={{
                     height: 53 * emptyRows,

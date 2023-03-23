@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Outlet, Route, Routes } from 'react-router-dom';
 
-import Page404 from 'pages/Public/Page404';
+import Page404 from 'pages/Page404';
 import routes from 'routes/routes';
 import PrivateRoute from 'components/PrivateRoute';
 
@@ -29,10 +29,8 @@ const App = () => {
   //! Function
 
   //! Render
-  return (
-    <ThemeProvider theme={theme(mode)}>
-      <CssBaseline />
-
+  const renderContent = () => {
+    return (
       <Router>
         <Routes>
           {routes.map((route) => {
@@ -74,6 +72,14 @@ const App = () => {
           <Route path='*' element={<Page404 />} />
         </Routes>
       </Router>
+    );
+  };
+
+  return (
+    <ThemeProvider theme={theme(mode)}>
+      <CssBaseline />
+
+      {renderContent()}
     </ThemeProvider>
   );
 };

@@ -6,6 +6,7 @@ import Select, { SelectProps } from '@mui/material/Select';
 import { FieldInputProps, FormikProps } from 'formik';
 import { get } from 'lodash';
 import { SelectOption } from 'interfaces/common';
+import CommonStyles from 'components/CommonStyles';
 
 interface SelectFieldProps extends SelectProps {
   field: FieldInputProps<any>;
@@ -20,12 +21,13 @@ const SelectField = ({ field, form, options, label, ...props }: SelectFieldProps
   const msgError = get(touched, name) && get(errors, name) ? (get(errors, name) as string) : '';
 
   return (
-    <div>
-      <FormControl sx={{ minWidth: 120 }} error={!!msgError}>
+    <CommonStyles.Box sx={{ minWidth: 120 }}>
+      <FormControl fullWidth={props.fullWidth} error={!!msgError}>
         <InputLabel id={`${name}`}>{label}</InputLabel>
         <Select
-          labelId={`${name}`}
           id={`${name}`}
+          label={label}
+          labelId={`${name}`}
           value={value}
           name={name}
           onChange={onChange}
@@ -42,7 +44,7 @@ const SelectField = ({ field, form, options, label, ...props }: SelectFieldProps
         </Select>
         {!!msgError && <FormHelperText>{msgError}</FormHelperText>}
       </FormControl>
-    </div>
+    </CommonStyles.Box>
   );
 };
 

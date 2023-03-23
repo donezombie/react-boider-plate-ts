@@ -1,6 +1,9 @@
+import { UserInfo } from 'interfaces/user';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { AuthContextProps } from 'oidc-react';
 
 export const TOKEN_KEY = 'token';
+export const USER_KEY = 'user';
 
 class Services {
   axios: AxiosInstance;
@@ -35,11 +38,29 @@ class Services {
       function (config) {
         if (config.headers) {
           // Do something before request is sent
-          config.headers.sessionId = token;
+          config.headers.Authorization = `Bearer ${token}`;
         }
         return config;
       },
       function (error) {
+        return Promise.reject(error);
+      }
+    );
+  }
+
+  setupInterceptors(auth: AuthContextProps) {
+    this.axios.interceptors.response.use(
+      (response) => {
+        return response;
+      },
+      (error) => {
+        const { status } = error?.response || {};
+        if (status === 401) {
+          auth.signOut();
+          window.localStorage.clear();
+          window.location.reload();
+        }
+
         return Promise.reject(error);
       }
     );
@@ -68,6 +89,23 @@ class Services {
   getTokenStorage() {
     const token = localStorage.getItem(TOKEN_KEY);
     return token || '';
+  }
+
+  clearStorage() {
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(USER_KEY);
+  }
+
+  saveUserStorage(user: UserInfo) {
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
+  }
+
+  getUserStorage() {
+    if (localStorage.getItem(USER_KEY)) {
+      return JSON.parse(localStorage?.getItem(USER_KEY) || '') as UserInfo;
+    }
+
+    return null;
   }
 }
 

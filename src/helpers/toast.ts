@@ -11,6 +11,18 @@ export const showSuccess = (msg: any, options?: ToastOptions) => {
 };
 
 export const showError = (error: any, options?: ToastOptions) => {
+  if (error?.response) {
+    if (error?.response?.data?.errors) {
+      toast.error(JSON.stringify(error?.response?.data?.errors));
+      return;
+    }
+
+    if (error?.response?.data?.title) {
+      toast.error(JSON.stringify(error?.response?.data?.title));
+      return;
+    }
+  }
+
   if (isString(error) || isString(error.toString())) {
     toast.error(error, options);
     return;

@@ -11,6 +11,7 @@ declare module '@mui/material/styles' {
       white?: string;
       black?: string;
       gray?: string;
+      grayLight?: string;
     };
   }
   interface ThemeOptions {
@@ -23,6 +24,7 @@ declare module '@mui/material/styles' {
       white?: string;
       black?: string;
       gray?: string;
+      grayLight?: string;
     };
   }
 }
@@ -43,6 +45,7 @@ const lightTheme = createTheme({
     white: '#fff',
     black: 'rgb(18, 18, 18)',
     gray: 'rgba(0,0,0,0.4)',
+    grayLight: '#F2F2F2',
   },
 });
 
@@ -59,6 +62,7 @@ const darkTheme = createTheme({
     white: '#fff',
     black: 'rgb(18, 18, 18)',
     gray: '#ccc',
+    grayLight: '#F2F2F2',
   },
 });
 

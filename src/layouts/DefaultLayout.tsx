@@ -14,7 +14,7 @@ import CommonIcons from 'components/CommonIcons';
 import { NavLink } from 'react-router-dom';
 import useHandleAsideMenu from 'hooks/useHandleAsideMenu';
 import useCheckWidth from 'hooks/useCheckWidth';
-import useAuth from 'hooks/useAuth';
+import { useAuth } from 'providers/AuthenticationProvider';
 
 const drawerWidth = 90;
 
@@ -130,7 +130,9 @@ const DefaultLayout = ({ children }: { children: React.ReactNode }) => {
       <List>
         <ListItem disablePadding sx={{ display: 'block' }}>
           <ListItemButton
-            onClick={auth.logout}
+            onClick={() => {
+              auth.logout();
+            }}
             sx={{
               minHeight: 48,
               justifyContent: open ? 'initial' : 'center',
@@ -162,6 +164,70 @@ const DefaultLayout = ({ children }: { children: React.ReactNode }) => {
         </ListItem>
       </List>
     );
+  };
+
+  const renderAsideMenu = () => {
+    return asideMenu.map((eachList, idxEachList) => {
+      return (
+        <React.Fragment key={`${idxEachList}`}>
+          <List
+            key={`${idxEachList}`}
+            sx={{
+              maxHeight: '92vh',
+              overflow: 'auto',
+              [theme.breakpoints.down('sm')]: {
+                display: 'flex',
+              },
+            }}
+          >
+            {eachList.map((menu) => {
+              return (
+                <NavLink
+                  key={menu.label}
+                  to={menu.href}
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
+                  <ListItem disablePadding sx={{ display: 'block' }}>
+                    <ListItemButton
+                      sx={{
+                        minHeight: 48,
+                        justifyContent: open ? 'initial' : 'center',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <ListItemIcon
+                        sx={{
+                          minWidth: 0,
+                          justifyContent: 'center',
+                          color: theme.colors?.white,
+                        }}
+                      >
+                        <menu.icon />
+                      </ListItemIcon>
+                      <CommonStyles.Typography
+                        sx={{
+                          opacity: open ? 1 : 0,
+                          fontSize: '0.825rem',
+                          pt: 0.5,
+                          color: theme.colors?.white,
+                          whiteSpace: 'pre-wrap',
+                          textAlign: 'center',
+                        }}
+                      >
+                        {menu.label}
+                      </CommonStyles.Typography>
+                    </ListItemButton>
+                  </ListItem>
+                </NavLink>
+              );
+            })}
+          </List>
+          {idxEachList !== asideMenu.length - 1 && <Divider />}
+        </React.Fragment>
+      );
+    });
   };
 
   return (
@@ -214,70 +280,9 @@ const DefaultLayout = ({ children }: { children: React.ReactNode }) => {
         </DrawerHeader>
 
         <Divider /> */}
+        {renderAsideMenu()}
 
-        {asideMenu.map((eachList, idxEachList) => {
-          return (
-            <React.Fragment key={`${idxEachList}`}>
-              <List
-                key={`${idxEachList}`}
-                sx={{
-                  maxHeight: '92vh',
-                  overflow: 'auto',
-                  [theme.breakpoints.down('sm')]: {
-                    display: 'flex',
-                  },
-                }}
-              >
-                {eachList.map((menu) => {
-                  return (
-                    <NavLink
-                      key={menu.label}
-                      to={menu.href}
-                      style={{ textDecoration: 'none', color: 'inherit' }}
-                    >
-                      <ListItem disablePadding sx={{ display: 'block' }}>
-                        <ListItemButton
-                          sx={{
-                            minHeight: 48,
-                            justifyContent: open ? 'initial' : 'center',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                          }}
-                        >
-                          <ListItemIcon
-                            sx={{
-                              minWidth: 0,
-                              justifyContent: 'center',
-                              color: theme.colors?.white,
-                            }}
-                          >
-                            <menu.icon />
-                          </ListItemIcon>
-                          <CommonStyles.Typography
-                            sx={{
-                              opacity: open ? 1 : 0,
-                              fontSize: '0.825rem',
-                              pt: 0.5,
-                              color: theme.colors?.white,
-                              whiteSpace: 'pre-wrap',
-                              textAlign: 'center',
-                            }}
-                          >
-                            {menu.label}
-                          </CommonStyles.Typography>
-                        </ListItemButton>
-                      </ListItem>
-                    </NavLink>
-                  );
-                })}
-              </List>
-              {idxEachList !== asideMenu.length - 1 && <Divider />}
-            </React.Fragment>
-          );
-        })}
-
-        {renderBtnLogout()}
+        {!auth.loading && renderBtnLogout()}
       </Drawer>
 
       <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
