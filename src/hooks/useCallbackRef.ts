@@ -1,7 +1,7 @@
 import { isFunction } from 'lodash';
 import { useLayoutEffect, useRef } from 'react';
 
-const useCallbackRef = (callback: Function) => {
+const useCallbackRef = (callback: () => void) => {
   const callbackRef = useRef(callback);
 
   useLayoutEffect(() => {

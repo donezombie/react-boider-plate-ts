@@ -57,3 +57,7 @@ export const getNameRole = (role: string) => {
 };
 
 export const momentInstance = moment;
+
+export const isPromise = (value: any) => {
+  return Boolean(value && typeof value.then === 'function');
+};

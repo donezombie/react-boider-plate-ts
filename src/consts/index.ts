@@ -1,19 +1,5 @@
 export const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
-export const queryKeys = {
-  getTodos: 'getTodos',
-  getAppList: 'getAppList',
-  getAppDetail: 'getAppDetai',
-  getAppInstalledList: 'getAppInstalledList',
-
-  getUserInfo: 'getUserInfo',
-  updateUserInfo: 'updateUserInfo',
-  assignUser: 'assignUser',
-  getListUser: 'getListUser',
-  getUserDetail: 'getUserDetail',
-  updateUser: 'updateUser',
-};
-
 export const LANG_ENUM = {
   vi: 'vi',
   en: 'en',

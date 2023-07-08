@@ -10,6 +10,7 @@ const Homepage = lazy(() => import('pages/Homepage'));
 interface Route {
   name: string;
   path: string;
+  isPrivateRoute?: boolean;
   layout:
     | React.LazyExoticComponent<React.MemoExoticComponent<any>>
     | React.ExoticComponent<any>
@@ -40,13 +41,13 @@ const routes: Route[] = [
     name: 'Home Layout',
     path: BaseUrl.Homepage,
     layout: DefaultLayout,
+    isPrivateRoute: true,
     routeChild: [
       // Bash appendHere
       {
         name: 'Homepage',
         path: BaseUrl.Homepage,
         component: withCheckRole(Homepage, [PERMISSION_ENUM.PUBLIC]),
-        isPrivateRoute: true,
       },
     ],
   },

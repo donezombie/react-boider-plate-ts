@@ -39,9 +39,17 @@ const App = () => {
                 key={`${route.path}-layout`}
                 path={route.path}
                 element={
-                  <route.layout>
-                    <Outlet />
-                  </route.layout>
+                  route.isPrivateRoute ? (
+                    <PrivateRoute>
+                      <route.layout>
+                        <Outlet />
+                      </route.layout>
+                    </PrivateRoute>
+                  ) : (
+                    <route.layout>
+                      <Outlet />
+                    </route.layout>
+                  )
                 }
               >
                 {route.routeChild.map((child, idx) => {
