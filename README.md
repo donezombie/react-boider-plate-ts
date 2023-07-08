@@ -40,6 +40,7 @@ Just make sure that you reboot the server when updating .env file
 
 ## Some snippet to make you code faster
 
+`genHooksPaging`
 `genComponent`
 `genComponentTable`
 `genDialog`
