@@ -1,7 +1,7 @@
 import { create } from 'zustand';
-import queryKeys from 'consts/queryKeys';
+import cachedKeys from 'consts/cachedKeys';
 
-type AllQueryKeys = keyof typeof queryKeys;
+type AllQueryKeys = keyof typeof cachedKeys;
 
 const useStore = create<{ [key: string]: any }>((set) => ({
   state: {},

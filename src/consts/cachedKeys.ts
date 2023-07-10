@@ -1,6 +1,6 @@
-const queryKeys = {
+const cachedKeys = {
   setTodos: 'setTodos',
   refetchTodos: 'refetchTodos',
 };
 
-export default queryKeys;
+export default cachedKeys;

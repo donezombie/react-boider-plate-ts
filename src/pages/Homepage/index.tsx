@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { langMethod } from 'i18n';
 import useGetTodos from 'hooks/todos/useGetTodos';
 import useFiltersHandler from 'hooks/useFiltersHandler';
-import queryKeys from 'consts/queryKeys';
+import cachedKeys from 'consts/cachedKeys';
 
 const Apps = () => {
   //! State
@@ -15,7 +15,7 @@ const Apps = () => {
   const { isUser, user } = useAuth();
 
   const { filters } = useFiltersHandler({ page: 1, rowsPerPage: 10 });
-  const { data, loading } = useGetTodos(filters, { refetchKey: queryKeys.refetchTodos });
+  const { data, loading } = useGetTodos(filters, { refetchKey: cachedKeys.refetchTodos });
 
   //! Function
 
