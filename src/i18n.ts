@@ -1,4 +1,4 @@
-import { LANG_ENUM } from 'consts';
+import { LANG_ENUM } from 'consts/common';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import enLang from './locales/en';

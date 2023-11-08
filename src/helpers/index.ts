@@ -1,4 +1,4 @@
-import { PERMISSION_ENUM } from 'consts/index';
+import { PERMISSION_ENUM } from 'consts/common';
 import moment from 'moment';
 
 export function a11yProps(index: number) {

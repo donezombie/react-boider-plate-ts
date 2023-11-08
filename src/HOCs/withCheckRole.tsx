@@ -1,6 +1,6 @@
 import CommonStyles from 'components/CommonStyles';
 import React from 'react';
-import { PERMISSION_ENUM } from 'consts/index';
+import { PERMISSION_ENUM } from 'consts/common';
 import { useAuth } from 'providers/AuthenticationProvider';
 
 const withCheckRole = (

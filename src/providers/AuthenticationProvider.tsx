@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react';
-import { PERMISSION_ENUM } from 'consts/index';
+import { PERMISSION_ENUM } from 'consts/common';
 import httpService from 'services/httpService';
 import { UserInfo } from 'interfaces/user';
 import { showError } from 'helpers/toast';
