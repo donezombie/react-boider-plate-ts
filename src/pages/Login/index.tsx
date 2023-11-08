@@ -30,6 +30,7 @@ const Login = () => {
 
   return (
     <CommonStyles.Box
+      className='component:Login'
       sx={{
         width: '100%',
         height: '100vh',

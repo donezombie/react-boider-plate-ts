@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import { flatten, isArray, isEmpty } from 'lodash';
 import { useSave } from 'stores/useStore';
@@ -7,7 +7,8 @@ import { showError } from 'helpers/toast';
 import { Todo } from 'interfaces/todo';
 import todoService, { RequestGetToDoList, ResponseToDoList } from 'services/todoService';
 
-/**
+/********************************************************
+ * SNIPPET GENERATED
  * GUIDE
  * Snippet for infinite scroll with page + rowsPerPage
  * Maybe you should check function:
@@ -16,7 +17,7 @@ import todoService, { RequestGetToDoList, ResponseToDoList } from 'services/todo
  * - checkConditionPass
  * - fetch
  * - refetch
- */
+ ********************************************************/
 
 //* Check parse body request
 const parseRequest = (filters: RequestGetToDoList) => {
@@ -26,6 +27,8 @@ const parseRequest = (filters: RequestGetToDoList) => {
   });
 };
 
+const MAX_COUNT_RETRY_REQUEST = 3;
+
 const useGetTodos = (
   filters: RequestGetToDoList,
   options: { isTrigger?: boolean; refetchKey?: string } = { isTrigger: true, refetchKey: '' }
@@ -34,6 +37,7 @@ const useGetTodos = (
   const { isTrigger = true, refetchKey = '' } = options;
 
   const save = useSave();
+  const countRequest = useRef(0);
   const [data, setData] = useState<Todo[]>([]);
   const [loading, setLoading] = useState(false);
   const [refetching, setRefetching] = useState(false);
@@ -52,10 +56,17 @@ const useGetTodos = (
         try {
           const nextFilters = parseRequest(filters);
           const response = await todoService.getTodoList(nextFilters);
+          countRequest.current = 0;
           resolve(response);
         } catch (error) {
-          setError(error);
-          reject(error);
+          if (countRequest.current < MAX_COUNT_RETRY_REQUEST) {
+            countRequest.current = countRequest.current + 1;
+            fetch();
+          } else {
+            countRequest.current = 0;
+            setError(error);
+            reject(error);
+          }
         }
       })();
     });
@@ -81,19 +92,6 @@ const useGetTodos = (
       }
     },
     [filters.rowsPerPage]
-  );
-
-  const fetchMore = useCallback(
-    async (shouldSetData: boolean) => {
-      setLoadingMore(true);
-      const response = await fetch();
-      if (shouldSetData && response) {
-        checkConditionPass(response, { isLoadmore: true });
-      }
-
-      setLoadingMore(false);
-    },
-    [fetch, checkConditionPass]
   );
 
   //* Refetch implicity (without changing loading state)
@@ -134,37 +132,60 @@ const useGetTodos = (
   }, [save, refetchKey, refetch]);
 
   //* Refetch with changing loading state
-  const refetchWithLoading = useCallback(
-    async (shouldSetData: boolean) => {
+  const refetchWithLoading = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await fetch();
+      if (response) {
+        checkConditionPass(response);
+      }
+      setLoading(false);
+    } catch (error) {
+      showError(error);
+      setLoading(false);
+    }
+  }, [fetch, checkConditionPass]);
+
+  useEffect(() => {
+    let shouldSetData = true;
+
+    //* Fetch initial API
+    const fetchAPI = async () => {
       try {
         setLoading(true);
         const response = await fetch();
         if (shouldSetData && response) {
           checkConditionPass(response);
+          setLoading(false);
         }
-        setLoading(false);
       } catch (error) {
         showError(error);
         setLoading(false);
       }
-    },
-    [fetch, checkConditionPass]
-  );
+    };
 
-  useEffect(() => {
-    let shouldSetData = true;
+    //* Fetch more API
+    const fetchMore = async () => {
+      setLoadingMore(true);
+      const response = await fetch();
+      if (shouldSetData && response) {
+        checkConditionPass(response, { isLoadmore: true });
+      }
+
+      setLoadingMore(false);
+    };
+
     if (filters.page !== undefined && filters.page <= 0) {
-      refetchWithLoading(shouldSetData);
-      return;
+      fetchAPI();
+    } else {
+      //* If page / offset > 0 -> fetch more
+      fetchMore();
     }
-
-    //* If offset > 0 -> fetch more
-    fetchMore(shouldSetData);
 
     return () => {
       shouldSetData = false;
     };
-  }, [filters.page, fetchMore, refetchWithLoading]);
+  }, [filters.page, fetch, checkConditionPass]);
 
   return {
     data,
