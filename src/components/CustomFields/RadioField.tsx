@@ -5,17 +5,24 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { FieldInputProps, FormikProps } from 'formik';
 import { SelectOption } from 'interfaces/common';
+import { ChangeEvent } from 'react';
 
 interface RadioFieldI extends RadioGroupProps {
   field: FieldInputProps<any>;
   form: FormikProps<any>;
   values: SelectOption[];
   label?: string;
+  afterOnChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 function RadioField(props: RadioFieldI) {
-  const { field, values, label, ...restProps } = props;
+  const { field, values, label, afterOnChange, ...restProps } = props;
   const { name, value, onBlur, onChange } = field;
+
+  const onHandleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onChange(e);
+    afterOnChange && afterOnChange(e);
+  };
 
   return (
     <FormControl>
@@ -24,7 +31,7 @@ function RadioField(props: RadioFieldI) {
         aria-labelledby={name}
         name={name}
         value={value}
-        onChange={onChange}
+        onChange={onHandleChange}
         onBlur={onBlur}
         row
         {...restProps}

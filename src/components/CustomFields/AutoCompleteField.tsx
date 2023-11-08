@@ -12,6 +12,7 @@ interface Props {
   label?: string;
   key: string;
   loadOptions: (text: string, setOptions: SetOptionsValue, setLoading: SetBooleanState) => void;
+  afterOnChange?: (value: string | null) => void;
 }
 
 function AutoCompleteField(props: Props) {
@@ -51,6 +52,7 @@ function AutoCompleteField(props: Props) {
 
   const handleChange = (event: any, value: string | null) => {
     form?.setFieldValue(name, value);
+    props.afterOnChange && props.afterOnChange(value);
   };
 
   //! Render
