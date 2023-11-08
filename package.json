@@ -45,7 +45,7 @@
     "vite-plugin-mkcert": "^1.13.3",
     "web-vitals": "^2.1.4",
     "yup": "^1.0.0",
-    "zustand": "^4.3.9"
+    "zustand": "^4.4.6"
   },
   "devDependencies": {
     "@types/flat": "^5.0.2",
