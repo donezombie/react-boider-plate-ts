@@ -38,9 +38,10 @@ First, you need define key with prefix REACT_APP\_[YOUR_KEY]="YOUR_VALUE"
 You can access your .env variables by deconstructing 'process.env.REACT_APP\_[YOUR_KEY]' object, both on client and server.
 Just make sure that you reboot the server when updating .env file
 
-## Some snippet to make you code faster
+## Some snippet to let you code faster
 
-`genHooksPaging`
+`genHooks`
+`genHooksInifiniteScroll`
 `genComponent`
 `genComponentTable`
 `genDialog`
