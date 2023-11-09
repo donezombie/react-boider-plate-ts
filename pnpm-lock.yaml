@@ -56,6 +56,7 @@ specifiers:
   react-day-picker: ^8.9.1
   react-dom: ^18.2.0
   react-error-boundary: ^4.0.11
+  react-number-format: ^5.3.1
   react-router-dom: ^6.18.0
   react-stately: ^3.28.0
   tailwind-merge: ^1.14.0
@@ -108,6 +109,7 @@ dependencies:
   react-day-picker: 8.9.1_kzhlcyde2l6xjiirkbg7jzhosa
   react-dom: 18.2.0_react@18.2.0
   react-error-boundary: 4.0.11_react@18.2.0
+  react-number-format: 5.3.1_biqbaboplfbrettd7655fr4n2y
   react-router-dom: 6.18.0_biqbaboplfbrettd7655fr4n2y
   react-stately: 3.28.0_react@18.2.0
   tailwindcss-animate: 1.0.7_tailwindcss@3.3.5
@@ -4774,6 +4776,14 @@ packages:
     hasBin: true
     dev: true
 
+  /prop-types/15.8.1:
+    resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+      react-is: 16.13.1
+    dev: false
+
   /property-expr/2.0.6:
     resolution: {integrity: sha512-SVtmxhRE/CGkn3eZY1T6pC8Nln6Fr/lu1mKSgRud0eC73whjGfoAogbn78LkD8aFL0zz3bAFerKSnOl7NlErBA==}
     dev: false
@@ -4871,6 +4881,17 @@ packages:
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+    dev: false
+
+  /react-number-format/5.3.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-qpYcQLauIeEhCZUZY9jXZnnroOtdy3jYaS1zQ3M1Sr6r/KMOBEIGNIb7eKT19g2N1wbYgFgvDzs19hw5TrB8XQ==}
+    peerDependencies:
+      react: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /react-refresh/0.14.0:
