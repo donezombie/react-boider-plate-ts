@@ -1,5 +1,6 @@
 import CommonIcons from "@/components/commonIcons";
 import CommonStyles from "@/components/commonStyles";
+import CheckBoxField from "@/components/customFields/CheckBoxField";
 import DateTimePickerField from "@/components/customFields/DateTimePickerField";
 import FormikField from "@/components/customFields/FormikField";
 import InputField from "@/components/customFields/InputField";
@@ -35,6 +36,7 @@ const Login = () => {
           password: "",
           gender: "",
           date: undefined,
+          agree: false,
         }}
         onSubmit={async (values, { setSubmitting }) => {
           try {
@@ -93,6 +95,12 @@ const Login = () => {
                     name="date"
                     label="Date time picker"
                     required
+                  />
+
+                  <FormikField
+                    component={CheckBoxField}
+                    name="agree"
+                    label="Agree with the terms"
                   />
 
                   <CommonStyles.Button type="submit" isLoading={isSubmitting}>
