@@ -13,6 +13,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import PrivateRoute from "@/components/PrivateRoute";
 import { Toaster } from "@/components/ui/toaster";
 import AuthenticationProvider from "./providers/AuthenticationProvider";
+import { ThemeProvider } from "./providers/ThemeProvider";
 
 const ErrorFallback = ({ error, resetErrorBoundary }: any) => {
   return (
@@ -85,10 +86,12 @@ const App = () => {
   };
 
   return (
-    <AuthenticationProvider>
-      <Toaster />
-      {renderContent()}
-    </AuthenticationProvider>
+    <ThemeProvider defaultTheme="light" storageKey="theme">
+      <AuthenticationProvider>
+        <Toaster />
+        {renderContent()}
+      </AuthenticationProvider>
+    </ThemeProvider>
   );
 };
 
