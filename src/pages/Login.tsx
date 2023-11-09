@@ -1,10 +1,12 @@
 import CommonIcons from "@/components/commonIcons";
-import CommonStyles from "@/components/commonStyles";
 import CheckBoxField from "@/components/customFields/CheckBoxField";
 import DateTimePickerField from "@/components/customFields/DateTimePickerField";
 import FormikField from "@/components/customFields/FormikField";
 import InputField from "@/components/customFields/InputField";
+import RadioField from "@/components/customFields/RadioField";
 import SelectField from "@/components/customFields/SelectField";
+import SwitchBoxField from "@/components/customFields/SwitchBoxField";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import BaseUrl from "@/consts/baseUrl";
@@ -30,6 +32,7 @@ const Login = () => {
           password: Yup.string().required("Password is required field!"),
           gender: Yup.string().required("Gender is required field!"),
           date: Yup.date().required("Date is required field!"),
+          level: Yup.string().required("Level is required field!"),
         })}
         initialValues={{
           username: "",
@@ -37,6 +40,8 @@ const Login = () => {
           gender: "",
           date: undefined,
           agree: false,
+          level: "1",
+          toggle: false,
         }}
         onSubmit={async (values, { setSubmitting }) => {
           try {
@@ -60,7 +65,7 @@ const Login = () => {
             <Form className="min-w-[400px]">
               <Card className="shadow-md">
                 <CardHeader>Login form (don / don)</CardHeader>
-                <CardContent className="flex flex-col gap-3">
+                <CardContent className="flex flex-col gap-5">
                   <FormikField
                     component={InputField}
                     name="username"
@@ -83,11 +88,25 @@ const Login = () => {
                     name="gender"
                     label="Gender"
                     placeholder="Select gender"
+                    placeholderSearch="Search gender"
+                    messageItemNotFound="No gender found"
                     required
                     options={[
                       { label: "Male", value: 0 },
                       { label: "Female", value: 1 },
                     ]}
+                  />
+
+                  <FormikField
+                    component={RadioField}
+                    name="level"
+                    label="Your Level"
+                    options={[
+                      { label: "Junior", value: "1" },
+                      { label: "Middle", value: "2" },
+                      { label: "Senior", value: "3" },
+                    ]}
+                    required
                   />
 
                   <FormikField
@@ -98,14 +117,20 @@ const Login = () => {
                   />
 
                   <FormikField
+                    component={SwitchBoxField}
+                    name="toggle"
+                    label="Is Pro?"
+                  />
+
+                  <FormikField
                     component={CheckBoxField}
                     name="agree"
                     label="Agree with the terms"
                   />
 
-                  <CommonStyles.Button type="submit" isLoading={isSubmitting}>
+                  <Button type="submit" isLoading={isSubmitting}>
                     <CommonIcons.LogIn className="icon" /> Sign in
-                  </CommonStyles.Button>
+                  </Button>
                 </CardContent>
               </Card>
             </Form>

@@ -6,13 +6,13 @@ import { twMerge } from "tailwind-merge";
 import { get, isString } from "lodash";
 import { Calendar } from "../ui/calendar";
 import { SelectSingleEventHandler } from "react-day-picker";
-import CommonStyles from "../commonStyles";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import CommonIcons from "../commonIcons";
 import { momentInstance } from "@/helpers/common";
 import { cn } from "@/lib/utils";
 import { TimeValue as TimeValueAria } from "react-aria";
 import { TimePicker } from "../ui/date-time-picker/time-picker";
+import { Button } from "../ui/button";
 
 interface DateTimePickerFieldProps extends InputProps {
   label?: string | React.ReactNode;
@@ -118,7 +118,7 @@ const DateTimePickerField = (
             }}
           >
             <PopoverTrigger className="flex-1">
-              <CommonStyles.Button
+              <Button
                 variant="outline"
                 className={cn(
                   "w-full min-w-[200px] flex-1 pl-3 text-left font-normal",
@@ -132,7 +132,7 @@ const DateTimePickerField = (
                   <span>Pick a date</span>
                 )}
                 <CommonIcons.CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-              </CommonStyles.Button>
+              </Button>
             </PopoverTrigger>
 
             <PopoverContent className="w-auto p-0" align="start">
@@ -157,12 +157,12 @@ const DateTimePickerField = (
           />
         )}
 
-        <CommonStyles.Button
+        <Button
           variant="outline"
           onClick={() => setFieldValue(name, undefined)}
         >
           <CommonIcons.X className="ml-auto h-4 w-4 opacity-50" />
-        </CommonStyles.Button>
+        </Button>
       </div>
 
       {isString(msgError) && <span className="invalid-text">{msgError}</span>}

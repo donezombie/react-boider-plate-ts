@@ -3,10 +3,10 @@ import { AdditionalFormikProps } from "@/interfaces/common";
 import { Label } from "../ui/label";
 import { twMerge } from "tailwind-merge";
 import { get, isString } from "lodash";
-import { Checkbox } from "../ui/checkbox";
-import { CheckboxProps } from "@radix-ui/react-checkbox";
+import { Switch } from "../ui/switch";
+import { SwitchProps } from "@radix-ui/react-switch";
 
-interface CheckBoxFieldProps extends CheckboxProps {
+interface SwitchBoxFieldProps extends SwitchProps {
   label?: string | React.ReactNode;
   required?: boolean;
   classNameLabel?: string;
@@ -14,7 +14,7 @@ interface CheckBoxFieldProps extends CheckboxProps {
   afterOnChange?: (checked: boolean) => void;
 }
 
-const CheckBoxField = (props: CheckBoxFieldProps & AdditionalFormikProps) => {
+const SwitchBoxField = (props: SwitchBoxFieldProps & AdditionalFormikProps) => {
   const {
     label,
     classNameLabel,
@@ -37,10 +37,11 @@ const CheckBoxField = (props: CheckBoxFieldProps & AdditionalFormikProps) => {
 
   return (
     <div className={twMerge("flex items-center gap-3", classNameContainer)}>
-      <Checkbox
+      <Switch
         id={name}
         checked={value}
         onCheckedChange={onHandleChange}
+        aria-readonly
         {...restProps}
       />
       {label && (
@@ -56,4 +57,4 @@ const CheckBoxField = (props: CheckBoxFieldProps & AdditionalFormikProps) => {
   );
 };
 
-export default CheckBoxField;
+export default SwitchBoxField;
