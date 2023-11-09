@@ -1,20 +1,22 @@
-import React, { Suspense } from 'react';
-import { BrowserRouter as Router, Outlet, Route, Routes } from 'react-router-dom';
+import { Fragment, Suspense } from "react";
+import {
+  BrowserRouter as Router,
+  Outlet,
+  Route,
+  Routes,
+} from "react-router-dom";
 
-import Page404 from 'pages/Page404';
-import routes from 'routes/routes';
-import PrivateRoute from 'components/PrivateRoute';
+import Page404 from "@/pages/Page404";
+import routes from "@/routes/routes";
 
-import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider } from '@mui/material/styles';
-import { theme } from './theme';
-import { useToggleTheme } from 'providers/ToggleThemeProvider';
-import { ErrorBoundary } from 'react-error-boundary';
-import CommonStyles from 'components/CommonStyles';
+import { ErrorBoundary } from "react-error-boundary";
+import PrivateRoute from "@/components/PrivateRoute";
+import { Toaster } from "@/components/ui/toaster";
+import AuthenticationProvider from "./providers/AuthenticationProvider";
 
 const ErrorFallback = ({ error, resetErrorBoundary }: any) => {
   return (
-    <div role='alert'>
+    <div role="alert">
       <p>Something went wrong:</p>
       <pre>{error.message}</pre>
       <button onClick={resetErrorBoundary}>Try again</button>
@@ -24,7 +26,6 @@ const ErrorFallback = ({ error, resetErrorBoundary }: any) => {
 
 const App = () => {
   //! State
-  const { mode } = useToggleTheme();
 
   //! Function
 
@@ -58,7 +59,7 @@ const App = () => {
                       key={`${child.path}-${idx}`}
                       path={child.path}
                       element={
-                        <Suspense fallback={<CommonStyles.Loading />}>
+                        <Suspense fallback={<span>Loading...</span>}>
                           <ErrorBoundary FallbackComponent={ErrorFallback}>
                             {child.isPrivateRoute ? (
                               <PrivateRoute>
@@ -77,19 +78,18 @@ const App = () => {
             );
           })}
 
-          <Route path='*' element={<Page404 />} />
+          <Route path="*" element={<Page404 />} />
         </Routes>
       </Router>
     );
   };
 
   return (
-    <ThemeProvider theme={theme(mode)}>
-      <CssBaseline />
-
+    <AuthenticationProvider>
+      <Toaster />
       {renderContent()}
-    </ThemeProvider>
+    </AuthenticationProvider>
   );
 };
 
-export default React.memo(App);
+export default App;

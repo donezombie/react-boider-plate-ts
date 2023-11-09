@@ -1,7 +1,6 @@
-import CommonStyles from 'components/CommonStyles';
 import React from 'react';
-import { PERMISSION_ENUM } from 'consts/common';
-import { useAuth } from 'providers/AuthenticationProvider';
+import { PERMISSION_ENUM } from '@/consts/common';
+import { useAuth } from '@/providers/AuthenticationProvider';
 
 const withCheckRole = (
   ComponentWrapped:
@@ -21,7 +20,7 @@ const withCheckRole = (
     }
 
     return (
-      <CommonStyles.Typography>{`You're not have permission to access this!`}</CommonStyles.Typography>
+      <span>{`You're not have permission to access this!`}</span>
     );
   };
 };

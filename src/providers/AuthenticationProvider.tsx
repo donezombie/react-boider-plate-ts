@@ -1,8 +1,8 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react';
-import { PERMISSION_ENUM } from 'consts/common';
-import httpService from 'services/httpService';
-import { UserInfo } from 'interfaces/user';
-import { showError } from 'helpers/toast';
+import { PERMISSION_ENUM } from '@/consts/common';
+import httpService from '@/services/httpService';
+import { UserInfo } from '@/interfaces/user';
+import { useToast } from '@/components/ui/use-toast';
 
 interface AuthenticationContextI {
   loading: boolean;
@@ -30,6 +30,7 @@ export const useAuth = () => useContext(AuthenticationContext);
 
 const AuthenticationProvider = ({ children }: { children: any }) => {
   //! State
+  const { toast  } = useToast();
   const [token, setToken] = useState(httpService.getTokenStorage());
   const [user, setUser] = useState<UserInfo | null>(httpService.getUserStorage());
   const [isLogging, setIsLogging] = useState(false);
@@ -61,9 +62,12 @@ const AuthenticationProvider = ({ children }: { children: any }) => {
       httpService.saveUserStorage(mockUser);
       setIsLogging(false);
     } else {
-      showError('User/password is not correct!');
+      toast({
+        description: 'Username / Password is not correct!',
+        variant: 'destructive'
+      });
     }
-  }, []);
+  }, [toast]);
 
   const logout = useCallback(() => {
     httpService.clearStorage();
