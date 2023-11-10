@@ -13,10 +13,12 @@ import BaseUrl from "@/consts/baseUrl";
 import { sleepTime } from "@/helpers/common";
 import { useAuth } from "@/providers/AuthenticationProvider";
 import { Form, Formik } from "formik";
+import { useTranslation } from "react-i18next";
 import { Navigate } from "react-router-dom";
 import * as Yup from "yup";
 
 const Login = () => {
+  const { t } = useTranslation("en");
   const { toast } = useToast();
   const { login, isLogged } = useAuth();
 
@@ -59,8 +61,7 @@ const Login = () => {
           }
         }}
       >
-        {({ values, isSubmitting }) => {
-          console.log("123123", values);
+        {({ isSubmitting }) => {
           return (
             <Form className="min-w-[400px]">
               <Card className="shadow-md">
@@ -129,7 +130,7 @@ const Login = () => {
                   />
 
                   <Button type="submit" isLoading={isSubmitting}>
-                    <CommonIcons.LogIn className="icon" /> Sign in
+                    <CommonIcons.LogIn className="icon" /> {t("shared:login")}
                   </Button>
                 </CardContent>
               </Card>
