@@ -1,11 +1,3 @@
-import CommonIcons from "@/components/commonIcons";
-import CheckBoxField from "@/components/customFields/CheckBoxField";
-import DateTimePickerField from "@/components/customFields/DateTimePickerField";
-import FormikField from "@/components/customFields/FormikField";
-import InputField from "@/components/customFields/InputField";
-import RadioField from "@/components/customFields/RadioField";
-import SelectField from "@/components/customFields/SelectField";
-import SwitchBoxField from "@/components/customFields/SwitchBoxField";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
@@ -17,11 +9,28 @@ import { useTranslation } from "react-i18next";
 import { Navigate } from "react-router-dom";
 import * as Yup from "yup";
 
+import CommonIcons from "@/components/commonIcons";
+import CheckBoxField from "@/components/customFields/CheckBoxField";
+import DateTimePickerField from "@/components/customFields/DateTimePickerField";
+import FormikField from "@/components/customFields/FormikField";
+import InputField from "@/components/customFields/InputField";
+import RadioField from "@/components/customFields/RadioField";
+import SelectField from "@/components/customFields/SelectField";
+import SwitchBoxField from "@/components/customFields/SwitchBoxField";
+import DialogConfirm from "@/components/dialogs/DialogConfirm";
+import useToggleDialog from "@/hooks/useToggleDialog";
+import DialogExample from "@/components/dialogs/DialogExample";
+
 const Login = () => {
-  const { t } = useTranslation("en");
+  //! State
+  const { t } = useTranslation("shared");
   const { toast } = useToast();
   const { login, isLogged } = useAuth();
 
+  const [openConfirm, toggleConfirm, shouldRenderConfirm] = useToggleDialog();
+  const [openExample, toggleExample, shouldRenderExample] = useToggleDialog();
+
+  //! Render
   if (isLogged) {
     return <Navigate to={BaseUrl.Homepage} />;
   }
@@ -64,9 +73,32 @@ const Login = () => {
         {({ isSubmitting }) => {
           return (
             <Form className="min-w-[400px]">
+              {shouldRenderConfirm && (
+                <DialogConfirm
+                  isOpen={openConfirm}
+                  toggle={toggleConfirm}
+                  title="Confirmation"
+                  content="Are you sure you want do something?"
+                  onSubmit={(_, { setSubmitting }) => {
+                    setSubmitting(true);
+                    setTimeout(() => {
+                      toggleConfirm();
+                    }, 2000);
+                  }}
+                />
+              )}
+
+              {shouldRenderExample && (
+                <DialogExample isOpen={openExample} toggle={toggleExample} />
+              )}
+
               <Card className="shadow-md">
                 <CardHeader>Login form (don / don)</CardHeader>
+
                 <CardContent className="flex flex-col gap-5">
+                  <Button onClick={toggleConfirm}>Open confirm dialog</Button>
+                  <Button onClick={toggleExample}>Open example dialog</Button>
+
                   <FormikField
                     component={InputField}
                     name="username"
@@ -130,7 +162,7 @@ const Login = () => {
                   />
 
                   <Button type="submit" isLoading={isSubmitting}>
-                    <CommonIcons.LogIn className="icon" /> {t("shared:login")}
+                    <CommonIcons.LogIn className="icon" /> {t("login")}
                   </Button>
                 </CardContent>
               </Card>

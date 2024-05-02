@@ -4,5 +4,7 @@
   "description": {
     "part1": "This is a simple example.",
     "part2": "😉"
-  }
+  },
+  "yes": "Yes",
+  "close": "Close"
 }

@@ -13,7 +13,7 @@ const useToggleDialog = () => {
 
   const shouldRender = open || close;
 
-  return { open, toggle, shouldRender };
+  return [open, toggle, shouldRender] as const;
 };
 
 export default useToggleDialog;
