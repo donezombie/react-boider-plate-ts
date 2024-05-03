@@ -10,9 +10,9 @@ import { I18nextProvider } from "react-i18next";
 import Page404 from "@/pages/Page404";
 import routes from "@/routes/routes";
 
+import { ToastContainer } from "react-toastify";
 import { ErrorBoundary } from "react-error-boundary";
 import PrivateRoute from "@/components/PrivateRoute";
-import { Toaster } from "@/components/ui/toaster";
 import AuthenticationProvider from "./providers/AuthenticationProvider";
 import { ThemeProvider } from "./providers/ThemeProvider";
 import i18n from "./i18n/config";
@@ -91,8 +91,8 @@ const App = () => {
     <I18nextProvider i18n={i18n}>
       <ThemeProvider defaultTheme="light" storageKey="theme">
         <AuthenticationProvider>
-          <Toaster />
           {renderContent()}
+          <ToastContainer theme="light" />
         </AuthenticationProvider>
       </ThemeProvider>
     </I18nextProvider>

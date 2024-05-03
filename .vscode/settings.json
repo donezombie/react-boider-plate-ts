@@ -1,0 +1,9 @@
+{
+    "editor.formatOnSave": true,
+    "eslint.enable": true,
+    "files.eol": "\n",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+  }
+  

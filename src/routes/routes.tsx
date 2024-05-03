@@ -1,12 +1,12 @@
-import React, { Fragment, lazy } from 'react';
-import BaseUrl from '@/consts/baseUrl';
-import withCheckRole from '@/HOCs/withCheckRole';
-import { PERMISSION_ENUM } from '@/consts/common';
+import React, { Fragment, lazy } from "react";
+import BaseUrl from "@/consts/baseUrl";
+import withCheckRole from "@/HOCs/withCheckRole";
+import { PERMISSION_ENUM } from "@/consts/common";
 
 // Bash importHere
-const DefaultLayout = lazy(() => import('@/layouts/DefaultLayout'));
-const Login = lazy(() => import('@/pages/Login'));
-const Homepage = lazy(() => import('@/pages/Homepage'));
+const DefaultLayout = lazy(() => import("@/layouts/DefaultLayout"));
+const Login = lazy(() => import("@/pages/Login"));
+const Homepage = lazy(() => import("@/pages/Homepage"));
 interface Route {
   name: string;
   path: string;
@@ -25,12 +25,12 @@ interface Route {
 
 const routes: Route[] = [
   {
-    name: 'Login Layout',
+    name: "Login Layout",
     path: BaseUrl.Login,
     layout: Fragment,
     routeChild: [
       {
-        name: 'Login',
+        name: "Login",
         path: BaseUrl.Login,
         component: Login,
       },
@@ -38,14 +38,14 @@ const routes: Route[] = [
   },
 
   {
-    name: 'Home Layout',
+    name: "Home Layout",
     path: BaseUrl.Homepage,
     layout: DefaultLayout,
-    isPrivateRoute: true,
+    isPrivateRoute: false,
     routeChild: [
       // Bash appendHere
       {
-        name: 'Homepage',
+        name: "Homepage",
         path: BaseUrl.Homepage,
         component: withCheckRole(Homepage, [PERMISSION_ENUM.PUBLIC]),
       },

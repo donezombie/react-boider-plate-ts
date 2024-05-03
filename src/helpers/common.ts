@@ -72,3 +72,5 @@ export const getNameRole = (role: string) => {
 export const isPromise = (value: any) => {
   return Boolean(value && typeof value.then === "function");
 };
+
+export const addConfigsToRequest = () => {};

@@ -23,7 +23,6 @@ function TimeField(
   });
   const {
     fieldProps: { ...fieldProps },
-    labelProps,
   } = useTimeField(restProps, state, ref);
 
   return (

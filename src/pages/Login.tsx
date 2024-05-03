@@ -1,14 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { useToast } from "@/components/ui/use-toast";
-import BaseUrl from "@/consts/baseUrl";
-import { sleepTime } from "@/helpers/common";
-import { useAuth } from "@/providers/AuthenticationProvider";
-import { Form, Formik } from "formik";
-import { useTranslation } from "react-i18next";
-import { Navigate } from "react-router-dom";
-import * as Yup from "yup";
-
 import CommonIcons from "@/components/commonIcons";
 import CheckBoxField from "@/components/customFieldsFormik/CheckBoxField";
 import DateTimePickerField from "@/components/customFieldsFormik/DateTimePickerField";
@@ -18,8 +7,18 @@ import RadioField from "@/components/customFieldsFormik/RadioField";
 import SelectField from "@/components/customFieldsFormik/SelectField";
 import SwitchBoxField from "@/components/customFieldsFormik/SwitchBoxField";
 import DialogConfirm from "@/components/dialogs/DialogConfirm";
-import useToggleDialog from "@/hooks/useToggleDialog";
 import DialogExample from "@/components/dialogs/DialogExample";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast";
+import BaseUrl from "@/consts/baseUrl";
+import { sleepTime } from "@/helpers/common";
+import useToggleDialog from "@/hooks/useToggleDialog";
+import { useAuth } from "@/providers/AuthenticationProvider";
+import { Form, Formik } from "formik";
+import { useTranslation } from "react-i18next";
+import { Navigate } from "react-router-dom";
+import * as Yup from "yup";
 
 const Login = () => {
   //! State
@@ -94,7 +93,6 @@ const Login = () => {
 
               <Card className="shadow-md">
                 <CardHeader>Login form (don / don)</CardHeader>
-
                 <CardContent className="flex flex-col gap-5">
                   <Button onClick={toggleConfirm}>Open confirm dialog</Button>
                   <Button onClick={toggleExample}>Open example dialog</Button>

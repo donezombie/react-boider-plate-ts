@@ -23,29 +23,13 @@ Make sure you have the following installed on your development machine:
 
 Follow these steps to get started with the react-vite-ui template:
 
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/donezombie/react-boider-plate-ts.git
-   ```
-
-   ```bash
-   git checkout vite-tailwind
-   ```
-
-2. Navigate to the project directory:
-
-   ```bash
-   cd react-boider-plate-ts
-   ```
-
-3. Install the dependencies:
+1. Install the dependencies:
 
    ```bash
    pnpm install
    ```
 
-4. Start the development server:
+2. Start the development server:
 
    ```bash
    pnpm dev

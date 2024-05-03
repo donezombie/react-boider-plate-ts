@@ -6,7 +6,7 @@ import { TimeField } from "./time-field";
 const TimePicker = React.forwardRef<
   HTMLDivElement,
   Omit<TimeFieldStateOptions<TimeValue> & { className?: string }, "locale">
->((props, forwardedRef) => {
+>((props) => {
   return <TimeField {...props} />;
 });
 
