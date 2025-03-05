@@ -1,27 +1,19 @@
-import { Button } from "@/components/ui/button";
-import { useAuth } from "@/providers/AuthenticationProvider";
-import TodosInfiniteScroll from "./TodosInfiniteScroll";
-import Todos from "./Todos";
+import ExampleComponents from "@/components/Examples/ExampleComponents";
+import PageWrapper from "@/components/PageWrapper";
 
 const Homepage = () => {
   //! State
-  const { logout } = useAuth();
 
   //! Function
 
   //! Render
 
   return (
-    <div className="component:Homepager p-2">
-      <div className="mb-2 flex items-center gap-3">
-        <p>Homepage</p>
-        <Button onClick={logout}>Logout</Button>
+    <PageWrapper>
+      <div className="component:Homepage">
+        <ExampleComponents />
       </div>
-
-      <Todos />
-
-      <TodosInfiniteScroll />
-    </div>
+    </PageWrapper>
   );
 };
 

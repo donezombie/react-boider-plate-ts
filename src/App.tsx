@@ -16,6 +16,8 @@ import PrivateRoute from "@/components/PrivateRoute";
 import AuthenticationProvider from "./providers/AuthenticationProvider";
 import { ThemeProvider } from "./providers/ThemeProvider";
 import i18n from "./i18n/config";
+import Loading from "./components/ui/loading";
+import SidebarProvider from "./providers/SidebarProvider";
 
 const ErrorFallback = ({ error, resetErrorBoundary }: any) => {
   return (
@@ -62,7 +64,13 @@ const App = () => {
                       key={`${child.path}-${idx}`}
                       path={child.path}
                       element={
-                        <Suspense fallback={<span>Loading...</span>}>
+                        <Suspense
+                          fallback={
+                            <div className="p-2">
+                              <Loading />
+                            </div>
+                          }
+                        >
                           <ErrorBoundary FallbackComponent={ErrorFallback}>
                             {child.isPrivateRoute ? (
                               <PrivateRoute>
@@ -91,8 +99,10 @@ const App = () => {
     <I18nextProvider i18n={i18n}>
       <ThemeProvider defaultTheme="light" storageKey="theme">
         <AuthenticationProvider>
-          {renderContent()}
-          <ToastContainer theme="light" />
+          <SidebarProvider>
+            {renderContent()}
+            <ToastContainer theme="light" />
+          </SidebarProvider>
         </AuthenticationProvider>
       </ThemeProvider>
     </I18nextProvider>

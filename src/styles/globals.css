@@ -4,6 +4,8 @@
 
 @layer base {
   :root {
+    --sidebar-width: 16rem;
+
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
@@ -86,4 +88,26 @@
   .icon {
     @apply mr-2 h-4 w-4;
   }
+}
+
+.side-bar__menu__item {
+  transition: .3s;
+}
+
+.side-bar__menu__item:hover, .side-bar__menu__item.is-active {
+  @apply bg-gray-100;
+  @apply rounded-md;
+}
+
+.content-container {
+  @apply w-full;
+  @apply md:pl-8;
+  @apply md:pr-2;  
+  @apply md:pt-4;
+}
+
+.is-hover:hover {
+  @apply bg-gray-100;
+  @apply rounded-md;
+  @apply cursor-pointer;
 }
