@@ -6,6 +6,7 @@ const DefaultLayout = lazy(() => import("@/layouts/DefaultLayout"));
 const Login = lazy(() => import("@/pages/Login"));
 const Homepage = lazy(() => import("@/pages/Homepage"));
 const ChangePassword = lazy(() => import("@/pages/ChangePassword"));
+const ForgotPassword = lazy(() => import("@/pages/ForgotPassword"));
 
 interface Route {
   name: string;
@@ -33,6 +34,18 @@ const routes: Route[] = [
         name: "Login",
         path: BaseUrl.Login,
         component: Login,
+      },
+    ],
+  },
+  {
+    name: "Forgot Password",
+    path: BaseUrl.ForgotPassword,
+    layout: Fragment,
+    routeChild: [
+      {
+        name: "Forgot Password",
+        path: BaseUrl.ForgotPassword,
+        component: ForgotPassword,
       },
     ],
   },

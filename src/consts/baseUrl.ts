@@ -14,6 +14,7 @@ const BaseUrl = {
   AppConnect: "/app-connect",
 
   ChangePassword: "/change-password",
+  ForgotPassword: "/forgot-password",
 };
 
 export default BaseUrl;

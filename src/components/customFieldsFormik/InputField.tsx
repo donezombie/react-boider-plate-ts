@@ -11,7 +11,7 @@ interface InputFieldProps extends InputProps {
   required?: boolean;
   classNameLabel?: string;
   classNameContainer?: string;
-  helperText?: string;
+  helperText?: string | React.ReactNode;
   afterOnChange?: (e: ChangeEvent) => void;
 }
 
@@ -88,7 +88,7 @@ const InputField = (props: InputFieldProps & AdditionalFormikProps) => {
         )}
       </div>
       {helperText && (
-        <span className="mt-1 text-sm text-muted-foreground">{helperText}</span>
+        <span className="text-[13px] text-muted-foreground">{helperText}</span>
       )}
       {isString(msgError) && <span className="invalid-text">{msgError}</span>}
     </div>

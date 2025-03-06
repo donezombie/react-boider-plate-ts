@@ -1,4 +1,3 @@
-import CommonIcons from "@/components/CommonIcons";
 import FormikField from "@/components/CustomFieldsFormik/FormikField";
 import InputField from "@/components/CustomFieldsFormik/InputField";
 import { Button } from "@/components/ui/button";
@@ -8,13 +7,11 @@ import BaseUrl from "@/consts/baseUrl";
 import { sleepTime } from "@/helpers/common";
 import { useAuth } from "@/providers/AuthenticationProvider";
 import { Form, Formik } from "formik";
-import { useTranslation } from "react-i18next";
 import { Link, Navigate } from "react-router-dom";
 import * as Yup from "yup";
 
-const Login = () => {
+const ForgotPassword = () => {
   //! State
-  const { t } = useTranslation("shared");
   const { toast } = useToast();
   const { login, isLogged } = useAuth();
 
@@ -24,7 +21,7 @@ const Login = () => {
   }
 
   return (
-    <div className="component:Login flex h-[100vh] w-[100vw] items-center justify-center p-2">
+    <div className="component:ForgotPassword flex h-[100vh] w-[100vw] items-center justify-center p-2">
       <Formik
         validationSchema={Yup.object().shape({
           username: Yup.string().required("Username is required field!"),
@@ -53,48 +50,36 @@ const Login = () => {
         {({ isSubmitting }) => {
           return (
             <Form className="min-w-[500px]">
-              <div className="mb-8 flex justify-center text-3xl font-bold">
-                Logo here
-              </div>
               <Card className="shadow-md">
                 <CardHeader className="pb-5">
-                  <h1 className="text-2xl font-semibold tracking-tight">
-                    Login (don / don)
+                  <h1 className="text-xl font-semibold tracking-tight">
+                    Forgot password
                   </h1>
                   <p className="text-sm text-muted-foreground">
-                    Enter your username and password below
+                    Enter your registered email and
                     <br />
-                    to log into your account
+                    we will send you a link to reset your password.
                   </p>
                 </CardHeader>
-                <CardContent className="flex flex-col gap-5">
+                <CardContent className="flex flex-col gap-3">
                   <FormikField
                     component={InputField}
-                    name="username"
-                    label="Username"
-                    placeholder="Enter your username"
+                    name="email"
+                    label="Email"
+                    placeholder="your-email@gmail.com"
                     required
                   />
-
-                  <FormikField
-                    component={InputField}
-                    name="password"
-                    type="password"
-                    label="Password"
-                    placeholder="Enter your password"
-                    required
-                  />
-
-                  <Link
-                    to={BaseUrl.ForgotPassword}
-                    className="is-link text-right text-sm text-muted-foreground"
-                  >
-                    Forgot password?
-                  </Link>
 
                   <Button type="submit" isLoading={isSubmitting}>
-                    <CommonIcons.LogIn className="icon" /> {t("login")}
+                    Continue
                   </Button>
+
+                  <p className="text-center text-sm text-muted-foreground">
+                    You have an account?{" "}
+                    <Link to={BaseUrl.Login} className="is-link">
+                      Log in
+                    </Link>
+                  </p>
                 </CardContent>
               </Card>
             </Form>
@@ -105,4 +90,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgotPassword;

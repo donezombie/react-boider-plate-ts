@@ -101,7 +101,7 @@ const App = () => {
         <AuthenticationProvider>
           <SidebarProvider>
             {renderContent()}
-            <ToastContainer theme="light" />
+            <ToastContainer />
           </SidebarProvider>
         </AuthenticationProvider>
       </ThemeProvider>
