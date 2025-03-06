@@ -1,15 +1,16 @@
 import { Form, Formik } from "formik";
 import { Button } from "../ui/button";
-import SelectField from "../customFieldsFormik/SelectField";
-import FormikField from "../customFieldsFormik/FormikField";
-import InputField from "../customFieldsFormik/InputField";
-import RadioField from "../customFieldsFormik/RadioField";
-import DateTimePickerField from "../customFieldsFormik/DateTimePickerField";
-import SwitchBoxField from "../customFieldsFormik/SwitchBoxField";
-import CheckBoxField from "../customFieldsFormik/CheckBoxField";
-import DialogConfirm from "../dialogs/DialogConfirm";
-import DialogExample from "../dialogs/DialogExample";
+import SelectField from "../CustomFieldsFormik/SelectField";
+import FormikField from "../CustomFieldsFormik/FormikField";
+import InputField from "../CustomFieldsFormik/InputField";
+import RadioField from "../CustomFieldsFormik/RadioField";
+import DateTimePickerField from "../CustomFieldsFormik/DateTimePickerField";
+import SwitchBoxField from "../CustomFieldsFormik/SwitchBoxField";
+import CheckBoxField from "../CustomFieldsFormik/CheckBoxField";
+import DialogConfirm from "../Dialogs/DialogConfirm";
+import DialogExample from "../Dialogs/DialogExample";
 import useToggleDialog from "@/hooks/useToggleDialog";
+import { Link } from "react-router-dom";
 
 const ExampleComponents = () => {
   const [openConfirm, toggleConfirm, shouldRenderConfirm] = useToggleDialog();
@@ -25,12 +26,16 @@ const ExampleComponents = () => {
       {() => {
         return (
           <Form className="flex flex-col gap-8 rounded-md border p-3">
-            <div className="button-example">
+            <div className="button-example ">
               <p className="mb-2 text-2xl font-semibold">Buttons</p>
-              <div className="flex gap-3">
+              <div className="flex flex flex-wrap gap-3">
+                <Button size="lg">Button Size lg</Button>
+                <Button size="sm">Button Size sm</Button>
+
                 <Button>Button Primary</Button>
-                <Button variant={"outline"}>Button Outline</Button>
                 <Button variant={"secondary"}>Button Secondary</Button>
+                <Button variant={"destructive"}>Button Destructive</Button>
+                <Button variant={"outline"}>Button Outline</Button>
                 <Button isLoading={true}>Button Loading</Button>
                 <Button variant={"ghost"}>Button Ghost</Button>
               </div>
@@ -47,6 +52,10 @@ const ExampleComponents = () => {
                 <p className="text-lg">Typography lg</p>
                 <p className="text-md">Typography md</p>
                 <p className="text-sm">Typography sm</p>
+
+                <Link to="/" className="is-link">
+                  Link
+                </Link>
               </div>
             </div>
 

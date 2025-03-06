@@ -8,7 +8,7 @@ import {
 } from "react-aria";
 import { useTimeFieldState } from "react-stately";
 import { cn } from "@/lib/utils";
-import CommonIcons from "@/components/commonIcons";
+import CommonIcons from "@/components/CommonIcons";
 
 function TimeField(
   props: { className?: string } & AriaTimeFieldProps<TimeValue>

@@ -6,32 +6,35 @@ import { useState } from "react";
 import { useAuth } from "@/providers/AuthenticationProvider";
 import { Link } from "react-router-dom";
 import BaseUrl from "@/consts/baseUrl";
+import Sidebar from "../Sidebar";
 
 export default function Navbar() {
   const { logout } = useAuth();
   const { isOpen, toggle } = useSidebarHandler();
+
   const [openPopover, setPopover] = useState(false);
 
   return (
     <nav className="flex w-full items-center justify-between p-2 md:justify-end">
-      {isOpen ? (
-        <X
-          className="hover:cursor-pointer hover:bg-gray-100 md:hidden"
-          onClick={toggle}
-        />
-      ) : (
-        <Menu
-          className="hover:cursor-pointer hover:bg-gray-100 md:hidden"
-          onClick={toggle}
-        />
-      )}
+      <Popover open={isOpen} onOpenChange={toggle}>
+        <PopoverTrigger asChild>
+          {isOpen ? (
+            <X className="hover:cursor-pointer hover:bg-gray-100 md:hidden" />
+          ) : (
+            <Menu className="hover:cursor-pointer hover:bg-gray-100 md:hidden" />
+          )}
+        </PopoverTrigger>
+        <PopoverContent className="mt-[10px] w-auto border-0 p-0">
+          <Sidebar forMobile />
+        </PopoverContent>
+      </Popover>
 
       <Popover open={openPopover} onOpenChange={setPopover}>
         <PopoverTrigger asChild>
           <div className="navbar__avatar flex items-center gap-2 rounded-md hover:cursor-pointer">
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarImage src="https://github.com/shadcnee.png" />
+              <AvatarFallback>D</AvatarFallback>
             </Avatar>
             <div>
               <p className="mb-1 text-sm font-medium leading-none">
@@ -48,11 +51,14 @@ export default function Navbar() {
             {
               label: "Change password",
               href: BaseUrl.ChangePassword,
-              function: () => {},
+              function: () => {
+                setPopover(false);
+              },
             },
             {
               label: "Log out",
               function: () => {
+                setPopover(false);
                 logout();
               },
             },
@@ -63,6 +69,7 @@ export default function Navbar() {
                   to={f.href}
                   className="navbar__each__menu is-hover p-1 px-2 text-sm"
                   key={f.label}
+                  onClick={f.function}
                 >
                   {f.label}
                 </Link>

@@ -101,13 +101,16 @@
 
 .content-container {
   @apply w-full;
-  @apply md:pl-8;
-  @apply md:pr-2;  
-  @apply md:pt-4;
+  @apply pt-8;
 }
 
 .is-hover:hover {
   @apply bg-gray-100;
   @apply rounded-md;
   @apply cursor-pointer;
+}
+
+.is-link {
+  text-decoration: underline;
+  @apply hover:cursor-pointer
 }

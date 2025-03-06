@@ -1,23 +1,23 @@
-import useResponsive from "@/hooks/useResponsive";
 import { cn } from "@/lib/utils";
 import { useSidebarHandler } from "@/providers/SidebarProvider";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-const Sidebar = () => {
+const Sidebar = ({ forMobile }: { forMobile?: boolean }) => {
+  const location = useLocation();
   const { isOpen } = useSidebarHandler();
-  const { isMobile, isTablet } = useResponsive();
 
   return (
     <div
       className={cn(
-        "component:Sidebar  w-[--sidebar-width] bg-white p-2",
-        isMobile || isTablet ? "absolute top-14" : "hidden md:block"
+        "component:Sidebar",
+        forMobile
+          ? isOpen
+            ? "block h-[100vh] w-[100vw] overflow-auto"
+            : "hidden h-[100vh] w-[100vw] overflow-auto"
+          : "sticky top-0 hidden h-[100vh] max-h-[100vh] w-[--sidebar-width] p-2 md:block"
       )}
-      style={{
-        display: isMobile || isTablet ? (isOpen ? "block" : "none") : undefined,
-      }}
     >
-      <div className="flex h-full w-full flex-col rounded-md border p-1 shadow-md">
+      <div className="flex h-full w-full flex-col rounded-md border bg-backgroundSidebar p-1 shadow-md">
         <div className="side-bar__logo px-2 pt-2">
           <h3 className="text-xl">Logo comany here</h3>
         </div>
@@ -36,9 +36,9 @@ const Sidebar = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
                   <path d="M5 4h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1"></path>
                   <path d="M5 16h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1"></path>
@@ -49,7 +49,7 @@ const Sidebar = () => {
             },
             {
               label: "Task",
-              href: "/",
+              href: "/task",
               icon: (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -58,9 +58,9 @@ const Sidebar = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
                   <path d="M9.615 20h-2.615a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8"></path>
                   <path d="M14 19l2 2l4 -4"></path>
@@ -71,7 +71,7 @@ const Sidebar = () => {
             },
             {
               label: "Apps",
-              href: "/",
+              href: "/apps",
               icon: (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -80,9 +80,9 @@ const Sidebar = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
                   <path d="M7 16.5l-5 -3l5 -3l5 3v5.5l-5 3z"></path>
                   <path d="M2 13.5v5.5l5 3"></path>
@@ -98,7 +98,7 @@ const Sidebar = () => {
             },
             {
               label: "Users",
-              href: "/",
+              href: "/users",
               icon: (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -107,9 +107,9 @@ const Sidebar = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
                   <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
                   <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
@@ -121,8 +121,12 @@ const Sidebar = () => {
           ].map((el) => {
             return (
               <Link
+                key={el.label}
                 to={el.href}
-                className="side-bar__menu__item flex items-center gap-2 px-3 py-2 text-sm"
+                className={cn(
+                  "side-bar__menu__item flex items-center gap-2 px-3 py-2 text-sm",
+                  location.pathname === el.href && "is-active"
+                )}
               >
                 {el.icon} {el.label}
               </Link>

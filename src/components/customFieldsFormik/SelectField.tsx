@@ -11,7 +11,7 @@ import {
   CommandInput,
   CommandItem,
 } from "../ui/command";
-import CommonIcons from "../commonIcons";
+import CommonIcons from "../CommonIcons";
 import { cn } from "@/lib/utils";
 import { isDefine } from "@/helpers/common";
 import { Button } from "../ui/button";
