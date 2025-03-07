@@ -11,7 +11,16 @@ export const showSuccess = (msg: any, options?: ToastOptions) => {
 };
 
 export const showError = (error: any, options?: ToastOptions) => {
+  if (error.ignoreShowMessage || error?.isCanceled || error === "canceled") {
+    return;
+  }
+
   if (error?.response) {
+    if (error?.response?.data?.message) {
+      toast.error(error?.response?.data?.message);
+      return;
+    }
+
     if (error?.response?.data?.errors) {
       toast.error(JSON.stringify(error?.response?.data?.errors));
       return;

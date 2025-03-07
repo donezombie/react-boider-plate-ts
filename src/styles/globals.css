@@ -15,7 +15,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 169 100% 30.4%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -32,7 +32,7 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --ring: 169 100% 30.4%;
 
     --radius: 0.5rem;
   }
@@ -113,4 +113,15 @@
 .is-link {
   text-decoration: underline;
   @apply hover:cursor-pointer
+}
+
+.header-text {
+  @apply text-2xl;
+  @apply md:text-3xl;
+  @apply font-bold;
+}
+
+.is-tab-active {
+  @apply bg-muted;
+  @apply rounded-md
 }

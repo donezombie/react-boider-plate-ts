@@ -74,3 +74,34 @@ export const isPromise = (value: any) => {
 };
 
 export const addConfigsToRequest = () => {};
+
+export const isNumeric = (n: unknown) => {
+  return (
+    n !== "" &&
+    n !== undefined &&
+    n !== null &&
+    !isNaN(parseFloat(n as string)) &&
+    isFinite(n as number)
+  );
+};
+
+export const localeNumber = (
+  number: number | string,
+  options?: Intl.NumberFormatOptions
+) => {
+  return isNumeric(number)
+    ? number.toLocaleString("en-US", { maximumFractionDigits: 10, ...options })
+    : 0;
+};
+
+export const formatBytes = (bytes: number, decimals: number) => {
+  if (bytes == 0) {
+    return "0 Byte";
+  }
+  const k = 1024; //Or 1 kilo = 1000
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return (
+    parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + " " + sizes[i]
+  );
+};

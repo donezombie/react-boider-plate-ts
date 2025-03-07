@@ -1,19 +1,28 @@
-import { UserInfo } from '@/interfaces/user';
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { Profile } from "@/interfaces/user";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
-export const TOKEN_KEY = 'token';
-export const USER_KEY = 'user';
+export const TOKEN_KEY = "token";
+export const USER_KEY = "user";
 
 class Services {
   axios: AxiosInstance;
 
   constructor() {
-    this.axios = axios;
+    this.axios = axios.create({
+      baseURL: import.meta.env.VITE_ROOT_API,
+    });
     this.axios.defaults.withCredentials = false;
 
     //! Interceptor request
     this.axios.interceptors.request.use(
       function (config) {
+        if (config.headers) {
+          // Do something before request is sent
+          config.headers.Authorization = `Bearer ${localStorage.getItem(
+            TOKEN_KEY
+          )}`;
+        }
+
         return config;
       },
       function (error) {
@@ -86,7 +95,7 @@ class Services {
 
   getTokenStorage() {
     const token = localStorage.getItem(TOKEN_KEY);
-    return token || '';
+    return token || "";
   }
 
   clearStorage() {
@@ -94,13 +103,13 @@ class Services {
     localStorage.removeItem(USER_KEY);
   }
 
-  saveUserStorage(user: UserInfo) {
-    localStorage.setItem(USER_KEY, JSON.stringify(user));
+  saveUserStorage(user: Profile | null) {
+    localStorage.setItem(USER_KEY, user ? JSON.stringify(user) : "");
   }
 
   getUserStorage() {
     if (localStorage.getItem(USER_KEY)) {
-      return JSON.parse(localStorage?.getItem(USER_KEY) || '') as UserInfo;
+      return JSON.parse(localStorage?.getItem(USER_KEY) || "") as Profile;
     }
 
     return null;

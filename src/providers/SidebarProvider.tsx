@@ -1,4 +1,10 @@
-import { createContext, useCallback, useContext, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
 interface SidebarContextI {
   isOpen?: boolean;
@@ -20,10 +26,13 @@ const SidebarProvider = ({ children }: { children: any }) => {
     setOpen((prev) => !prev);
   }, []);
 
-  const value = {
-    isOpen,
-    toggle,
-  };
+  const value = useMemo(
+    () => ({
+      isOpen,
+      toggle,
+    }),
+    [isOpen, toggle]
+  );
 
   //! Render
   return (

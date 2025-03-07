@@ -1,10 +1,57 @@
 {
   "title": "Welcome to react using react-i18next fully type-safe",
   "login": "Login",
+  "logout": "Log out",
   "description": {
     "part1": "This is a simple example.",
     "part2": "😉"
   },
+  
   "close": "Close",
-  "yes": "Yes"
+  "yes": "Yes",
+  "update": "Update",
+  "settings": "Settings",
+  "submit": "Submit",
+  "forgotPassword": "Forgot password",
+  "upload": "Upload",
+  "remove": "Remove",
+
+  "username": "Username",
+  "email": "Email",
+  "password": "Password",
+  "newPassword": "New password",
+
+  "loginPage": {
+    "subHeader": "Enter your username and password below to log into your account"
+  },
+
+  "account": {
+    "account": "Account",
+    "profile": "Profile",
+    "subHeader": "Manage your account settings and set e-mail preferences."
+  },
+
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "importData": "Import customers"
+  },
+
+  "placeholder": {
+    "inputEmail": "Enter your email",
+    "inputUsername": "Enter your username",
+    "inputPassword": "Enter your password",
+    "inputNewPassword": "Enter your new password"
+  },
+
+  "validationMessage": {
+    "noDataFound": "No data found",
+    "emailIsRequired": "Email is required field!",
+    "passwordIsRequired": "Password is required field!",
+    "usernameIsRequired": "Username is required field!"
+  },
+
+  "success": {
+    "uploadSuccessfully": "Upload successfully!",
+    "changePasswordSuccessfully": "Change password successfully!"
+  }
 }

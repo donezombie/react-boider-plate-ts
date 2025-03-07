@@ -570,11 +570,13 @@
     "body": [
       "import React from \"react\";",
       "import { cn } from \"@/lib/utils\";",
+      "import { useTranslation } from \"react-i18next\";",
       "",
       "interface $1Props {}",
       "",
       "const $1 = (props: React.PropsWithChildren<$1Props>) => {",
       "  //! State",
+      "  const { t } = useTranslation(); ",
       "",
       "  //! Function",
       "",

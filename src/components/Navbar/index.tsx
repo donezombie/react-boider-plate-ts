@@ -7,10 +7,15 @@ import { useAuth } from "@/providers/AuthenticationProvider";
 import { Link } from "react-router-dom";
 import BaseUrl from "@/consts/baseUrl";
 import Sidebar from "../Sidebar";
+import { useTranslation } from "react-i18next";
+import { upperCase } from "lodash";
+import { Badge } from "../ui/badge";
 
 export default function Navbar() {
+  const { t } = useTranslation();
   const { logout } = useAuth();
   const { isOpen, toggle } = useSidebarHandler();
+  const { user, isAdmin } = useAuth();
 
   const [openPopover, setPopover] = useState(false);
 
@@ -34,14 +39,15 @@ export default function Navbar() {
           <div className="navbar__avatar flex items-center gap-2 rounded-md hover:cursor-pointer">
             <Avatar>
               <AvatarImage src="https://github.com/shadcnee.png" />
-              <AvatarFallback>D</AvatarFallback>
+              <AvatarFallback>{upperCase(user?.username?.[0])}</AvatarFallback>
             </Avatar>
             <div>
               <p className="mb-1 text-sm font-medium leading-none">
-                donezombie
+                {user?.username}{" "}
+                {isAdmin && <Badge className="mr-2">Admin</Badge>}
               </p>
               <p className="text-xs leading-none text-muted-foreground">
-                donezombie@gmail.com
+                {user?.email}
               </p>
             </div>
           </div>
@@ -49,14 +55,14 @@ export default function Navbar() {
         <PopoverContent className="mr-2 mt-2 flex max-w-[200px] flex-col p-2">
           {[
             {
-              label: "Change password",
-              href: BaseUrl.ChangePassword,
+              label: t("settings"),
+              href: BaseUrl.Settings,
               function: () => {
                 setPopover(false);
               },
             },
             {
-              label: "Log out",
+              label: t("logout"),
               function: () => {
                 setPopover(false);
                 logout();

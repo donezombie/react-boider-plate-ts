@@ -1,5 +1,7 @@
 import React, { Fragment, lazy } from "react";
 import BaseUrl from "@/consts/baseUrl";
+import withCheckRole from "@/HOCs/withCheckRole";
+import { PERMISSION_ENUM } from "@/consts/common";
 
 // Bash importHere
 const DefaultLayout = lazy(() => import("@/layouts/DefaultLayout"));
@@ -7,6 +9,13 @@ const Login = lazy(() => import("@/pages/Login"));
 const Homepage = lazy(() => import("@/pages/Homepage"));
 const ChangePassword = lazy(() => import("@/pages/ChangePassword"));
 const ForgotPassword = lazy(() => import("@/pages/ForgotPassword"));
+const ResetPassword = lazy(() => import("@/pages/ResetPassword"));
+const Settings = lazy(() => import("@/pages/Settings"));
+const ImportData = lazy(() => import("@/pages/ImportData"));
+
+const ExampleComponents = lazy(
+  () => import("@/components/Examples/ExampleComponents")
+);
 
 interface Route {
   name: string;
@@ -49,6 +58,31 @@ const routes: Route[] = [
       },
     ],
   },
+  {
+    name: "Reset Password",
+    path: BaseUrl.ResetPassword,
+    layout: Fragment,
+    routeChild: [
+      {
+        name: "Reset Password",
+        path: BaseUrl.ResetPassword,
+        component: ResetPassword,
+      },
+    ],
+  },
+
+  {
+    name: "Example Components",
+    path: "/example/components",
+    layout: Fragment,
+    routeChild: [
+      {
+        name: "Example",
+        path: "/example/components",
+        component: ExampleComponents,
+      },
+    ],
+  },
 
   {
     name: "Home Layout",
@@ -66,6 +100,16 @@ const routes: Route[] = [
         name: "Change Password",
         path: BaseUrl.ChangePassword,
         component: ChangePassword,
+      },
+      {
+        name: "Import Data",
+        path: BaseUrl.ImportData,
+        component: withCheckRole(ImportData, [PERMISSION_ENUM.ADMIN]),
+      },
+      {
+        name: "Settings",
+        path: BaseUrl.Settings,
+        component: Settings,
       },
     ],
   },

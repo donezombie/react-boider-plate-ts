@@ -1,19 +1,23 @@
 import FormikField from "@/components/CustomFieldsFormik/FormikField";
 import InputField from "@/components/CustomFieldsFormik/InputField";
+import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { useToast } from "@/components/ui/use-toast";
 import BaseUrl from "@/consts/baseUrl";
-import { sleepTime } from "@/helpers/common";
+import { showError } from "@/helpers/toast";
 import { useAuth } from "@/providers/AuthenticationProvider";
+import AuthService from "@/services/AuthService";
 import { Form, Formik } from "formik";
-import { Link, Navigate } from "react-router-dom";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Navigate } from "react-router-dom";
 import * as Yup from "yup";
 
 const ForgotPassword = () => {
   //! State
-  const { toast } = useToast();
-  const { login, isLogged } = useAuth();
+  const { t } = useTranslation();
+  const { isLogged } = useAuth();
+  const [emailSuccess, setEmailSuccess] = useState("");
 
   //! Render
   if (isLogged) {
@@ -24,24 +28,20 @@ const ForgotPassword = () => {
     <div className="component:ForgotPassword flex h-[100vh] w-[100vw] items-center justify-center p-2">
       <Formik
         validationSchema={Yup.object().shape({
-          username: Yup.string().required("Username is required field!"),
-          password: Yup.string().required("Password is required field!"),
+          username: Yup.string().required(
+            t("validationMessage.usernameIsRequired")
+          ),
         })}
         initialValues={{
           username: "",
-          password: "",
         }}
         onSubmit={async (values, { setSubmitting }) => {
           try {
             setSubmitting(true);
-            const { username, password } = values;
-            await sleepTime(1000);
-            login({ username, password });
+            const response = await AuthService.resetPassword(values.username);
+            setEmailSuccess(response?.data?.data?.email);
           } catch (error) {
-            toast({
-              variant: "destructive",
-              description: error as string,
-            });
+            showError(error);
           } finally {
             setSubmitting(false);
           }
@@ -56,30 +56,34 @@ const ForgotPassword = () => {
                     Forgot password
                   </h1>
                   <p className="text-sm text-muted-foreground">
-                    Enter your registered email and
+                    Enter your registered username and
                     <br />
-                    we will send you a link to reset your password.
+                    we will send you a link to your email to reset your
+                    password.
                   </p>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-3">
                   <FormikField
                     component={InputField}
-                    name="email"
-                    label="Email"
-                    placeholder="your-email@gmail.com"
+                    name="username"
+                    label={t("username")}
+                    placeholder={t("placeholder.inputUsername")}
                     required
                   />
 
                   <Button type="submit" isLoading={isSubmitting}>
-                    Continue
+                    {t("submit")}
                   </Button>
 
-                  <p className="text-center text-sm text-muted-foreground">
-                    You have an account?{" "}
-                    <Link to={BaseUrl.Login} className="is-link">
-                      Log in
-                    </Link>
-                  </p>
+                  {emailSuccess && (
+                    <Alert
+                      variant={"default"}
+                      className="border-green-200 bg-green-100 p-2 text-sm text-green-700"
+                    >
+                      We have sent the link to {emailSuccess}. Please check in
+                      your email!
+                    </Alert>
+                  )}
                 </CardContent>
               </Card>
             </Form>

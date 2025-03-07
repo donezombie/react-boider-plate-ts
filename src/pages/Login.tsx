@@ -1,11 +1,10 @@
 import CommonIcons from "@/components/CommonIcons";
 import FormikField from "@/components/CustomFieldsFormik/FormikField";
 import InputField from "@/components/CustomFieldsFormik/InputField";
+import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { useToast } from "@/components/ui/use-toast";
 import BaseUrl from "@/consts/baseUrl";
-import { sleepTime } from "@/helpers/common";
 import { useAuth } from "@/providers/AuthenticationProvider";
 import { Form, Formik } from "formik";
 import { useTranslation } from "react-i18next";
@@ -15,7 +14,6 @@ import * as Yup from "yup";
 const Login = () => {
   //! State
   const { t } = useTranslation("shared");
-  const { toast } = useToast();
   const { login, isLogged } = useAuth();
 
   //! Render
@@ -27,8 +25,12 @@ const Login = () => {
     <div className="component:Login flex h-[100vh] w-[100vw] items-center justify-center p-2">
       <Formik
         validationSchema={Yup.object().shape({
-          username: Yup.string().required("Username is required field!"),
-          password: Yup.string().required("Password is required field!"),
+          username: Yup.string().required(
+            t("validationMessage.usernameIsRequired")
+          ),
+          password: Yup.string().required(
+            t("validationMessage.passwordIsRequired")
+          ),
         })}
         initialValues={{
           username: "",
@@ -38,13 +40,9 @@ const Login = () => {
           try {
             setSubmitting(true);
             const { username, password } = values;
-            await sleepTime(1000);
-            login({ username, password });
+            await login({ username: username, password });
           } catch (error) {
-            toast({
-              variant: "destructive",
-              description: error as string,
-            });
+            console.log("error", error);
           } finally {
             setSubmitting(false);
           }
@@ -52,27 +50,25 @@ const Login = () => {
       >
         {({ isSubmitting }) => {
           return (
-            <Form className="min-w-[500px]">
+            <Form className="md:min-w-[500px]">
               <div className="mb-8 flex justify-center text-3xl font-bold">
-                Logo here
+                <Logo />
               </div>
               <Card className="shadow-md">
                 <CardHeader className="pb-5">
                   <h1 className="text-2xl font-semibold tracking-tight">
-                    Login (don / don)
+                    {t("login")}
                   </h1>
-                  <p className="text-sm text-muted-foreground">
-                    Enter your username and password below
-                    <br />
-                    to log into your account
+                  <p className="max-w-[290px] text-sm text-muted-foreground">
+                    {t("loginPage.subHeader")}
                   </p>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-5">
                   <FormikField
                     component={InputField}
                     name="username"
-                    label="Username"
-                    placeholder="Enter your username"
+                    label={t("username")}
+                    placeholder={t("placeholder.inputUsername")}
                     required
                   />
 
@@ -80,8 +76,8 @@ const Login = () => {
                     component={InputField}
                     name="password"
                     type="password"
-                    label="Password"
-                    placeholder="Enter your password"
+                    label={t("password")}
+                    placeholder={t("placeholder.inputPassword")}
                     required
                   />
 
@@ -89,7 +85,7 @@ const Login = () => {
                     to={BaseUrl.ForgotPassword}
                     className="is-link text-right text-sm text-muted-foreground"
                   >
-                    Forgot password?
+                    {t("forgotPassword")}
                   </Link>
 
                   <Button type="submit" isLoading={isSubmitting}>

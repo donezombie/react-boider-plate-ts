@@ -15,6 +15,10 @@ const BaseUrl = {
 
   ChangePassword: "/change-password",
   ForgotPassword: "/forgot-password",
+  ResetPassword: "/reset-password",
+
+  Account: "/account",
+  ImportData: "/import-data",
 };
 
 export default BaseUrl;
