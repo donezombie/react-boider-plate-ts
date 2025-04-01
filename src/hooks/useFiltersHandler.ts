@@ -45,12 +45,14 @@ function useFiltersHandler<T>(initialFilters: T & CommonFilters) {
     (event: React.MouseEvent<unknown>, property: keyof any) => {
       setFilters((prev) => {
         if (prev) {
-          const isAsc = prev.orderBy === property && prev?.order === "asc";
-          return {
-            ...prev,
-            order: isAsc ? Order.desc : Order.asc,
-            orderBy: property,
-          };
+          if ("orderBy" in prev && "order" in prev) {
+            const isAsc = prev.orderBy === property && prev?.order === "asc";
+            return {
+              ...prev,
+              order: isAsc ? Order.desc : Order.asc,
+              orderBy: property,
+            };
+          }
         }
 
         return prev;

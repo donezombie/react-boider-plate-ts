@@ -441,7 +441,7 @@
     "prefix": "genComponentTable",
     "body": [
       "import React from 'react';",
-      "import CommonIcons from 'components/CommonIcons';",
+      "import CommonIcons from 'components/commonIcons';",
       "import CommonStyles from 'components/CommonStyles';",
       "import SearchAndFilters from 'components/SearchAndFilters';",
       "import { FastField } from 'formik';",

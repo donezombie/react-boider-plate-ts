@@ -6,6 +6,7 @@ import {
   Routes,
 } from "react-router-dom";
 import { I18nextProvider } from "react-i18next";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Page404 from "@/pages/Page404";
 import routes from "@/routes/routes";
@@ -28,6 +29,15 @@ const ErrorFallback = ({ error, resetErrorBoundary }: any) => {
     </div>
   );
 };
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const App = () => {
   //! State
@@ -98,12 +108,14 @@ const App = () => {
   return (
     <I18nextProvider i18n={i18n}>
       <ThemeProvider defaultTheme="light" storageKey="theme">
-        <AuthenticationProvider>
-          <SidebarProvider>
-            {renderContent()}
-            <ToastContainer />
-          </SidebarProvider>
-        </AuthenticationProvider>
+        <QueryClientProvider client={queryClient}>
+          <AuthenticationProvider>
+            <SidebarProvider>
+              {renderContent()}
+              <ToastContainer />
+            </SidebarProvider>
+          </AuthenticationProvider>
+        </QueryClientProvider>
       </ThemeProvider>
     </I18nextProvider>
   );

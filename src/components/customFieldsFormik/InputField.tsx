@@ -73,7 +73,7 @@ const InputField = (props: InputFieldProps & AdditionalFormikProps) => {
         {isPasswordType && (
           <button
             type="button"
-            className="[&_svg]:size-4 absolute right-1 top-1/2 inline-flex h-6 w-6 -translate-y-1/2 items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0"
+            className="absolute right-1 top-1/2 inline-flex h-6 w-6 -translate-y-1/2 items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
             onClick={(e) => {
               e.stopPropagation();
               setSeeText((prev) => !prev);

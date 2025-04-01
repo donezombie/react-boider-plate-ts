@@ -64,12 +64,14 @@ const DateTimePickerField = (
     setFieldValue(name, nextDate);
   };
 
-  const onHandleChangeTime = (timeValue: TimeValue) => {
+  const onHandleChangeTime = (timeValue: TimeValue | null) => {
     const nextDate = momentInstance(value).toDate();
-    nextDate.setHours(timeValue.hour);
-    nextDate.setMinutes(timeValue.minute);
-    nextDate.setSeconds(timeValue.second);
-    nextDate.setMilliseconds(timeValue.millisecond);
+    if (timeValue) {
+      nextDate.setHours(timeValue.hour);
+      nextDate.setMinutes(timeValue.minute);
+      nextDate.setSeconds(timeValue.second);
+      nextDate.setMilliseconds(timeValue.millisecond);
+    }
 
     setFieldValue(name, nextDate);
     afterOnChange && afterOnChange(nextDate);

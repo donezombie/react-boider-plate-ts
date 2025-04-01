@@ -11,10 +11,42 @@ import DialogConfirm from "../Dialogs/DialogConfirm";
 import DialogExample from "../Dialogs/DialogExample";
 import useToggleDialog from "@/hooks/useToggleDialog";
 import { Link } from "react-router-dom";
+import { useGetTodos } from "@/modules/todos";
+import useFiltersHandler from "@/hooks/useFiltersHandler";
+import { cloneDeep } from "lodash";
+import Loading from "../ui/loading";
 
 const ExampleComponents = () => {
   const [openConfirm, toggleConfirm, shouldRenderConfirm] = useToggleDialog();
   const [openExample, toggleExample, shouldRenderExample] = useToggleDialog();
+
+  const { filters, setFilters } = useFiltersHandler({
+    page: 1,
+    rowsPerPage: 15,
+  });
+  const { data, isPending } = useGetTodos({ filters });
+
+  const renderExampleTodos = () => {
+    if (isPending) {
+      return (
+        <div>
+          <Loading />
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        {(data || []).map((el) => {
+          return (
+            <div key={el.id}>
+              {el.id} - {el.title}
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
 
   return (
     <Formik
@@ -28,7 +60,7 @@ const ExampleComponents = () => {
           <Form className="flex flex-col gap-8 rounded-md border p-3">
             <div className="button-example ">
               <p className="mb-2 text-2xl font-semibold">Buttons</p>
-              <div className="flex flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-3">
                 <Button size="lg">Button Size lg</Button>
                 <Button size="sm">Button Size sm</Button>
 
@@ -154,6 +186,37 @@ const ExampleComponents = () => {
               </div>
               <div>
                 <Button onClick={toggleExample}>Open example dialog</Button>
+              </div>
+            </div>
+
+            <div>
+              {renderExampleTodos()}
+
+              <div className="mt-2 flex gap-3">
+                <Button
+                  variant="secondary"
+                  disabled={filters.page <= 1}
+                  onClick={() => {
+                    setFilters((prev) => {
+                      const next = cloneDeep(prev);
+                      next.page = next.page - 1;
+                      return next;
+                    });
+                  }}
+                >
+                  Back
+                </Button>
+                <Button
+                  onClick={() => {
+                    setFilters((prev) => {
+                      const next = cloneDeep(prev);
+                      next.page = next.page + 1;
+                      return next;
+                    });
+                  }}
+                >
+                  Next
+                </Button>
               </div>
             </div>
           </Form>
