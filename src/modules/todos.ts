@@ -1,5 +1,4 @@
 import queriesKeys from "@/consts/queriesKeys";
-import { showError } from "@/helpers/toast";
 import todoService, { RequestGetTodos } from "@/services/todoService";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -12,14 +11,7 @@ export const useGetTodos = ({
 }) =>
   useQuery({
     queryKey: [queriesKeys.getTodos, key, filters.page],
-    queryFn: async ({ signal }) => {
-      try {
-        const response = await todoService.getTodos(filters, { signal });
-        return response.data;
-      } catch (error) {
-        showError(error);
-      }
-    },
+    queryFn: ({ signal }) => todoService.getTodos(filters, { signal }),
   });
 
 export const useAddNewTodo = () =>

@@ -6,7 +6,11 @@ import {
   Routes,
 } from "react-router-dom";
 import { I18nextProvider } from "react-i18next";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 
 import Page404 from "@/pages/Page404";
 import routes from "@/routes/routes";
@@ -19,6 +23,7 @@ import { ThemeProvider } from "./providers/ThemeProvider";
 import i18n from "./i18n/config";
 import Loading from "./components/ui/loading";
 import SidebarProvider from "./providers/SidebarProvider";
+import { showError } from "./helpers/toast";
 
 const ErrorFallback = ({ error, resetErrorBoundary }: any) => {
   return (
@@ -31,6 +36,13 @@ const ErrorFallback = ({ error, resetErrorBoundary }: any) => {
 };
 
 const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error, query) => {
+      if (query.state.data !== undefined) {
+        showError(error);
+      }
+    },
+  }),
   defaultOptions: {
     queries: {
       refetchOnMount: false,
