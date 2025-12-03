@@ -1,20 +1,22 @@
 import { Form, Formik } from "formik";
 import { Button } from "../ui/button";
-import SelectField from "../CustomFieldsFormik/SelectField";
-import FormikField from "../CustomFieldsFormik/FormikField";
-import InputField from "../CustomFieldsFormik/InputField";
-import RadioField from "../CustomFieldsFormik/RadioField";
-import DateTimePickerField from "../CustomFieldsFormik/DateTimePickerField";
-import SwitchBoxField from "../CustomFieldsFormik/SwitchBoxField";
-import CheckBoxField from "../CustomFieldsFormik/CheckBoxField";
-import DialogConfirm from "../Dialogs/DialogConfirm";
-import DialogExample from "../Dialogs/DialogExample";
+import SelectField from "../customFieldsFormik/SelectField";
+import FormikField from "../customFieldsFormik/FormikField";
+import InputField from "../customFieldsFormik/InputField";
+import RadioField from "../customFieldsFormik/RadioField";
+import DateTimePickerField from "../customFieldsFormik/DateTimePickerField";
+import SwitchBoxField from "../customFieldsFormik/SwitchBoxField";
+import CheckBoxField from "../customFieldsFormik/CheckBoxField";
+import DialogConfirm from "../dialogs/DialogConfirm";
+import DialogExample from "../dialogs/DialogExample";
 import useToggleDialog from "@/hooks/useToggleDialog";
 import { Link } from "react-router-dom";
 import { useGetTodos } from "@/modules/todos";
 import useFiltersHandler from "@/hooks/useFiltersHandler";
 import { cloneDeep } from "lodash";
 import Loading from "../ui/loading";
+import AsyncSelectField from "../customFieldsFormik/AsyncSelectField";
+import * as Yup from "yup";
 
 const ExampleComponents = () => {
   const [openConfirm, toggleConfirm, shouldRenderConfirm] = useToggleDialog();
@@ -51,11 +53,29 @@ const ExampleComponents = () => {
   return (
     <Formik
       initialValues={{
-        gender: "m",
+        username: "",
+        password: "",
+        radioInput: "1",
+        date: new Date(),
+        toggle: true,
+        agree: true,
+        gender: { label: "Male", value: "m" },
+        genderAsync: [
+          { label: "Male", value: "m" },
+          { label: "Female", value: "female" },
+        ],
       }}
       onSubmit={() => {}}
+      validationSchema={Yup.object().shape({
+        username: Yup.string().required("Username is required field!"),
+        password: Yup.string().required("Password is required field!"),
+        radioInput: Yup.string().required("Radio input is required field!"),
+        date: Yup.date().required("Date is required field!"),
+        toggle: Yup.boolean().required("Toggle is required field!"),
+        agree: Yup.boolean().required("Agree is required field!"),
+      })}
     >
-      {() => {
+      {({ values, errors }) => {
         return (
           <Form className="flex flex-col gap-8 rounded-md border p-3">
             <div className="button-example ">
@@ -93,6 +113,10 @@ const ExampleComponents = () => {
 
             <div className="form-example">
               <p className="mb-2 text-2xl font-semibold">Form</p>
+              <code className="mb-4 block">
+                {JSON.stringify({ values, errors })}
+              </code>
+
               <div className="flex max-w-md flex-col gap-4">
                 <FormikField
                   component={SelectField}
@@ -107,7 +131,30 @@ const ExampleComponents = () => {
                       value: "female",
                     },
                   ]}
+                  isClearable
+                  placeholder="Select gender"
                   label="Gender"
+                />
+
+                <FormikField
+                  component={AsyncSelectField}
+                  name="genderAsync"
+                  label="Gender"
+                  required
+                  isClearable
+                  isMulti
+                  loadOptions={(inputValue) => {
+                    return new Promise((resolve) => {
+                      setTimeout(() => {
+                        resolve([
+                          { label: "Male", value: "m" },
+                          { label: "Female", value: "female" },
+                          { label: "Other", value: "other" },
+                        ]);
+                      }, 1000);
+                    });
+                  }}
+                  placeholder="Select Async Gender"
                 />
 
                 <FormikField
@@ -120,7 +167,7 @@ const ExampleComponents = () => {
 
                 <FormikField
                   component={InputField}
-                  name="Password"
+                  name="password"
                   label="Password"
                   type="password"
                   placeholder="Enter your password"
@@ -157,6 +204,10 @@ const ExampleComponents = () => {
                   name="agree"
                   label="Checkbox field"
                 />
+              </div>
+
+              <div className="mt-4">
+                <Button type="submit">Submit</Button>
               </div>
             </div>
 

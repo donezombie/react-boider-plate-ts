@@ -33,6 +33,7 @@ const InputField = (props: InputFieldProps & AdditionalFormikProps) => {
   const [seeText, setSeeText] = useState(false);
 
   const msgError = get(touched, name) && (get(errors, name) as string);
+  console.log("msgError", msgError, name);
 
   const isPasswordType = type === "password";
 

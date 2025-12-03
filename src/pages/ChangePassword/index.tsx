@@ -1,5 +1,5 @@
-import FormikField from "@/components/CustomFieldsFormik/FormikField";
-import InputField from "@/components/CustomFieldsFormik/InputField";
+import FormikField from "@/components/customFieldsFormik/FormikField";
+import InputField from "@/components/customFieldsFormik/InputField";
 import PageWrapper from "@/components/PageWrapper";
 import { Button } from "@/components/ui/button";
 import { Form, Formik } from "formik";

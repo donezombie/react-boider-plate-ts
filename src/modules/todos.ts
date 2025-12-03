@@ -11,7 +11,10 @@ export const useGetTodos = ({
 }) =>
   useQuery({
     queryKey: [queriesKeys.getTodos, key, filters.page],
-    queryFn: ({ signal }) => todoService.getTodos(filters, { signal }),
+    queryFn: async ({ signal }) => {
+      const response = await todoService.getTodos(filters, { signal });
+      return response.data;
+    },
   });
 
 export const useAddNewTodo = () =>

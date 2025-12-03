@@ -1,5 +1,5 @@
-import FormikField from "@/components/CustomFieldsFormik/FormikField";
-import InputField from "@/components/CustomFieldsFormik/InputField";
+import FormikField from "@/components/customFieldsFormik/FormikField";
+import InputField from "@/components/customFieldsFormik/InputField";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";

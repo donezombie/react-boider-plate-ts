@@ -3,7 +3,7 @@ import { AdditionalFormikProps, SelectOption } from "@/interfaces/common";
 import { Label } from "../ui/label";
 import { get, isString } from "lodash";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import {
   Command,
   CommandEmpty,
@@ -15,9 +15,10 @@ import CommonIcons from "../CommonIcons";
 import { cn } from "@/lib/utils";
 import { isDefine } from "@/helpers/common";
 import { Button } from "../ui/button";
+import Loading from "../ui/loading";
 import { Badge } from "../ui/badge";
 
-interface SelectFieldProps {
+interface AsyncSelectFieldProps {
   label?: string | React.ReactNode;
   required?: boolean;
   classNameLabel?: string;
@@ -25,16 +26,20 @@ interface SelectFieldProps {
   placeholder?: string;
   placeholderSearch?: string;
   messageItemNotFound?: string;
-  options: SelectOption[];
+  loadOptions: (inputValue?: string) => Promise<SelectOption[]>;
+  defaultOptions?: SelectOption[];
+  cacheOptions?: boolean;
+  debounceMs?: number;
   isClearable?: boolean;
   isMulti?: boolean;
   afterOnChange?: (e: SelectOption | SelectOption[] | null) => void;
 }
 
-const SelectField = (props: SelectFieldProps & AdditionalFormikProps) => {
+const AsyncSelectField = (
+  props: AsyncSelectFieldProps & AdditionalFormikProps
+) => {
   //! State
   const {
-    options,
     classNameContainer,
     field,
     form,
@@ -45,10 +50,21 @@ const SelectField = (props: SelectFieldProps & AdditionalFormikProps) => {
     messageItemNotFound,
     required,
     afterOnChange,
+    loadOptions,
+    defaultOptions = [],
+    cacheOptions = false,
+    debounceMs = 300,
     isClearable = false,
     isMulti = false,
   } = props;
   const [open, setOpen] = useState(false);
+  const [options, setOptions] = useState<SelectOption[]>(defaultOptions);
+  const [loading, setLoading] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const cachedOptionsRef = useRef<Map<string, SelectOption[]>>(new Map());
+
   const { value, name } = field;
   const { setFieldValue, setFieldTouched, errors, touched } = form;
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -58,7 +74,27 @@ const SelectField = (props: SelectFieldProps & AdditionalFormikProps) => {
   // Check if value is an array (multi-select)
   const isValueArray = Array.isArray(value);
 
-  // Get selected options for multi-select
+  // Check if value is a SelectOption object (single select)
+  const isValueObject =
+    !isValueArray &&
+    value &&
+    typeof value === "object" &&
+    "label" in value &&
+    "value" in value;
+  const valueOption = isValueObject ? (value as SelectOption) : null;
+  const actualValue = isValueObject ? valueOption?.value : value;
+
+  // Get selected values for multi-select
+  const getSelectedValues = (): (string | number)[] => {
+    if (!isMulti || !isValueArray) return [];
+    return value.map((item: any) => {
+      if (item && typeof item === "object" && "value" in item) {
+        return item.value;
+      }
+      return item;
+    });
+  };
+
   const getSelectedOptions = (): SelectOption[] => {
     if (!isMulti || !isValueArray) return [];
     return value
@@ -80,10 +116,88 @@ const SelectField = (props: SelectFieldProps & AdditionalFormikProps) => {
       );
   };
 
+  const selectedValues = getSelectedValues();
   const selectedOptions = getSelectedOptions();
 
   //! Function
-  const handleSelect = (option: SelectOption) => {
+  const fetchOptions = useCallback(
+    async (inputValue: string = "") => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        // Check cache if enabled
+        if (cacheOptions && cachedOptionsRef.current.has(inputValue)) {
+          const cached = cachedOptionsRef.current.get(inputValue);
+          if (cached) {
+            setOptions(cached);
+            setLoading(false);
+            return;
+          }
+        }
+
+        const result = await loadOptions(inputValue);
+        setOptions(result);
+
+        // Cache the result if enabled
+        if (cacheOptions) {
+          cachedOptionsRef.current.set(inputValue, result);
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to load options");
+        setOptions([]);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [loadOptions, cacheOptions]
+  );
+
+  const debouncedFetchOptions = useCallback(
+    (inputValue: string = "") => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+
+      debounceTimerRef.current = setTimeout(() => {
+        fetchOptions(inputValue);
+      }, debounceMs);
+    },
+    [fetchOptions, debounceMs]
+  );
+
+  // Load options when popover opens
+  useEffect(() => {
+    if (open) {
+      fetchOptions("");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  // Cleanup debounce timer on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, []);
+
+  //! Render
+  const widthPopover = buttonRef.current?.getBoundingClientRect().width || 0;
+
+  const handleSearchChange = (value: string) => {
+    setSearchValue(value);
+    debouncedFetchOptions(value);
+  };
+
+  const handleSelect = (optionValue: string | number) => {
+    const selectedOption = options.find(
+      (option) => `${option.value}` === `${optionValue}`
+    );
+
+    if (!selectedOption) return;
+
     if (isMulti) {
       // Multi-select mode - always store SelectOption objects
       const currentValues = isValueArray ? [...value] : [];
@@ -99,24 +213,24 @@ const SelectField = (props: SelectFieldProps & AdditionalFormikProps) => {
           return item as SelectOption;
         }
         // Find the option object for primitive values
-        const foundOption = options.find((opt) => `${opt.value}` === `${item}`);
-        return foundOption || { label: String(item), value: item };
+        const option = options.find((opt) => `${opt.value}` === `${item}`);
+        return option || { label: String(item), value: item };
       });
 
       // Check if already selected
       const isSelected = currentOptions.some(
-        (opt) => `${opt.value}` === `${option.value}`
+        (opt) => `${opt.value}` === `${optionValue}`
       );
 
       let newValue: SelectOption[];
       if (isSelected) {
         // Remove from selection
         newValue = currentOptions.filter(
-          (opt) => `${opt.value}` !== `${option.value}`
+          (opt) => `${opt.value}` !== `${optionValue}`
         );
       } else {
         // Add to selection
-        newValue = [...currentOptions, option];
+        newValue = [...currentOptions, selectedOption];
       }
 
       setFieldValue(name, newValue);
@@ -124,17 +238,10 @@ const SelectField = (props: SelectFieldProps & AdditionalFormikProps) => {
       // Don't close popover in multi-select mode
     } else {
       // Single select mode - always store SelectOption object
-      const isSameValue =
-        value &&
-        typeof value === "object" &&
-        "label" in value &&
-        "value" in value
-          ? `${(value as SelectOption).value}` === `${option.value}`
-          : `${value}` === `${option.value}`;
-
-      const result = isSameValue ? null : option;
+      const isSameValue = `${actualValue}` === `${optionValue}`;
+      const result = isSameValue ? null : selectedOption;
       setFieldValue(name, result);
-      afterOnChange && afterOnChange(isSameValue ? null : option);
+      afterOnChange && afterOnChange(isSameValue ? null : selectedOption);
       setOpen(false);
     }
   };
@@ -157,8 +264,8 @@ const SelectField = (props: SelectFieldProps & AdditionalFormikProps) => {
         return item as SelectOption;
       }
       // Find the option object for primitive values
-      const foundOption = options.find((opt) => `${opt.value}` === `${item}`);
-      return foundOption || { label: String(item), value: item };
+      const option = options.find((opt) => `${opt.value}` === `${item}`);
+      return option || { label: String(item), value: item };
     });
 
     // Remove the selected option
@@ -176,13 +283,11 @@ const SelectField = (props: SelectFieldProps & AdditionalFormikProps) => {
       setFieldValue(name, []);
       afterOnChange && afterOnChange([]);
     } else {
+      // Always clear to null (not empty string)
       setFieldValue(name, null);
       afterOnChange && afterOnChange(null);
     }
   };
-
-  //! Render
-  const widthPopover = buttonRef.current?.getBoundingClientRect().width || 0;
 
   return (
     <div
@@ -204,6 +309,7 @@ const SelectField = (props: SelectFieldProps & AdditionalFormikProps) => {
           setOpen(open);
           if (!open) {
             setFieldTouched(name, true);
+            setSearchValue("");
           }
         }}
       >
@@ -236,12 +342,10 @@ const SelectField = (props: SelectFieldProps & AdditionalFormikProps) => {
               ) : isMulti ? (
                 <span className="text-muted-foreground">{placeholder}</span>
               ) : isDefine(value) ? (
-                value && typeof value === "object" && "label" in value ? (
-                  (value as SelectOption).label
-                ) : (
-                  options.find((option) => `${option.value}` === `${value}`)
-                    ?.label || placeholder
-                )
+                valueOption?.label ||
+                options.find((option) => `${option.value}` === `${actualValue}`)
+                  ?.label ||
+                placeholder
               ) : (
                 placeholder
               )}
@@ -265,41 +369,57 @@ const SelectField = (props: SelectFieldProps & AdditionalFormikProps) => {
             width: widthPopover,
           }}
         >
-          <Command>
-            <CommandInput placeholder={placeholderSearch || "Search item"} />
-            <CommandEmpty>
-              {messageItemNotFound || "No item found."}
-            </CommandEmpty>
-            <CommandGroup>
-              {options.map((option) => {
-                const isSelected = isMulti
-                  ? selectedOptions.some(
-                      (opt) => `${opt.value}` === `${option.value}`
-                    )
-                  : value &&
-                    typeof value === "object" &&
-                    "label" in value &&
-                    "value" in value
-                  ? `${(value as SelectOption).value}` === `${option.value}`
-                  : `${value}` === `${option.value}`;
-
-                return (
+          <Command shouldFilter={false}>
+            <CommandInput
+              placeholder={placeholderSearch || "Search item"}
+              value={searchValue}
+              onValueChange={handleSearchChange}
+            />
+            {loading && (
+              <div className="flex items-center justify-center py-4">
+                <Loading className="h-4 w-4" />
+                <span className="ml-2 text-sm text-muted-foreground">
+                  Loading...
+                </span>
+              </div>
+            )}
+            {error && (
+              <div className="py-4 text-center text-sm text-red-500">
+                {error}
+              </div>
+            )}
+            {!loading && !error && options.length === 0 && (
+              <CommandEmpty>
+                {messageItemNotFound || "No item found."}
+              </CommandEmpty>
+            )}
+            {!loading && !error && options.length > 0 && (
+              <CommandGroup>
+                {options.map((option) => (
                   <CommandItem
                     key={option.value}
                     value={`${option.value}`}
-                    onSelect={() => handleSelect(option)}
+                    onSelect={() => handleSelect(option.value)}
                   >
                     <CommonIcons.Check
                       className={cn(
                         "mr-2 h-4 w-4",
-                        isSelected ? "opacity-100" : "opacity-0"
+                        isMulti
+                          ? selectedValues.some(
+                              (val) => `${val}` === `${option.value}`
+                            )
+                            ? "opacity-100"
+                            : "opacity-0"
+                          : `${actualValue}` === `${option.value}`
+                          ? "opacity-100"
+                          : "opacity-0"
                       )}
                     />
                     {option.label}
                   </CommandItem>
-                );
-              })}
-            </CommandGroup>
+                ))}
+              </CommandGroup>
+            )}
           </Command>
         </PopoverContent>
       </Popover>
@@ -309,4 +429,4 @@ const SelectField = (props: SelectFieldProps & AdditionalFormikProps) => {
   );
 };
 
-export default SelectField;
+export default AsyncSelectField;

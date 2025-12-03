@@ -13,7 +13,6 @@ import {
 } from "@tanstack/react-query";
 
 import Page404 from "@/pages/Page404";
-import routes from "@/routes/routes";
 
 import { ToastContainer } from "react-toastify";
 import { ErrorBoundary } from "react-error-boundary";
@@ -24,6 +23,12 @@ import i18n from "./i18n/config";
 import Loading from "./components/ui/loading";
 import SidebarProvider from "./providers/SidebarProvider";
 import { showError } from "./helpers/toast";
+import BaseUrl from "./consts/baseUrl";
+import Login from "./pages/Login";
+import ForgotPassword from "./pages/ForgotPassword";
+import DefaultLayout from "./layouts/DefaultLayout";
+import Homepage from "./pages/Homepage";
+import ChangePassword from "./pages/ChangePassword";
 
 const ErrorFallback = ({ error, resetErrorBoundary }: any) => {
   return (
@@ -61,55 +66,31 @@ const App = () => {
     return (
       <Router>
         <Routes>
-          {routes.map((route) => {
-            return (
-              <Route
-                key={`${route.path}-layout`}
-                path={route.path}
-                element={
-                  route.isPrivateRoute ? (
-                    <PrivateRoute>
-                      <route.layout>
-                        <Outlet />
-                      </route.layout>
-                    </PrivateRoute>
-                  ) : (
-                    <route.layout>
-                      <Outlet />
-                    </route.layout>
-                  )
+          <Route path={BaseUrl.Login} element={<Login />} />
+          <Route path={BaseUrl.ForgotPassword} element={<ForgotPassword />} />
+          <Route
+            path={BaseUrl.Homepage}
+            element={
+              <Suspense
+                fallback={
+                  <div className="p-2">
+                    <Loading />
+                  </div>
                 }
               >
-                {route.routeChild.map((child, idx) => {
-                  return (
-                    <Route
-                      key={`${child.path}-${idx}`}
-                      path={child.path}
-                      element={
-                        <Suspense
-                          fallback={
-                            <div className="p-2">
-                              <Loading />
-                            </div>
-                          }
-                        >
-                          <ErrorBoundary FallbackComponent={ErrorFallback}>
-                            {child.isPrivateRoute ? (
-                              <PrivateRoute>
-                                <child.component />
-                              </PrivateRoute>
-                            ) : (
-                              <child.component />
-                            )}
-                          </ErrorBoundary>
-                        </Suspense>
-                      }
-                    />
-                  );
-                })}
-              </Route>
-            );
-          })}
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                  <PrivateRoute>
+                    <DefaultLayout>
+                      <Outlet />
+                    </DefaultLayout>
+                  </PrivateRoute>
+                </ErrorBoundary>
+              </Suspense>
+            }
+          >
+            <Route index element={<Homepage />} />
+            <Route path={BaseUrl.ChangePassword} element={<ChangePassword />} />
+          </Route>
 
           <Route path="*" element={<Page404 />} />
         </Routes>
