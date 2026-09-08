@@ -17,13 +17,13 @@ const Sidebar = ({ forMobile }: { forMobile?: boolean }) => {
           : "sticky top-0 hidden h-[100vh] max-h-[100vh] w-[--sidebar-width] p-2 md:block"
       )}
     >
-      <div className="flex h-full w-full flex-col rounded-md border bg-backgroundSidebar p-1 shadow-md">
+      <div className="flex h-full w-full flex-col rounded-md border bg-card p-1 shadow-md">
         <div className="side-bar__logo px-2 pt-2">
           <h3 className="text-xl">Logo comany here</h3>
         </div>
 
         <div className="side-bar__menu mt-8">
-          <h6 className="mb-2 px-3 text-sm text-gray-500">General</h6>
+          <h6 className="mb-2 px-3 text-sm text-muted-foreground">General</h6>
           {[
             {
               label: "Dashboard",

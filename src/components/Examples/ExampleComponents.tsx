@@ -17,10 +17,16 @@ import { cloneDeep } from "lodash";
 import Loading from "../ui/loading";
 import AsyncSelectField from "../customFieldsFormik/AsyncSelectField";
 import * as Yup from "yup";
+import DialogForm from "../dialogs/DialogForm";
 
 const ExampleComponents = () => {
   const [openConfirm, toggleConfirm, shouldRenderConfirm] = useToggleDialog();
   const [openExample, toggleExample, shouldRenderExample] = useToggleDialog();
+  const [
+    openExampleComponents,
+    toggleExampleComponents,
+    shouldRenderExampleComponents,
+  ] = useToggleDialog();
 
   const { filters, setFilters } = useFiltersHandler({
     page: 1,
@@ -139,7 +145,7 @@ const ExampleComponents = () => {
                 <FormikField
                   component={AsyncSelectField}
                   name="genderAsync"
-                  label="Gender"
+                  label="Gender (Async)"
                   required
                   isClearable
                   isMulti
@@ -213,6 +219,13 @@ const ExampleComponents = () => {
 
             <div className="dialogs-example flex flex-col gap-2">
               <p className="mb-2 text-2xl font-semibold">Dialogs</p>
+              {shouldRenderExampleComponents && (
+                <DialogForm
+                  isOpen={openExampleComponents}
+                  toggle={toggleExampleComponents}
+                />
+              )}
+
               {shouldRenderConfirm && (
                 <DialogConfirm
                   isOpen={openConfirm}
@@ -232,6 +245,11 @@ const ExampleComponents = () => {
                 <DialogExample isOpen={openExample} toggle={toggleExample} />
               )}
 
+              <div>
+                <Button onClick={toggleExampleComponents}>
+                  Open form dialog
+                </Button>
+              </div>
               <div>
                 <Button onClick={toggleConfirm}>Open confirm dialog</Button>
               </div>

@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
 @layer base {
   :root {
     --sidebar-width: 16rem;
@@ -91,11 +103,12 @@
 }
 
 .side-bar__menu__item {
-  transition: .3s;
+  transition: 0.3s;
 }
 
-.side-bar__menu__item:hover, .side-bar__menu__item.is-active {
-  @apply bg-gray-100;
+.side-bar__menu__item:hover,
+.side-bar__menu__item.is-active {
+  @apply bg-accent;
   @apply rounded-md;
 }
 
@@ -108,9 +121,10 @@
   @apply bg-gray-100;
   @apply rounded-md;
   @apply cursor-pointer;
+  @apply dark:text-black;
 }
 
 .is-link {
   text-decoration: underline;
-  @apply hover:cursor-pointer
+  @apply hover:cursor-pointer;
 }

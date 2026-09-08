@@ -5,11 +5,12 @@ import {
   DialogContent,
   DialogTitle,
   DialogDescription,
+  DialogHeader,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { DialogI } from "@/interfaces/common";
 import { Button } from "../ui/button";
 import { Form, Formik } from "formik";
-import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 
 interface DialogProps extends DialogI<any> {}
@@ -23,22 +24,29 @@ const DialogExample = (props: DialogProps) => {
       <DialogPortal>
         <DialogOverlay />
         <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Dialog Example</DialogTitle>
+            <DialogDescription>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit,
+              earum enim doloribus rerum repudiandae voluptatem, nihil ad dicta
+              necessitatibus, aliquam eius numquam id dolorum quas nulla facilis
+              a cumque! Architecto?
+            </DialogDescription>
+          </DialogHeader>
+
           <Formik initialValues={{}} onSubmit={onSubmit || (() => {})}>
             {({ isSubmitting }) => {
               return (
-                <Fragment>
-                  <DialogTitle>Title example</DialogTitle>
-                  <DialogDescription>Content example</DialogDescription>
-
-                  <Form className="mt-[25px] flex justify-end gap-2">
+                <Form>
+                  <DialogFooter className="self-end">
                     <Button type="submit" isLoading={isSubmitting}>
                       {t("yes")}
                     </Button>
                     <Button variant="ghost" type="button" onClick={toggle}>
                       {t("close")}
                     </Button>
-                  </Form>
-                </Fragment>
+                  </DialogFooter>
+                </Form>
               );
             }}
           </Formik>

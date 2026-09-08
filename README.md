@@ -67,7 +67,7 @@ A modern, production-ready React boilerplate built with Vite, TypeScript, and Ta
 Make sure you have the following installed on your development machine:
 
 - **Node.js** (version 16 or above)
-- **pnpm** (recommended) or **yarn** or **npm** (package manager)
+- **pnpm** (recommended) or **npm** (package manager)
 
 ## 🚀 Getting Started
 
@@ -84,12 +84,6 @@ Using pnpm (recommended):
 
 ```bash
 pnpm install
-```
-
-Or using yarn:
-
-```bash
-yarn install
 ```
 
 Or using npm:

@@ -1,8 +1,8 @@
-import { UserInfo } from '@/interfaces/user';
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { UserInfo } from "@/interfaces/user";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
-export const TOKEN_KEY = 'token';
-export const USER_KEY = 'user';
+export const TOKEN_KEY = "token";
+export const USER_KEY = "user";
 
 class Services {
   axios: AxiosInstance;
@@ -86,7 +86,7 @@ class Services {
 
   getTokenStorage() {
     const token = localStorage.getItem(TOKEN_KEY);
-    return token || '';
+    return token || "";
   }
 
   clearStorage() {
@@ -100,7 +100,7 @@ class Services {
 
   getUserStorage() {
     if (localStorage.getItem(USER_KEY)) {
-      return JSON.parse(localStorage?.getItem(USER_KEY) || '') as UserInfo;
+      return JSON.parse(localStorage?.getItem(USER_KEY) || "") as UserInfo;
     }
 
     return null;

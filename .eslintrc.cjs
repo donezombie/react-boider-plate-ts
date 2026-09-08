@@ -16,4 +16,10 @@ module.exports = {
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/no-inferrable-types": "off",
   },
+  overrides: [
+    {
+      files: ["*.cjs", "*.config.js", "*.config.cjs"],
+      env: { node: true },
+    },
+  ],
 };
