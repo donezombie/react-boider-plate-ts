@@ -1,5 +1,6 @@
 import queriesKeys from "@/consts/queriesKeys";
-import todoService, { RequestGetTodos } from "@/services/todoService";
+import todoService from "@/pages/Todos/services/todoService";
+import { RequestGetTodos } from "@/pages/Todos/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useGetTodos = ({

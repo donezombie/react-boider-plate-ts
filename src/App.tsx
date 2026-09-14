@@ -29,6 +29,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import DefaultLayout from "./layouts/DefaultLayout";
 import Homepage from "./pages/Homepage";
 import ChangePassword from "./pages/ChangePassword";
+import Todos from "./pages/Todos";
 
 const ErrorFallback = ({ error, resetErrorBoundary }: any) => {
   return (
@@ -89,6 +90,7 @@ const App = () => {
             }
           >
             <Route index element={<Homepage />} />
+            <Route path={BaseUrl.Todos} element={<Todos />} />
             <Route path={BaseUrl.ChangePassword} element={<ChangePassword />} />
           </Route>
 

@@ -11,13 +11,13 @@ import DialogConfirm from "../dialogs/DialogConfirm";
 import DialogExample from "../dialogs/DialogExample";
 import useToggleDialog from "@/hooks/useToggleDialog";
 import { Link } from "react-router-dom";
-import { useGetTodos } from "@/modules/todos";
 import useFiltersHandler from "@/hooks/useFiltersHandler";
 import { cloneDeep } from "lodash";
 import Loading from "../ui/loading";
 import AsyncSelectField from "../customFieldsFormik/AsyncSelectField";
 import * as Yup from "yup";
 import DialogForm from "../dialogs/DialogForm";
+import { useGetTodos } from "@/pages/Todos/hooks/useTodos";
 
 const ExampleComponents = () => {
   const [openConfirm, toggleConfirm, shouldRenderConfirm] = useToggleDialog();
